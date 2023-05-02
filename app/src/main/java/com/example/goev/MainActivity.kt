@@ -18,5 +18,7 @@ class MainActivity : AppCompatActivity() {
         //Test 5
 
         //jjaiee
+
+        //navigation component
     }
 }
