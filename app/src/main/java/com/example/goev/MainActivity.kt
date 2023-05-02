@@ -9,6 +9,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //Test
         //Master test
-        //Master test 2
+        //Yu Her test merge to Master
     }
 }
