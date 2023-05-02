@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="testing"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="265dp" />
+        tools:layout_editor_absoluteX="184dp"
+        tools:layout_editor_absoluteY="234dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
