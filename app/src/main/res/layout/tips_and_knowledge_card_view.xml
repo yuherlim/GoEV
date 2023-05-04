@@ -44,6 +44,8 @@
             <TextView
                 android:id="@+id/contentPreview"
                 style="@style/contentTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:text="Lörem ipsum multifagt plattfilm bysade. Såguliga pagt. Nivire trafficking inte näss diröligen. Bolundare dosm. Jån guv niktig. Lörem ipsum multifagt plattfilm bysade. Såguliga pagt. Nivire trafficking inte näss diröligen. Bolundare dosm. Jån guv niktig. "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

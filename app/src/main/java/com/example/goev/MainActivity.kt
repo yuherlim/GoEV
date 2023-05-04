@@ -11,17 +11,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
          // Testing
 
 
-        //temporarily test button
-        val button = findViewById<Button>(R.id.tkTest)
-        button.setOnClickListener {
-            val intent = Intent(this, TipsAndKnowledge::class.java)
-            startActivity(intent)
-        }
+//        //temporarily test button
+//        val button = findViewById<Button>(R.id.tkStartButton)
+//        button.setOnClickListener {
+//            val intent = Intent(this, TipsAndKnowledge::class.java)
+//            startActivity(intent)
+//        }
     }
-
+//
+//    private fun deleteDatabase() {
+//        applicationContext.deleteDatabase("TkPostDatabase")
+//    }
 }

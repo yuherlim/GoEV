@@ -5,4 +5,8 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.8.21' apply false
 }
 
+ext {
+    navigationVersion = "2.3.0"
+}
+
 
