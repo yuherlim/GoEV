@@ -5,7 +5,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TkIntoPostAct">
+    tools:context=".TkIntoPost">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backFloatingbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="150dp"
+        android:alpha="0.7"
+        android:backgroundTint="@color/md_theme_light_background"
+        android:src="@drawable/baseline_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/intoPostScrollableView"
@@ -75,7 +87,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/intoPostContent"
+                app:layout_constraintTop_toBottomOf="@+id/intoPostDate"
                 app:srcCompat="@drawable/thumb_up" />
 
             <TextView
@@ -149,6 +161,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/intoPostCommentButton"
                 tools:text="500" />
+
+            <TextView
+                android:id="@+id/intoPostDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                android:textColor="#807777"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intoPostContent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

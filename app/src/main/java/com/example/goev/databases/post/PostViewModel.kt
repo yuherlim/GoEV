@@ -1,9 +1,10 @@
-package com.example.goev.databases
+package com.example.goev.databases.post
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.goev.databases.TipsAndKnowledgeDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -12,7 +13,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
     private val repository: PostRepository
 
     init{
-        val tkPostDAO = TkPostDatabase.getInstance(application).tkPostDAO()
+        val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
         repository = PostRepository(tkPostDAO)
         readAllData = repository.readAllData
     }

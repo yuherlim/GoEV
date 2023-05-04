@@ -1,8 +1,6 @@
-package com.example.goev.databases
+package com.example.goev.databases.post
 
 import androidx.lifecycle.LiveData
-import com.example.goev.databases.TkPostDAO
-import com.example.goev.databases.TkPostData
 
 class PostRepository(private val tkPostDao: TkPostDAO) {
     val readAllData: LiveData<List<TkPostData>> = tkPostDao.getAllPosts()
