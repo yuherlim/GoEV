@@ -42,6 +42,7 @@ class TipsAndKnowledge : Fragment() {
             adapter.setData(post)
         })
 
+
         return binding.root
     }
 }

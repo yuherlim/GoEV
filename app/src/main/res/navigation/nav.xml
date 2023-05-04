@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_tipsAndKnowledge_to_addPostAdmin"
             app:destination="@id/addPostAdmin" />
+        <action
+            android:id="@+id/action_tipsAndKnowledge_to_tkIntoPost"
+            app:destination="@id/tkIntoPost" />
     </fragment>
 
     <fragment
@@ -21,6 +24,18 @@
         tools:layout="@layout/fragment_add_post_admin" >
         <action
             android:id="@+id/action_addPostAdmin_to_tipsAndKnowledge"
+            app:destination="@id/tipsAndKnowledge" />
+    </fragment>
+    <fragment
+        android:id="@+id/tkIntoPost"
+        android:name="com.example.goev.TkIntoPost"
+        android:label="fragment_tk_into_post"
+        tools:layout="@layout/fragment_tk_into_post" >
+        <action
+            android:id="@+id/action_tkIntoPost_to_tipsAndKnowledge"
+            app:destination="@id/tipsAndKnowledge" />
+        <action
+            android:id="@+id/action_tkIntoPost_to_tipsAndKnowledge2"
             app:destination="@id/tipsAndKnowledge" />
     </fragment>
 
