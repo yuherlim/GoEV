@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="Settings_notifications">
+
+        <TextView
+            android:id="@+id/notificationsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="@string/notifications"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/showNotificationSwitch"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:checked="true"
+            android:text="@string/showNotifications"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notificationsTitle"
+            app:thumbIcon="@drawable/baseline_check_24"
+            app:thumbIconTint="@color/md_theme_dark_background"
+            app:trackTint="@color/md_theme_dark_onPrimaryContainer" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/floatingNotificationSwitch"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:checked="false"
+            android:text="@string/floatingNotifications"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/showNotificationSwitch"
+            app:thumbIcon="@drawable/baseline_check_24"
+            app:trackTint="@color/md_theme_dark_onPrimaryContainer" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/lockScreenNotificationsSwitch"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:checked="true"
+            android:text="@string/lockScreenNotifications"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/floatingNotificationSwitch"
+            app:thumbIcon="@drawable/baseline_check_24"
+            app:trackTint="@color/md_theme_dark_onPrimaryContainer" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/allowSoundSwitch"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:checked="false"
+            android:text="@string/allowSound"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lockScreenNotificationsSwitch"
+            app:thumbIcon="@drawable/baseline_check_24"
+            app:trackTint="@color/md_theme_dark_onPrimaryContainer" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/allowVibrationSwitch"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:checked="true"
+            android:text="@string/allowVibration"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allowSoundSwitch"
+            app:thumbIcon="@drawable/baseline_check_24"
+            app:trackTint="@color/md_theme_dark_onPrimaryContainer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
