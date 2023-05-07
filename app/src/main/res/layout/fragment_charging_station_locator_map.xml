@@ -18,7 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             app:title="GoEV"
             app:menu="@menu/action_bar_menu"
-            app:navigationIcon="@drawable/ic_action_go_ev" />
+            app:navigationIcon="@drawable/ic_go_ev" />
 <!--        app:navigationIconTint="?attr/colorSurface"-->
 <!--        style="@style/Widget.App.Toolbar"-->
 
