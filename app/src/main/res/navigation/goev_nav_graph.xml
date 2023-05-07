@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/goev_nav_graph"
+    app:startDestination="@id/chargingStationLocatorMapFragment">
+
+    <fragment
+        android:id="@+id/chargingStationLocatorMapFragment"
+        android:name="com.example.goev.ChargingStationLocatorMapFragment"
+        android:label="fragment_charging_station_locator_map"
+        tools:layout="@layout/fragment_charging_station_locator_map" >
+        <action
+            android:id="@+id/action_chargingStationLocatorMapFragment_to_chargingStationLocatorListFragment"
+            app:destination="@id/chargingStationLocatorListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chargingStationLocatorListFragment"
+        android:name="com.example.goev.ChargingStationLocatorListFragment"
+        android:label="fragment_charging_station_locator_list"
+        tools:layout="@layout/fragment_charging_station_locator_list" />
+</navigation>
