@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GoEV</string>
     <string name="login">Login</string>
     <string name="logo">Logo</string>
@@ -22,10 +22,49 @@
     <string name="help"><![CDATA[Help & Support]]></string>
     <string name="feedback">Feedback</string>
     <string name="about">About</string>
-    <string name="notifications">Notifications</string>
     <string name="showNotifications">Show notifications</string>
     <string name="floatingNotifications">Floating notifications</string>
     <string name="lockScreenNotifications">Lock screen notifications</string>
     <string name="allowSound">Allow sound</string>
     <string name="allowVibration">Allow vibration</string>
+    <string name="accountAndLogin">Account and login</string>
+    <string name="deleteAccount">Delete account</string>
+    <string name="privacyPolicy">GoEV Privacy Policy</string>
+    <string name="helpAndSupport"><![CDATA[Help & Support]]></string>
+    <string name="quickContact">QUICK CONTACT</string>
+    <string name="name">Name*</string>
+    <string name="enterFullName">Enter Full Name Here</string>
+    <string name="contactEmail">Email*</string>
+    <string name="enterEmailAddress">Enter Email Address</string>
+    <string name="contactMessage">Message*</string>
+    <string name="enterMessage">Enter your message here...</string>
+    <string name="contactSend">Send</string>
+    <string name="stillCantSolve">Still can\'t solve problem?</string>
+    <string name="callUsNow">Call us now</string>
+    <string name="commentHere">Comment Here...</string>
+    <string name="feedbackSubmit">Submit</string>
+    <string name="aboutGoEV">About GoEV</string>
+    <string name="GoEVDescription">     GoEV is a cutting-edge technology company that is leading the charge in the electric vehicle revolution. With a mission to encourage the adoption of electric vehicles and reduce carbon emissions, GoEV has developed an innovative app that makes it easy for people to make the switch to electric.
+        Founded in 2018 by a team of passionate entrepreneurs, GoEV has quickly become a recognized leader in the industry. ce, GoEV is poised to help accelerate the adoption of electric vehicles and drive positive change in the transportation industry.</string>
+    <string name="fullName">Full name</string>
+    <string name="passwordLowerCase">Password</string>
+    <string name="privacyPolicyTitle">Privacy Policy</string>
+    <string name="GoEVPrivacyPolicy">Privacy Policy for GoEV
+        GoEV is committed to protecting the privacy and security of our users'</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
