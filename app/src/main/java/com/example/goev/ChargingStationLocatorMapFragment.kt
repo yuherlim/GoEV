@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.goev.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +51,7 @@ class ChargingStationLocatorMapFragment : Fragment() {
             val action = ChargingStationLocatorMapFragmentDirections.actionChargingStationLocatorMapFragmentToChargingStationLocatorListFragment()
             view?.findNavController()?.navigate(action)
         }
+
         super.onViewCreated(view, savedInstanceState)
     }
 

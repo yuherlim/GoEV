@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-<!--        android:background="?attr/colorPrimaryContainer"-->
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="GoEV"
-            app:menu="@menu/action_bar_menu"
-            app:navigationIcon="@drawable/ic_go_ev" />
-<!--        app:navigationIconTint="?attr/colorSurface"-->
-<!--        style="@style/Widget.App.Toolbar"-->
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -52,19 +32,9 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- Note: A RecyclerView can also be used -->
-<!--    <androidx.core.widget.NestedScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-<!--        &lt;!&ndash; Scrollable content &ndash;&gt;-->
-
-<!--    </androidx.core.widget.NestedScrollView>-->
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 
 </layout>

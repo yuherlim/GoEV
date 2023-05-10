@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/chargingStationLocatorMapFragment"
         android:name="com.example.goev.ChargingStationLocatorMapFragment"
-        android:label="fragment_charging_station_locator_map"
+        android:label="GoEV"
         tools:layout="@layout/fragment_charging_station_locator_map" >
         <action
             android:id="@+id/action_chargingStationLocatorMapFragment_to_chargingStationLocatorListFragment"
