@@ -5,16 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goev.databases.PostViewModel
-import com.example.goev.databinding.FragmentAddPostAdminBinding
+import com.example.goev.databases.post.PostViewModel
+import com.example.goev.databases.tempUser.UserData
+import com.example.goev.databases.tempUser.UserViewModel
 import com.example.goev.databinding.FragmentTipsAndKnowledgeBinding
 
 class TipsAndKnowledge : Fragment() {
@@ -31,8 +29,8 @@ class TipsAndKnowledge : Fragment() {
             view.findNavController().navigate(R.id.action_tipsAndKnowledge_to_addPostAdmin)
         }
 
-        //RecyclerView content
-        val adapter = ListAdapter()
+        //RecyclerView content                        requireContext()
+        val adapter = ListAdapter(requireContext()) //for fragment to pass data to next acitivty (list adapter pass to post content)
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -41,7 +39,6 @@ class TipsAndKnowledge : Fragment() {
         mPostViewModel.readAllData.observe(viewLifecycleOwner, Observer { post->
             adapter.setData(post)
         })
-
 
         return binding.root
     }

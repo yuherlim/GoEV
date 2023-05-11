@@ -9,4 +9,9 @@ class PostRepository(private val tkPostDao: TkPostDAO) {
         tkPostDao.addPost(tkPostData)
     }
 
+    fun getAPostById(postID:Long): TkPostData{
+        return tkPostDao.getAPostById(postID)
+    }
+
+
 }

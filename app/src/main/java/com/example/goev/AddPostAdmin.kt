@@ -1,19 +1,25 @@
 package com.example.goev
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.goev.databases.PostViewModel
-import com.example.goev.databases.TkPostData
+import com.example.goev.databases.post.PostViewModel
+import com.example.goev.databases.post.TkPostData
 import com.example.goev.databinding.FragmentAddPostAdminBinding
+import java.io.ByteArrayOutputStream
 
 class AddPostAdmin : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -27,8 +33,12 @@ class AddPostAdmin : Fragment() {
             val content: String = binding.postContent.text.toString()
             if(inputCheck(title,content)){
                 //Create post object
-                val post = TkPostData(title,content)
+                val context = requireContext()
+                val drawable = ContextCompat.getDrawable(context, R.drawable.test)
+                val bitmap = (drawable as BitmapDrawable).bitmap
+                val byteArray = TkImageConverter().convertImage(bitmap)
                 // Add data to database
+                val post = TkPostData(title,byteArray,content)
                 postViewModel.addPost(post)
                 //display succeed message
                 Toast.makeText(requireContext(),"Post uploaded",Toast.LENGTH_LONG).show()

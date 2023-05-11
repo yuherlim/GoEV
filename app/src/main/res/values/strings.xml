@@ -11,4 +11,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="confirm_delete_comment">Confirm delete the comment? Once delete cannot be recovered.</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_comment">Edit Comment</string>
+    <string name="save">Save</string>
 </resources>

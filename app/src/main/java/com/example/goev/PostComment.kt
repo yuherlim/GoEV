@@ -1,19 +1,23 @@
 package com.example.goev
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.postcomment.TkPostCommentData
 import com.example.goev.databases.tempUser.UserData
+import com.example.goev.databases.tempUser.UserViewModel
 import com.example.goev.databinding.FragmentPostCommentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.Dispatchers
@@ -22,13 +26,14 @@ import kotlinx.coroutines.withContext
 
 class PostComment(private val postID: Long, private val user: UserData) : BottomSheetDialogFragment() {
     private lateinit var commentAdapter: PostCommentAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentPostCommentBinding>(
             inflater,
             R.layout.fragment_post_comment, container, false
         )
-        commentAdapter = PostCommentAdapter()
+        commentAdapter = PostCommentAdapter(user, ::deleteComment)
         val recyclerView = binding.recyclerView2
         recyclerView.adapter = commentAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -81,7 +86,7 @@ class PostComment(private val postID: Long, private val user: UserData) : Bottom
             } else {
                 comments.sortedByDescending { it.commentTime }
             }
-            commentAdapter.setComments(sortedComments)
+            commentAdapter.settingComments(sortedComments)
         })
     }
 
@@ -97,6 +102,15 @@ class PostComment(private val postID: Long, private val user: UserData) : Bottom
         }
     }
 
-
+    private fun deleteComment(comment: TkPostCommentData) {
+        val commentDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postCommentDAO
+        val postDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postDAO
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                commentDao.deleteComment(comment)
+                postDao.commentCountDecrement(postID)
+            }
+        }
+    }
 
 }

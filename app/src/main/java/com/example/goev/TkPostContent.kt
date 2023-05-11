@@ -50,7 +50,7 @@ class TkPostContent : AppCompatActivity() {
             if (userReact?.reaction != null && userReact.reaction == 1) {
                 binding.postContentLikeButton.setImageResource(R.drawable.thumb_up_green)
             } else if (userReact?.reaction != null && userReact.reaction == 0) {
-                binding.postContentLikeButton.setImageResource(R.drawable.thumb_down_red)
+                binding.postContentDislikeButton.setImageResource(R.drawable.thumb_down_red)
             } else if (userReact == null) {
                 Log.d("123", "its null")
             }

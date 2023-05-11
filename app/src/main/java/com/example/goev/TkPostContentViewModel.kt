@@ -78,5 +78,12 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
         }
     }
 
+    fun decreaseComment(){
+        val postUpdate = postUpdateLiveData.value
+        if (postUpdate != null) {
+            postUpdate.totalComments -= 1
+            postUpdateLiveData.postValue(postUpdate)
+        }
+    }
 
 }
