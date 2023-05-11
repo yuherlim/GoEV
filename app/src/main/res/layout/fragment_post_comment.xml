@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PostComment">
+
+        <!--            android:title="Comment"-->
+        <!--            android:titleTextColor="@android:color/white"-->
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/bottom_sheet_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#E6F1F2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxHeight="500dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="500dp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_toolbar" />
+
+        <EditText
+            android:id="@+id/writeComment"
+            android:layout_width="333dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:inputType="textCapSentences"
+            android:hint="Write your comment..."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+
+        <ImageView
+            android:id="@+id/postComment"
+            android:layout_width="28dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:rotation="-38"
+            android:src="@drawable/baseline_send_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toEndOf="@+id/writeComment"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+
+        <ImageView
+            android:id="@+id/toolbarBackButton"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/toolbarTitle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_arrow_back" />
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="126dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="16dp"
+            android:text="Comments"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.532"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_toolbar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/filterCommentButton"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.765"
+            app:layout_constraintStart_toEndOf="@+id/toolbarTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_filter_alt_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
