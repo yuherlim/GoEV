@@ -33,7 +33,8 @@ class PostComment(private val postID: Long, private val user: UserData) : Bottom
             inflater,
             R.layout.fragment_post_comment, container, false
         )
-        commentAdapter = PostCommentAdapter(user, ::deleteComment)
+
+        commentAdapter = PostCommentAdapter(user, ::deleteComment, ::updateEditedComment)
         val recyclerView = binding.recyclerView2
         recyclerView.adapter = commentAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -109,6 +110,15 @@ class PostComment(private val postID: Long, private val user: UserData) : Bottom
             withContext(Dispatchers.IO) {
                 commentDao.deleteComment(comment)
                 postDao.commentCountDecrement(postID)
+            }
+        }
+    }
+
+    private fun updateEditedComment(comment: TkPostCommentData){
+        val commentDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postCommentDAO
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                commentDao.editComment(comment)
             }
         }
     }
