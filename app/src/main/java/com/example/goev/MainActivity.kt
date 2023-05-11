@@ -74,27 +74,24 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = binding.bottomNavigation
         bottomNav.setupWithNavController(navController)
         //Navigates to the top-level of the following navigation icon selected
-        NavigationBarView.OnItemSelectedListener { item ->
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.chargingStationLocatorMapFragment -> {
                     // Respond to navigation item 1 click
                     navController.navigate(R.id.chargingStationLocatorMapFragment)
-                    Log.i("MainActivity", "charging station icon selected")
+//                    Log.i("MainActivity", "charging station map icon selected")
                     true
                 }
                 R.id.chargingStationLocatorListFragment -> {
                     // Respond to navigation item 2 click
                     navController.navigate(R.id.chargingStationLocatorListFragment)
+//                    Log.i("MainActivity", "charging station list icon selected")
                     true
                 }
-                else -> false
-            }
-        }
-        binding.bottomNavigation.setOnItemReselectedListener { item ->
-            when (item.itemId) {
-                R.id.chargingStationLocatorMapFragment -> navController.navigate(R.id.chargingStationLocatorMapFragment)
-                R.id.chargingStationLocatorListFragment -> navController.navigate(R.id.chargingStationLocatorListFragment)
-                else -> Toast.makeText(this, "No such navigation item", Toast.LENGTH_SHORT).show()
+                else -> {
+                    Toast.makeText(this, "No such navigation item", Toast.LENGTH_SHORT).show()
+                    false
+                }
             }
         }
     }
