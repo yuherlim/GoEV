@@ -1,6 +1,5 @@
-package com.example.goev
+package com.example.goev.login
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.goev.R
 import com.example.goev.databinding.ActivityLoginBinding
 
 class LoginFragment : Fragment() {
@@ -38,13 +38,17 @@ class LoginFragment : Fragment() {
 
             viewModel.loginValidation(email, password) { success ->
                 if (success) {
-                    // Navigate to next fragment
+                    view.findNavController().navigate(R.id.action_loginFragment_to_settingsFragment)
                     Toast.makeText(requireContext(), "Login....", Toast.LENGTH_SHORT).show()
+
                 } else {
                     Toast.makeText(requireContext(), "Wrong email or wrong password", Toast.LENGTH_SHORT).show()
                     clearInputFields()
                 }
             }
+
+
+
 
         }
 

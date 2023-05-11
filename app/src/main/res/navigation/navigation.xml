@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.goev.RegisterFragment"
+        android:name="com.example.goev.register.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/activity_register" >
         <action
@@ -16,11 +16,80 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.goev.LoginFragment"
+        android:name="com.example.goev.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/activity_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsAboutFragment"
+        android:name="com.example.goev.settings.SettingsAboutFragment"
+        android:label="SettingsAboutFragment"
+        tools:layout="@layout/activity_settings_about"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.goev.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/activity_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAboutFragment"
+            app:destination="@id/settingsAboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsNotificationsFragment"
+            app:destination="@id/settingsNotificationsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsPrivacyFragment"
+            app:destination="@id/settingsPrivacyFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsHelpFragment"
+            app:destination="@id/settingsHelpFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsFeedbackFragment"
+            app:destination="@id/settingsFeedbackFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFeedbackFragment"
+        android:name="com.example.goev.settings.SettingsFeedbackFragment"
+        android:label="SettingsFeedbackFragment"
+        tools:layout="@layout/activity_settings_feedback"/>
+    <fragment
+        android:id="@+id/settingsHelpFragment"
+        android:name="com.example.goev.settings.SettingsHelpFragment"
+        android:label="SettingsHelpFragment"
+        tools:layout="@layout/activity_settings_help"/>
+    <fragment
+        android:id="@+id/settingsPrivacyFragment"
+        android:name="com.example.goev.settings.SettingsPrivacyFragment"
+        android:label="SettingsPrivacyFragment"
+        tools:layout="@layout/activity_settings_privacy">
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_settingsPrivacyAccountFragment"
+            app:destination="@id/settingsPrivacyAccountFragment" />
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_settingsPrivacyPolicyFragment"
+            app:destination="@id/settingsPrivacyPolicyFragment" />
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsNotificationsFragment"
+        android:name="com.example.goev.settings.SettingsNotificationsFragment"
+        android:label="SettingsNotificationsFragment"
+        tools:layout="@layout/activity_settings_notifications"/>
+    <fragment
+        android:id="@+id/settingsPrivacyAccountFragment"
+        android:name="com.example.goev.settings.SettingsPrivacyAccountFragment"
+        android:label="fragment_settings_privacy_account"
+        tools:layout="@layout/activity_settings_privacy_account" />
+    <fragment
+        android:id="@+id/settingsPrivacyPolicyFragment"
+        android:name="com.example.goev.settings.SettingsPrivacyPolicyFragment"
+        android:label="fragment_settings_privacy_policy"
+        tools:layout="@layout/activity_settings_privacy_policy" />
 </navigation>

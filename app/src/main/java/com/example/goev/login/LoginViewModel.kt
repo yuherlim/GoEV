@@ -1,8 +1,9 @@
-package com.example.goev
+package com.example.goev.login
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.goev.database.user.UserData
 import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +22,14 @@ class LoginViewModel (application: Application) : AndroidViewModel(application){
     fun loginValidation(email: String, password: String, callback: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val user = repository.getUserByEmailAndPassword(email, password)
+
             val result = user != null
             withContext(Dispatchers.Main) {
                 callback(result)
             }
         }
     }
+
+
 
 }

@@ -1,4 +1,4 @@
-package com.example.goev
+package com.example.goev.register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.goev.R
 import com.example.goev.database.user.UserData
 import com.example.goev.databinding.ActivityRegisterBinding
 
