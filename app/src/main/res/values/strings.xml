@@ -49,8 +49,7 @@
     <string name="fullName">Full name</string>
     <string name="passwordLowerCase">Password</string>
     <string name="privacyPolicyTitle">Privacy Policy</string>
-    <string name="GoEVPrivacyPolicy">Privacy Policy for GoEV
-        GoEV is committed to protecting the privacy and security of our users'</string>
+    <string name="GoEVPrivacyPolicy">Privacy Policy for GoEV GoEV is committed to protecting the privacy and security of our users</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

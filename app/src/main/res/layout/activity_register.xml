@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="Register">
+        tools:context=".RegisterFragment">
 
         <ImageView
             android:id="@+id/registerLogo"
@@ -118,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="15dp"
+            android:clickable="true"
             android:text="@string/signToLogin2"
             android:textColor="#37E1EC"
             app:layout_constraintBottom_toBottomOf="parent"
