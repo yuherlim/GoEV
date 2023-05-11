@@ -5,9 +5,9 @@
         android:enabled="true"
         android:icon="@drawable/ic_go_ev"
         android:title="@string/locator"/>
-<!--    <item-->
-<!--        android:id="@+id/chargingStationLocatorListFragment"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_go_ev"-->
-<!--        android:title="list"/>-->
+    <item
+        android:id="@+id/chargingStationLocatorListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_go_ev"
+        android:title="list"/>
 </menu>

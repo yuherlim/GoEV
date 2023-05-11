@@ -8,6 +8,12 @@
         android:contentDescription="Content description edit"
         app:showAsAction="ifRoom" />
 
+<!--    <item android:id="@+id/action_search"-->
+<!--        android:title="@string/action_search"-->
+<!--        android:icon="@drawable/search_logo"-->
+<!--        app:showAsAction="ifRoom|collapseActionView"-->
+<!--        app:actionViewClass="androidx.appcompat.widget.SearchView" />-->
+
     <item
         android:id="@+id/favorite"
         android:icon="@drawable/test_nav_icon"

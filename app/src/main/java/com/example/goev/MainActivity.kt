@@ -5,18 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.example.goev.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -27,7 +28,12 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        //Setup the app bar and bottom navigation bar as well as logo
+        initialSetup()
 
+    }
+
+    private fun initialSetup() {
         //get an instance of navController
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -40,12 +46,10 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //setup bottom navigation bar
-        setupBottomNavMenu(navController)
-
-
         setupLogo(navController)
 
+        //setup bottom navigation bar
+        setupBottomNavMenu(navController)
     }
 
     // Hide the logo when navigating to any fragment other than the home fragment
@@ -69,6 +73,30 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavMenu(navController: NavController) {
         val bottomNav = binding.bottomNavigation
         bottomNav.setupWithNavController(navController)
+        //Navigates to the top-level of the following navigation icon selected
+        NavigationBarView.OnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.chargingStationLocatorMapFragment -> {
+                    // Respond to navigation item 1 click
+                    navController.navigate(R.id.chargingStationLocatorMapFragment)
+                    Log.i("MainActivity", "charging station icon selected")
+                    true
+                }
+                R.id.chargingStationLocatorListFragment -> {
+                    // Respond to navigation item 2 click
+                    navController.navigate(R.id.chargingStationLocatorListFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.bottomNavigation.setOnItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.chargingStationLocatorMapFragment -> navController.navigate(R.id.chargingStationLocatorMapFragment)
+                R.id.chargingStationLocatorListFragment -> navController.navigate(R.id.chargingStationLocatorListFragment)
+                else -> Toast.makeText(this, "No such navigation item", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
