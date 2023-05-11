@@ -20,7 +20,6 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!--        android:background="?attr/colorPrimaryContainer"-->
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/topAppBar"
@@ -29,8 +28,6 @@
                     app:menu="@menu/action_bar_menu"
                     app:logo="@drawable/ic_go_ev"
                     app:title="@string/app_name" />
-                <!--        app:navigationIconTint="?attr/colorSurface"-->
-                <!--        style="@style/Widget.App.Toolbar"-->
 
                 <!-- Note: A RecyclerView can also be used -->
                 <androidx.core.widget.NestedScrollView

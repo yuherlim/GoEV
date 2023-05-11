@@ -46,10 +46,25 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        setupTopAppBarButtons(toolbar)
+
         setupLogo(navController)
 
         //setup bottom navigation bar
         setupBottomNavMenu(navController)
+    }
+
+    private fun setupTopAppBarButtons(topAppBar: MaterialToolbar) {
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.userInfo -> {
+                    // Handle more item (inside overflow menu) press
+//                    Toast.makeText(this, "User profile button is pressed.", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     // Hide the logo when navigating to any fragment other than the home fragment
