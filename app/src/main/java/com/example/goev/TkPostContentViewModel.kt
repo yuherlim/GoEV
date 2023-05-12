@@ -70,20 +70,31 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
         }
     }
 
-    fun increaseComment(){
-        val postUpdate = postUpdateLiveData.value
-        if (postUpdate != null) {
-            postUpdate.totalComments += 1
-            postUpdateLiveData.postValue(postUpdate)
+//    fun increaseComment(){
+//        val postUpdate = postUpdateLiveData.value
+//        if (postUpdate != null) {
+//            postUpdate.totalComments += 1
+//            postUpdateLiveData.postValue(postUpdate)
+//        }
+//    }
+//
+//    fun decreaseComment(){
+//        val postUpdate = postUpdateLiveData.value
+//        if (postUpdate != null) {
+//            postUpdate.totalComments -= 1
+//            postUpdateLiveData.postValue(postUpdate)
+//        }
+//    }
+
+    fun deletePost(postID: Long){
+        viewModelScope.launch(Dispatchers.IO){
+            tkPostDAO.deletePost(tkPostDAO.getAPostById(postID))
         }
     }
 
-    fun decreaseComment(){
-        val postUpdate = postUpdateLiveData.value
-        if (postUpdate != null) {
-            postUpdate.totalComments -= 1
-            postUpdateLiveData.postValue(postUpdate)
+    fun confirmedModifyPost(postID: Long, title: String, content: String){
+        viewModelScope.launch(Dispatchers.IO){
+            tkPostDAO.updatePostTitleAndContent(postID,title,content)
         }
     }
-
 }

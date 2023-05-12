@@ -33,7 +33,8 @@ class ListAdapter(private val contextFromParent: Context): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = postList[position]
         holder.itemView.findViewById<TextView>(R.id.title).text = currentItem.title
-        holder.itemView.findViewById<ImageView>(R.id.postThumbnail).setImageResource(R.drawable.test)
+        val bitmap = TkImageConverter().extractImage(currentItem.thumbnail!!)
+        holder.itemView.findViewById<ImageView>(R.id.postThumbnail).setImageBitmap(bitmap)
         holder.itemView.findViewById<TextView>(R.id.contentPreview).text = currentItem.content
         holder.itemView.findViewById<TextView>(R.id.totalLikes).text = currentItem.totalLikes.toString()
         holder.itemView.findViewById<TextView>(R.id.totalDislikes).text = currentItem.totalDislikes.toString()

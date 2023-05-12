@@ -43,4 +43,7 @@ public interface TkPostDAO {
 
     @Delete
     suspend fun deletePost(post: TkPostData)
+
+    @Query("UPDATE posts SET title = :title, content = :content WHERE postID = :postId")
+    suspend fun updatePostTitleAndContent(postId: Long, title: String, content: String)
 }

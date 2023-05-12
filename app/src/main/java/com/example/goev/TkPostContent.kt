@@ -4,7 +4,12 @@ import android.app.Activity
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -84,12 +89,56 @@ class TkPostContent : AppCompatActivity() {
 
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         binding.postContentLikeButton.setOnClickListener {
-            likeButtonReact(postContentVM,postViewModel,
-                TipsAndKnowledgeDatabase.getInstance(application).userReactDAO,userID,postID)
+            likeButtonReact(
+                postContentVM, postViewModel,
+                TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
+            )
         }
         binding.postContentDislikeButton.setOnClickListener {
-            dislikeButtonReact(postContentVM,postViewModel,
-                TipsAndKnowledgeDatabase.getInstance(application).userReactDAO,userID,postID)
+            dislikeButtonReact(
+                postContentVM, postViewModel,
+                TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
+            )
+        }
+
+//        if(user.isSuper){
+//            binding.deletePostButton?.visibility = View.VISIBLE
+//            binding.editPostButton?.visibility = View.VISIBLE
+//        }else{
+//            binding.deletePostButton?.visibility = View.GONE
+//            binding.editPostButton?.visibility = View.GONE
+//        }
+
+        binding.deletePostButton?.setOnClickListener {
+            AlertDialog.Builder(this@TkPostContent)
+                .setMessage(R.string.confirm_delete_post)
+                .setPositiveButton(R.string.delete) { _, _ ->
+                    postContentVM.deletePost(postID)
+                    onBackPressed()
+                }
+                .setNegativeButton(R.string.cancel, null)
+                .show()
+        }
+
+        binding.editPostButton?.setOnClickListener {
+            val dialogView = LayoutInflater.from(this@TkPostContent)
+                .inflate(R.layout.edit_post_dialog, null)
+            val titleEditText = dialogView.findViewById<EditText>(R.id.modifyTitle)
+            titleEditText.setText(postTitle)
+            val contentEditText = dialogView.findViewById<EditText>(R.id.modifyContent)
+            contentEditText.setText(postContent)
+
+            AlertDialog.Builder(this@TkPostContent)
+                .setView(dialogView)
+                .setPositiveButton(R.string.save) { _, _ ->
+                    val newPostTitle = titleEditText.text.toString()
+                    val newPostContent = contentEditText.text.toString()
+                    postContentVM.confirmedModifyPost(postID, newPostTitle, newPostContent)
+                    binding.postContentTitle.text = newPostTitle
+                    binding.postContentFullContent.text = newPostContent
+                }
+                .setNegativeButton(R.string.cancel, null)
+                .show()
         }
     }
 
