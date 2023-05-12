@@ -1,22 +1,13 @@
 package com.example.goev.settings
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.room.Room
 import com.example.goev.R
-import com.example.goev.database.user.UserDatabase
 import com.example.goev.databinding.ActivitySettingsPrivacyBinding
-import com.example.goev.login.LoginViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SettingsPrivacyFragment : Fragment() {
 

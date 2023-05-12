@@ -69,4 +69,19 @@
     <string name="deleteUser">Delete Account</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="myProfile">My Profile</string>
+    <string name="profileName">Profile name</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="postHistory">Post History</string>
+    <string name="myPost">My Post</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="logOut">Log Out</string>
+    <string name="yourInformation">Your Information</string>
+    <string name="phoneNumber">Phone (+60)</string>
+    <array name="gender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Not Sure</item>
+    </array>
 </resources>
