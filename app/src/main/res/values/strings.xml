@@ -6,4 +6,8 @@
     <string name="action_search">search</string>
     <string name="user_profile">User Profile</string>
     <string name="user_profile_content_description">User Profile</string>
+    <string name="list_view">List view</string>
+    <string name="list_view_content_description">List view</string>
+    <string name="map_view">Map view</string>
+    <string name="map_view_content_description">Map view</string>
 </resources>
