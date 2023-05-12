@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/chargingStationLocatorListFragment"
         android:name="com.example.goev.ChargingStationLocatorListFragment"
-        android:label="fragment_charging_station_locator_list"
+        android:label="GoEV"
         tools:layout="@layout/fragment_charging_station_locator_list" >
         <action
             android:id="@+id/action_chargingStationLocatorListFragment_to_chargingStationLocatorMapFragment"

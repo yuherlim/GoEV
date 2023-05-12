@@ -107,6 +107,12 @@ open class ChargingStationLocatorMapFragment : Fragment() {
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 //        inflater.inflate(R.menu.locator_action_bar_menu, menu)
 //    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.action_view_list).isVisible = true
+        menu.findItem(R.id.action_view_map).isVisible = false
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_search -> {
@@ -135,18 +141,18 @@ open class ChargingStationLocatorMapFragment : Fragment() {
         view?.findNavController()?.navigate(action)
     }
 
-    private fun setupTopAppBarButtons(topAppBar: MaterialToolbar) {
-        topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.userInfo -> {
-                    // Handle more item (inside overflow menu) press
-                    Toast.makeText(requireContext(), "User profile button is pressed.", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                else -> false
-            }
-        }
-    }
+//    private fun setupTopAppBarButtons(topAppBar: MaterialToolbar) {
+//        topAppBar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.userInfo -> {
+//                    // Handle more item (inside overflow menu) press
+//                    Toast.makeText(requireContext(), "User profile button is pressed.", Toast.LENGTH_SHORT).show()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//    }
 
     companion object {
         /**
