@@ -1,6 +1,9 @@
 package com.example.goev
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
 import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.post.PostViewModel
@@ -15,7 +18,7 @@ import kotlinx.coroutines.withContext
 class TkPostContentViewModel(application:Application): AndroidViewModel(application) {
     val postUpdateLiveData = MutableLiveData<TkPostData>()
     val userReactLiveData = MutableLiveData<UserReactData?>()
-    private val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
+    val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
     private val userReactDao: UserReactDAO = TipsAndKnowledgeDatabase.getInstance(application).userReactDAO
 
 
@@ -25,7 +28,6 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
             postUpdateLiveData.postValue(postUpdate)
         }
     }
-
 
     fun userReactionPreviously(userID: Long, postID: Long) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -97,4 +99,16 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
             tkPostDAO.updatePostTitleAndContent(postID,title,content)
         }
     }
+
+    fun sharePost(context: Context, title: String, content: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TITLE, title)
+            putExtra(Intent.EXTRA_TEXT, content)
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(shareIntent)
+    }
+
 }

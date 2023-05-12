@@ -140,6 +140,10 @@ class TkPostContent : AppCompatActivity() {
                 .setNegativeButton(R.string.cancel, null)
                 .show()
         }
+
+        binding.sharePostButton?.setOnClickListener {
+            postContentVM.sharePost(this,postTitle!!,postContent!!)
+        }
     }
 
     private fun likeButtonReact(postContentVM: TkPostContentViewModel,postViewModel: PostViewModel,
