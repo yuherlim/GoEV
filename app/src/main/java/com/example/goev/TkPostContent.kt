@@ -100,6 +100,10 @@ class TkPostContent : AppCompatActivity() {
             )
         }
 
+        binding.toolbarBackButton?.setOnClickListener {
+            onBackPressed()
+        }
+
 //        if(user.isSuper){
 //            binding.deletePostButton?.visibility = View.VISIBLE
 //            binding.editPostButton?.visibility = View.VISIBLE

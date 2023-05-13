@@ -195,5 +195,63 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#CDE7EB"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/topBarUserProfilePic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ellipse_71" />
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="GoEv"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+            app:layout_constraintStart_toEndOf="@+id/appLogo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/toolbarBackButton"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+            app:layout_constraintStart_toStartOf="@+id/toolbar3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.64"
+            app:srcCompat="@drawable/baseline_arrow_back" />
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+            app:layout_constraintStart_toEndOf="@+id/toolbarBackButton"
+            app:layout_constraintTop_toTopOf="@+id/toolbar3"
+            app:srcCompat="@drawable/go_ev_logo" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
