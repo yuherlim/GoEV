@@ -47,10 +47,9 @@ class TkPostContent : AppCompatActivity() {
         //user setImageBitmap()
 
         //assume the user ID 1 logging into the app
-        val userID = 5L
+        val userID = 1L
         postContentVM = ViewModelProvider(this).get(TkPostContentViewModel::class.java)
         postContentVM.userReactionPreviously(userID, postID)
-
         postContentVM.userReactLiveData.observe(this) { userReact ->
             if (userReact?.reaction != null && userReact.reaction == 1) {
                 binding.postContentLikeButton.setImageResource(R.drawable.thumb_up_green)
