@@ -2,6 +2,8 @@ package com.example.goev.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.goev.database.user.UserData
 import com.example.goev.database.user.UserDatabase
@@ -18,16 +20,11 @@ class SettingsPrivacyViewModel (application: Application) : AndroidViewModel(app
         repository = UserRepository(userDao)
     }
 
-    fun deleteUser(userData: UserData){
-        viewModelScope.launch(Dispatchers.IO ) {
-            repository.deleteUser(userData)
+
+    fun deleteUser(){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.deleteUser()
         }
     }
-
-    fun getUserById(id: Int){
-        viewModelScope.launch(Dispatchers.IO ) {
-            repository.getUserById(id)
-        }
-    }
-
 }
+

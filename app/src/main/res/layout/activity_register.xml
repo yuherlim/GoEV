@@ -31,14 +31,14 @@
             app:layout_constraintTop_toBottomOf="@+id/registerLogo" />
 
         <EditText
-            android:id="@+id/editRegisterName"
+            android:id="@+id/editRegisterUserName"
             android:layout_width="350dp"
             android:layout_height="48dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
             android:ems="10"
-            android:hint="@string/fullname"
+            android:hint="@string/userName"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editRegisterName" />
+            app:layout_constraintTop_toBottomOf="@+id/editRegisterUserName" />
 
         <EditText
             android:id="@+id/editRegisterPassword"
@@ -114,7 +114,7 @@
 
         <TextView
             android:id="@+id/signToLoginText2"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="15dp"

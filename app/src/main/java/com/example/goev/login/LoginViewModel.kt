@@ -22,7 +22,9 @@ class LoginViewModel (application: Application) : AndroidViewModel(application){
     fun loginValidation(email: String, password: String, callback: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val user = repository.getUserByEmailAndPassword(email, password)
-
+            if (user != null) {
+                repository.updateUserLoggedIn(userId = user.id, is_logged_in = true)
+            }
             val result = user != null
             withContext(Dispatchers.Main) {
                 callback(result)

@@ -28,7 +28,7 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="10dp"
             android:drawableRight="@drawable/baseline_arrow_forward_24"
-            android:text="@string/fullName"
+            android:text="@string/userName"
             android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:textSize="20sp"

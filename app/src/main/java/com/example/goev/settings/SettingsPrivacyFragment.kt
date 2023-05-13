@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.goev.R
 import com.example.goev.databinding.ActivitySettingsPrivacyBinding
@@ -21,6 +22,8 @@ class SettingsPrivacyFragment : Fragment() {
     ): View {
 
         binding = ActivitySettingsPrivacyBinding.inflate(inflater, container, false)
+        // initialize the viewModel property
+        viewModel = ViewModelProvider(this).get(SettingsPrivacyViewModel::class.java)
 
 
         binding.accountAndLoginButton.setOnClickListener { view: View ->
@@ -30,7 +33,6 @@ class SettingsPrivacyFragment : Fragment() {
 
         binding.deleteAccountButton.setOnClickListener {
             showConfirmDialog()
-
         }
 
 
@@ -58,22 +60,15 @@ class SettingsPrivacyFragment : Fragment() {
         }
 
         dialog.findViewById<Button>(R.id.confirmButton).setOnClickListener {
-            deleteAccount()
+            viewModel.deleteUser()
             dialog.dismiss()
+            view?.findNavController()
+                ?.navigate(R.id.action_settingsPrivacyFragment_to_loginFragment)
         }
 
         dialog.show()
         dialog.window!!.attributes = layoutParams
     }
-
-    private fun deleteAccount() {
-
-        //delete account
-        //cbbbbbb dont know how to implement
-
-            view?.findNavController()
-                ?.navigate(R.id.action_settingsPrivacyFragment_to_loginFragment)
-        }
-    }
+}
 
 

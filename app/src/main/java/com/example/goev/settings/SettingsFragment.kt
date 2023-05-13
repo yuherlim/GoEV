@@ -18,7 +18,7 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Inflate the layout for this fragment
         binding = ActivitySettingsBinding.inflate(inflater, container, false)
@@ -43,7 +43,6 @@ class SettingsFragment : Fragment() {
         binding.aboutButton.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_settingsFragment_to_settingsAboutFragment)
         }
-
 
 
         return binding.root

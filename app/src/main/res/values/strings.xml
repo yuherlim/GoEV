@@ -78,6 +78,12 @@
     <string name="logOut">Log Out</string>
     <string name="yourInformation">Your Information</string>
     <string name="phoneNumber">Phone (+60)</string>
+    <string name="done">Done</string>
+    <string name="editPicture">Edit Picture</string>
+    <string name="userName">Username</string>
+    <string name="changePassword">Change Password</string>
+    <string name="changeUserName">Change Username</string>
+    <string name="changeEmail">Change Email</string>
     <array name="gender">
         <item>Gender</item>
         <item>Male</item>

@@ -46,10 +46,6 @@ class LoginFragment : Fragment() {
                     clearInputFields()
                 }
             }
-
-
-
-
         }
 
         binding.loginToSignText2.setOnClickListener{view: View ->
