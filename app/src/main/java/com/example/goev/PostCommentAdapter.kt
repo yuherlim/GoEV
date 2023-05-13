@@ -32,8 +32,12 @@ class PostCommentAdapter(val user: UserData,
         holder.userName.text = comment.userName
         holder.comment.text = comment.comment
         holder.commentTime.text = comment.commentTime.toString()
+        //profile pic has to modified based on kajie database. most likely will need
+        // to retrieve and convert into bitmap
         holder.itemView.findViewById<ImageView>(R.id.userProfilePic).setImageResource(R.drawable.ellipse_71)
 
+        // if it is admin user, everyone's edit comment and delete comment button is visible
+        //&& user.isSuper
         if (comment.userId == user.userID) {
             holder.itemView.findViewById<ImageView>(R.id.deleteCommentButton).visibility = View.VISIBLE
             holder.itemView.findViewById<ImageView>(R.id.editCommentButton).visibility = View.VISIBLE

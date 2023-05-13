@@ -44,9 +44,10 @@ class TkPostContent : AppCompatActivity() {
             thumbnail!! //retrieve image from database in bytearray format
         //convert byteArray into bitmap
         val bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
-        //user setImageBitmap()
 
-        //assume the user ID 1 logging into the app
+
+        //assume the user ID 1 logging into the app, this must be delete later on when combined
+        //user.userID instead depend on how kajie do his login
         val userID = 1L
         postContentVM = ViewModelProvider(this).get(TkPostContentViewModel::class.java)
         postContentVM.userReactionPreviously(userID, postID)
@@ -56,7 +57,7 @@ class TkPostContent : AppCompatActivity() {
             } else if (userReact?.reaction != null && userReact.reaction == 0) {
                 binding.postContentDislikeButton.setImageResource(R.drawable.thumb_down_red)
             } else if (userReact == null) {
-                Log.d("123", "its null")
+                Log.d("test", "its null")
             }
         }
 
