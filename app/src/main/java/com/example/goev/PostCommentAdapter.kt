@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goev.databases.postcomment.TkPostCommentData
 import com.example.goev.databases.tempUser.UserData
@@ -45,12 +46,14 @@ class PostCommentAdapter(val user: UserData,
             holder.itemView.findViewById<ImageView>(R.id.deleteCommentButton).visibility = View.GONE
             holder.itemView.findViewById<ImageView>(R.id.editCommentButton).visibility = View.GONE
         }
+        //postContentVM = ViewModelProvider(this).get(TkPostContentViewModel::class.java)
 
         holder.itemView.findViewById<ImageView>(R.id.deleteCommentButton).setOnClickListener {
             AlertDialog.Builder(holder.itemView.context)
                 .setMessage(R.string.confirm_delete_comment)
                 .setPositiveButton(R.string.delete) { _, _ ->
                     onDeleteComment(comment)
+
                 }
                 .setNegativeButton(R.string.cancel, null)
                 .show()
