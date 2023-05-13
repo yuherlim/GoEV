@@ -11,8 +11,9 @@ import kotlinx.coroutines.launch
 
 class PostViewModel(application: Application): AndroidViewModel(application) {
     val readAllData: LiveData<List<TkPostData>>
+    val searchedData: MutableLiveData<List<TkPostData>> = MutableLiveData()
     private val repository: PostRepository
-    private var likes: Int = 0
+
 
     init{
         val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
@@ -79,5 +80,13 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             postDao.dislikesCountDecrement(postId)
         }
+    }
+
+    fun searchPost(query:String){
+        viewModelScope.launch(Dispatchers.IO){
+            val filteredList = postDao.searchPosts("%$query%")
+            searchedData.postValue(filteredList)
+        }
+
     }
 }

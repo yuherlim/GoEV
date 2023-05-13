@@ -10,14 +10,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goev.databases.post.TkPostData
-
+import com.example.goev.databases.tempUser.UserViewModel
 
 
 class ListAdapter(private val contextFromParent: Context): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var postList = emptyList<TkPostData>()
+    private var searchedList = MutableLiveData<List<TkPostData>>()
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val cardView: CardView = itemView.findViewById(R.id.tkCardView)
     }
@@ -57,6 +59,11 @@ class ListAdapter(private val contextFromParent: Context): RecyclerView.Adapter<
 
     fun setData(post: List<TkPostData>){
         this.postList = post
+        notifyDataSetChanged()
+    }
+
+    fun setSearchData(post: MutableLiveData<List<TkPostData>>) {
+        this.searchedList.value = post.value
         notifyDataSetChanged()
     }
 }

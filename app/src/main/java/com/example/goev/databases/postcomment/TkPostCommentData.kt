@@ -26,6 +26,4 @@ data class TkPostCommentData(
 ) {
     @PrimaryKey(autoGenerate = true)  var id: Long = 0L
     @ColumnInfo(name="commentTime") var commentTime: Date = Date()
-    @ColumnInfo(name="totalLikes")var totalLikes: Int = 0
-    @ColumnInfo(name="totalDislikes")var totalDislikes: Int = 0
 }

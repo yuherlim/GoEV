@@ -46,4 +46,7 @@ public interface TkPostDAO {
 
     @Query("UPDATE posts SET title = :title, content = :content WHERE postID = :postId")
     suspend fun updatePostTitleAndContent(postId: Long, title: String, content: String)
+
+    @Query("SELECT * FROM posts WHERE LOWER(title) LIKE LOWER(:searchQuery) OR LOWER(content) LIKE LOWER(:searchQuery) ORDER BY date DESC")
+    fun searchPosts(searchQuery: String): List<TkPostData>
 }

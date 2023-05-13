@@ -1,6 +1,8 @@
 package com.example.goev
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +26,7 @@ class TipsAndKnowledge : Fragment() {
 
         //add new post (by admin only)
         // maybe add check function to see if a user login via admin acc / normal acc
-        binding.floatingActionButton.setOnClickListener{
+        binding.addPostButton?.setOnClickListener{
                 view : View ->
             view.findNavController().navigate(R.id.action_tipsAndKnowledge_to_addPostAdmin)
         }
@@ -34,12 +36,34 @@ class TipsAndKnowledge : Fragment() {
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.searchResultBackButton?.visibility = View.GONE
+
 
         mPostViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         mPostViewModel.readAllData.observe(viewLifecycleOwner, Observer { post->
             adapter.setData(post)
         })
 
+        binding.searchButton?.setOnClickListener {
+            val query = binding.seachQueryInput?.text.toString()
+            if (!query.isNullOrEmpty()) {
+                mPostViewModel.searchPost(query)
+                adapter.setSearchData(mPostViewModel.searchedData)
+            }
+        }
+        mPostViewModel.searchedData.observe(viewLifecycleOwner, Observer { post ->
+            adapter.setData(post)
+            binding.searchResultBackButton?.visibility = View.VISIBLE
+        })
+
+        binding.searchResultBackButton?.setOnClickListener {
+            binding.searchResultBackButton?.visibility = View.GONE
+            mPostViewModel.readAllData.observe(viewLifecycleOwner, Observer { post->
+                adapter.setData(post)
+            })
+        }
+
         return binding.root
     }
+
 }

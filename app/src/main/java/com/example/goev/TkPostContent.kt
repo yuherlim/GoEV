@@ -47,7 +47,7 @@ class TkPostContent : AppCompatActivity() {
         //user setImageBitmap()
 
         //assume the user ID 1 logging into the app
-        val userID = 1L
+        val userID = 5L
         postContentVM = ViewModelProvider(this).get(TkPostContentViewModel::class.java)
         postContentVM.userReactionPreviously(userID, postID)
 
