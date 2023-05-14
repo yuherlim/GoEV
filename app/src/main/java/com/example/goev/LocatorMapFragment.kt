@@ -3,13 +3,13 @@ package com.example.goev
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.example.goev.databinding.FragmentChargingStationLocatorMapBinding
-import com.google.android.material.appbar.MaterialToolbar
+import com.example.goev.databinding.FragmentLocatorMapBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,15 +18,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ChargingStationLocatorMapFragment.newInstance] factory method to
+ * Use the [LocatorMapFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-open class ChargingStationLocatorMapFragment : Fragment() {
+open class LocatorMapFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    private var _binding: FragmentChargingStationLocatorMapBinding? = null
+    private var _binding: FragmentLocatorMapBinding? = null
     private val binding get() = _binding!!
 
 
@@ -44,7 +44,7 @@ open class ChargingStationLocatorMapFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentChargingStationLocatorMapBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_locator_map, container, false)
         return binding.root
 //        return inflater.inflate(R.layout.fragment_charging_station_locator_map, container, false)
     }
@@ -54,50 +54,11 @@ open class ChargingStationLocatorMapFragment : Fragment() {
 
         (requireActivity() as MainActivity).setupActionBar(binding.topAppBar)
 
-        val buttonView = view?.findViewById<Button>(R.id.buttonTest)
-        buttonView?.setOnClickListener {
-            val action = ChargingStationLocatorMapFragmentDirections.actionChargingStationLocatorMapFragmentToChargingStationLocatorListFragment()
-            view?.findNavController()?.navigate(action)
-        }
-
-//        val topAppBar = requireActivity().
-//
-//        topAppBar.setOnMenuItemClickListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.edit -> {
-//                    // Handle edit text press
-//                    true
-//                }
-//                R.id.favorite -> {
-//                    // Handle favorite icon press
-//                    true
-//                }
-//                R.id.more -> {
-//                    // Handle more item (inside overflow menu) press
-//                    true
-//                }
-//                else -> false
-//            }
+//        val buttonView = view?.findViewById<Button>(R.id.buttonTest)
+//        buttonView?.setOnClickListener {
+//            val action = LocatorMapFragmentDirections.actionLocatorMapFragmentToLocatorListFragment()
+//            view?.findNavController()?.navigate(action)
 //        }
-
-//        (requireActivity() as MenuHost).addMenuProvider(object: MenuProvider {
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-////                val myMenuItem = menu.findItem(R.id.action_search)
-////                myMenuItem.isVisible = findNavController().currentDestination?.id == R.id.chargingStationLocatorMapFragment
-//                menu.add(Menu.NONE, R.id.action_search, Menu.FIRST, "Search")
-////                Log.i("ChargingStation", "${menu.findItem(R.id.userInfo).order}")
-//            }
-//
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                when(menuItem.itemId) {
-//                    R.id.action_search -> {
-//                        Toast.makeText(requireActivity(), "Search action selected.", Toast.LENGTH_SHORT).show()
-//                        true
-//                    }
-//                }
-//                return false
-//            }
-//        }, viewLifecycleOwner)
     }
 
     override fun onDestroyView() {
@@ -108,25 +69,46 @@ open class ChargingStationLocatorMapFragment : Fragment() {
 //        inflater.inflate(R.menu.locator_action_bar_menu, menu)
 //    }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.action_view_list).isVisible = true
-        menu.findItem(R.id.action_view_map).isVisible = false
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        // make sure the searchView takes up the whole app bar
+        searchItem.setOnActionExpandListener(onActionExpandListener(menu))
+
+        // Configure the search info and add any event listeners.
     }
+
+    private fun onActionExpandListener(menu: Menu) =
+        object : MenuItem.OnActionExpandListener {
+
+            override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
+                // Hide the other menu items when the search view is expanded
+                val profileItem = menu.findItem(R.id.action_view_user_info)
+                profileItem.isVisible = false
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
+                // Show the other menu items when the search view is collapsed
+                val profileItem = menu.findItem(R.id.action_view_user_info)
+                profileItem.isVisible = true
+                return true
+            }
+        }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_search -> {
                 // Navigate to settings screen.
                 Log.i("ChargingLocator", "search action triggered")
+
                 Toast.makeText(requireContext(), "Search selected", Toast.LENGTH_SHORT).show()
                 true
             }
-            R.id.action_view_list -> {
-                Log.i("ChargingLocator", "List view selected")
-                navigateToListFragment()
-                true
-            }
-            R.id.userInfo -> {
+            R.id.action_view_user_info -> {
                 // Save profile changes.
                 Log.i("ChargingLocator", "userInfo in fragment called")
                 Toast.makeText(requireContext(), "User profile selected", Toast.LENGTH_SHORT).show()
@@ -136,10 +118,12 @@ open class ChargingStationLocatorMapFragment : Fragment() {
         }
     }
 
-    private fun navigateToListFragment() {
-        val action = ChargingStationLocatorMapFragmentDirections.actionChargingStationLocatorMapFragmentToChargingStationLocatorListFragment()
-        view?.findNavController()?.navigate(action)
-    }
+
+
+//    private fun navigateToListFragment() {
+//        val action = LocatorMapFragmentDirections.actionLocatorMapFragmentToLocatorListFragment()
+//        view?.findNavController()?.navigate(action)
+//    }
 
 //    private fun setupTopAppBarButtons(topAppBar: MaterialToolbar) {
 //        topAppBar.setOnMenuItemClickListener { menuItem ->
@@ -166,7 +150,7 @@ open class ChargingStationLocatorMapFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ChargingStationLocatorMapFragment().apply {
+            LocatorMapFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

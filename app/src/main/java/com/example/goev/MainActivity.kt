@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.goev.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
         // appBarConfiguration needed to initialize app bar
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.chargingStationLocatorMapFragment, R.id.chargingStationLocatorListFragment))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.TrackerFragment))
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     // Hide the logo when navigating to any fragment other than the home fragment
     private fun setupLogo(navController: NavController) {
-        val topLevelDestinations = listOf(R.id.chargingStationLocatorMapFragment, R.id.chargingStationLocatorListFragment)
+        val topLevelDestinations = listOf(R.id.TrackerFragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in topLevelDestinations) {
                 // Setup the logo
@@ -82,15 +81,9 @@ class MainActivity : AppCompatActivity() {
         //Navigates to the top-level of the following navigation icon selected
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.chargingStationLocatorMapFragment -> {
-                    // Respond to navigation item 1 click
-                    navController.navigate(R.id.chargingStationLocatorMapFragment)
-//                    Log.i("MainActivity", "charging station map icon selected")
-                    true
-                }
-                R.id.chargingStationLocatorListFragment -> {
+                R.id.TrackerFragment -> {
                     // Respond to navigation item 2 click
-                    navController.navigate(R.id.chargingStationLocatorListFragment)
+                    navController.navigate(R.id.TrackerFragment)
 //                    Log.i("MainActivity", "charging station list icon selected")
                     true
                 }
@@ -103,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.locator_action_bar_menu, menu)
+        menuInflater.inflate(R.menu.tracker_action_bar_menu, menu)
         return true
     }
 }

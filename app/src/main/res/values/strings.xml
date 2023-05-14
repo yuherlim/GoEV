@@ -2,7 +2,7 @@
     <string name="app_name">GoEV</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="locator">Locator</string>
+    <string name="Tracker">Tracker</string>
     <string name="action_search">search</string>
     <string name="user_profile">User Profile</string>
     <string name="user_profile_content_description">User Profile</string>
@@ -10,4 +10,5 @@
     <string name="list_view_content_description">List view</string>
     <string name="map_view">Map view</string>
     <string name="map_view_content_description">Map view</string>
+    <string name="searchbar_hint">Find a station or address</string>
 </resources>

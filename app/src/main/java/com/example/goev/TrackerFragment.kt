@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.goev.databinding.FragmentChargingStationLocatorListBinding
-import com.example.goev.databinding.FragmentChargingStationLocatorMapBinding
+import com.example.goev.databinding.FragmentTrackerBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,14 +16,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ChargingStationLocatorListFragment.newInstance] factory method to
+ * Use the [TrackerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ChargingStationLocatorListFragment : Fragment() {
+class TrackerFragment : Fragment() {
     // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
-    private var _binding: FragmentChargingStationLocatorListBinding? = null
+    private var _binding: FragmentTrackerBinding? = null
     private val binding get() = _binding!!
 
 
@@ -45,7 +42,7 @@ class ChargingStationLocatorListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_charging_station_locator_list, container, false)
-        _binding = FragmentChargingStationLocatorListBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracker, container, false)
         return binding.root
     }
 
@@ -59,10 +56,16 @@ class ChargingStationLocatorListFragment : Fragment() {
         _binding = null
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.action_view_list).isVisible = false
-        menu.findItem(R.id.action_view_map).isVisible = true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        // make sure the searchView takes up the whole app bar
+        searchItem.setOnActionExpandListener(onActionExpandListener(menu))
+
+        // Configure the search info and add any event listeners.
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -73,12 +76,7 @@ class ChargingStationLocatorListFragment : Fragment() {
                 Toast.makeText(requireContext(), "Search selected", Toast.LENGTH_SHORT).show()
                 true
             }
-            R.id.action_view_map -> {
-                Log.i("ChargingLocatorList", "Map view selected")
-                navigateToMapFragment()
-                true
-            }
-            R.id.userInfo -> {
+            R.id.action_view_user_info -> {
                 // Save profile changes.
                 Log.i("ChargingLocatorList", "userInfo in fragment called")
                 Toast.makeText(requireContext(), "User profile selected", Toast.LENGTH_SHORT).show()
@@ -88,10 +86,28 @@ class ChargingStationLocatorListFragment : Fragment() {
         }
     }
 
-    private fun navigateToMapFragment() {
-        val action = ChargingStationLocatorListFragmentDirections.actionChargingStationLocatorListFragmentToChargingStationLocatorMapFragment()
-        view?.findNavController()?.navigate(action)
-    }
+    private fun onActionExpandListener(menu: Menu) =
+        object : MenuItem.OnActionExpandListener {
+
+            override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
+                // Hide the other menu items when the search view is expanded
+                val profileItem = menu.findItem(R.id.action_view_user_info)
+                profileItem.isVisible = false
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
+                // Show the other menu items when the search view is collapsed
+                val profileItem = menu.findItem(R.id.action_view_user_info)
+                profileItem.isVisible = true
+                return true
+            }
+        }
+
+//    private fun navigateToMapFragment() {
+//        val action = LocatorListFragmentDirections.actionLocatorListFragmentToLocatorMapFragment()
+//        view?.findNavController()?.navigate(action)
+//    }
 
 
 //    companion object {

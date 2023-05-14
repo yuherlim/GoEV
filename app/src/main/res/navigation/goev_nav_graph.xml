@@ -3,24 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/goev_nav_graph"
-    app:startDestination="@id/chargingStationLocatorMapFragment">
+    app:startDestination="@id/TrackerFragment">
 
     <fragment
-        android:id="@+id/chargingStationLocatorMapFragment"
-        android:name="com.example.goev.ChargingStationLocatorMapFragment"
+        android:id="@+id/TrackerFragment"
+        android:name="com.example.goev.TrackerFragment"
         android:label="GoEV"
-        tools:layout="@layout/fragment_charging_station_locator_map" >
-        <action
-            android:id="@+id/action_chargingStationLocatorMapFragment_to_chargingStationLocatorListFragment"
-            app:destination="@id/chargingStationLocatorListFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/chargingStationLocatorListFragment"
-        android:name="com.example.goev.ChargingStationLocatorListFragment"
-        android:label="GoEV"
-        tools:layout="@layout/fragment_charging_station_locator_list" >
-        <action
-            android:id="@+id/action_chargingStationLocatorListFragment_to_chargingStationLocatorMapFragment"
-            app:destination="@id/chargingStationLocatorMapFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_tracker" />
 </navigation>
