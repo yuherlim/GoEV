@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Settings">
+
+
+        <TextView
+            android:id="@+id/settingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="@string/settings"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SearchView
+            android:id="@+id/settingSearchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingTitle" />
+
+        <Button
+            android:id="@+id/notificationButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/baseline_notifications_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_24"
+            android:text="@string/notification"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingSearchView" />
+
+        <Button
+            android:id="@+id/privacyButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_24"
+            android:text="@string/privacy"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notificationButton" />
+
+        <Button
+            android:id="@+id/helpButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/baseline_headphones_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_24"
+            android:text="@string/help"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/privacyButton" />
+
+        <Button
+            android:id="@+id/feedbackButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/baseline_feedback_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_24"
+            android:text="@string/feedback"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+
+        <Button
+            android:id="@+id/aboutButton"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/baseline_question_mark_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_24"
+            android:text="@string/about"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            app:backgroundTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/feedbackButton" />
+
+        <ImageButton
+            android:id="@+id/profilePicButton"
+            android:layout_width="50dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

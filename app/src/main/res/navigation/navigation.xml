@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/registerFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.goev.register.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/activity_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.goev.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/activity_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsAboutFragment"
+        android:name="com.example.goev.settings.SettingsAboutFragment"
+        android:label="SettingsAboutFragment"
+        tools:layout="@layout/activity_settings_about">
+        <action
+            android:id="@+id/action_settingsAboutFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.goev.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/activity_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsAboutFragment"
+            app:destination="@id/settingsAboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsNotificationsFragment"
+            app:destination="@id/settingsNotificationsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsPrivacyFragment"
+            app:destination="@id/settingsPrivacyFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsHelpFragment"
+            app:destination="@id/settingsHelpFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsFeedbackFragment"
+            app:destination="@id/settingsFeedbackFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFeedbackFragment"
+        android:name="com.example.goev.settings.SettingsFeedbackFragment"
+        android:label="SettingsFeedbackFragment"
+        tools:layout="@layout/activity_settings_feedback">
+        <action
+            android:id="@+id/action_settingsFeedbackFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsHelpFragment"
+        android:name="com.example.goev.settings.SettingsHelpFragment"
+        android:label="SettingsHelpFragment"
+        tools:layout="@layout/activity_settings_help">
+        <action
+            android:id="@+id/action_settingsHelpFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsPrivacyFragment"
+        android:name="com.example.goev.settings.SettingsPrivacyFragment"
+        android:label="SettingsPrivacyFragment"
+        tools:layout="@layout/activity_settings_privacy">
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_settingsPrivacyAccountFragment"
+            app:destination="@id/settingsPrivacyAccountFragment" />
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_settingsPrivacyPolicyFragment"
+            app:destination="@id/settingsPrivacyPolicyFragment" />
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_settingsPrivacyFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsNotificationsFragment"
+        android:name="com.example.goev.settings.SettingsNotificationsFragment"
+        android:label="SettingsNotificationsFragment"
+        tools:layout="@layout/activity_settings_notifications">
+        <action
+            android:id="@+id/action_settingsNotificationsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsPrivacyAccountFragment"
+        android:name="com.example.goev.settings.SettingsPrivacyAccountFragment"
+        android:label="fragment_settings_privacy_account"
+        tools:layout="@layout/activity_settings_privacy_account" >
+        <action
+            android:id="@+id/action_settingsPrivacyAccountFragment_to_settingsPrivacyFragment"
+            app:destination="@id/settingsPrivacyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsPrivacyPolicyFragment"
+        android:name="com.example.goev.settings.SettingsPrivacyPolicyFragment"
+        android:label="fragment_settings_privacy_policy"
+        tools:layout="@layout/activity_settings_privacy_policy" >
+        <action
+            android:id="@+id/action_settingsPrivacyPolicyFragment_to_settingsPrivacyFragment"
+            app:destination="@id/settingsPrivacyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.goev.userProfile.MyProfileFragment"
+        android:label="MyProfileFragment"
+        tools:layout="@layout/activity_my_profile">
+        <action
+            android:id="@+id/action_myProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.goev.userProfile.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/activity_edit_profile">
+        <action
+            android:id="@+id/action_editProfileFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
+</navigation>
