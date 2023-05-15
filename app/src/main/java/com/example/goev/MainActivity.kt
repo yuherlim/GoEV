@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private val topLevelDestinations = setOf(R.id.trackerFragment)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private fun initialSetup() {
         initializeNavController()
 
+        setupActionBar(binding.topAppBar)
+
         //setup bottom navigation bar
         setupBottomNavMenu(navController)
     }
@@ -41,13 +44,13 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
     }
 
-    //Used by fragments to setup top app bar
+
     fun setupActionBar(toolBar: MaterialToolbar) {
 
         setSupportActionBar(toolBar)
 
         // appBarConfiguration needed to initialize app bar
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.TrackerFragment))
+        appBarConfiguration = AppBarConfiguration(topLevelDestinations)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -56,9 +59,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    // Hide the logo when navigating to any fragment other than the home fragment
+    // Hide the logo when navigating to any fragment other than the top level destination fragments
     private fun setupLogo(navController: NavController) {
-        val topLevelDestinations = listOf(R.id.TrackerFragment)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in topLevelDestinations) {
                 // Setup the logo
@@ -81,9 +84,9 @@ class MainActivity : AppCompatActivity() {
         //Navigates to the top-level of the following navigation icon selected
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.TrackerFragment -> {
+                R.id.trackerFragment -> {
                     // Respond to navigation item 2 click
-                    navController.navigate(R.id.TrackerFragment)
+                    navController.navigate(R.id.trackerFragment)
 //                    Log.i("MainActivity", "charging station list icon selected")
                     true
                 }

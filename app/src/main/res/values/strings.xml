@@ -11,4 +11,13 @@
     <string name="map_view">Map view</string>
     <string name="map_view_content_description">Map view</string>
     <string name="searchbar_hint">Find a station or address</string>
+    <string name="tracker_fab_content_desc">Add charging station</string>
+    <string name="fragment_add_station_label">Adding charging station location</string>
+    <string name="charging_station_name_label">Name</string>
+    <string name="charging_station_address_label">Address</string>
+    <string name="name_helper_text">Name of charging station</string>
+    <string name="address_helper_text">Address of charging station</string>
+    <string name="add_charging_station_btn_text">Add</string>
+    <string name="cancel_add_btn_text">Cancel</string>
+    <string name="error_add_message">Please fill out all fields.</string>
 </resources>
