@@ -16,13 +16,13 @@
 
             <TextView
                 android:id="@+id/view_ev_station_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
                 android:textSize="@dimen/ev_station_name_view_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Station Name" />
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
 
             <ImageView
                 android:id="@+id/view_address_icon"
@@ -48,15 +48,6 @@
                 app:layout_constraintTop_toBottomOf="@id/view_ev_station_name"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae fringilla lorem, sed lacinia lorem. Nulla convallis nibh a nisi venenatis mollis. Nunc eleifend accumsan mauris feugiat tristique. Cras aliquet varius iaculis. Nunc dictum pharetra mollis. Fusce felis diam, imperdiet id dictum id, viverra in dolor. Nullam sit amet pulvinar elit. Vestibulum iaculis tempus sem eget tincidunt." />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin"
-                app:layout_constraintBottom_toTopOf="@id/add_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <Button
                 android:id="@+id/edit_button"
                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
@@ -70,7 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_ev_station_address" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/extended_fab"
+                android:id="@+id/navigate_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"

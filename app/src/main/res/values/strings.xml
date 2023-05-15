@@ -24,4 +24,18 @@
     <string name="view_station_extended_fab_content_desc">Navigate to charging station address</string>
     <string name="view_station_extended_fab_label">Navigate</string>
     <string name="fragment_view_station_label" />
+    <string name="save_charging_station_btn_text">Save</string>
+    <string name="fragment_edit_station_label">Editing charging station location</string>
+    <string name="delete_all_content_description">Delete All</string>
+    <string name="action_delete_all_title">Delete All</string>
+    <string name="delete_content_description">Delete</string>
+    <string name="action_delete_title">Delete</string>
+    <string name="delete_dialog_title">Confirm deletion?</string>
+    <string name="delete_supporting_text">Are you sure you want to delete this charging station location? This action is undoable.</string>
+    <string name="decline">No</string>
+    <string name="accept">Yes</string>
+    <string name="delete_all_dialog_title">Confirm delete all?</string>
+    <string name="delete_all_supporting_text">Are you sure you want to delete all tracked charging stations? This action is undoable.</string>
+    <string name="delete_all_success_msg">Successfully deleted all charging stations.</string>
+    <string name="no_google_maps_message">Google maps not installed.</string>
 </resources>

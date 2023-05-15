@@ -41,5 +41,22 @@
         <argument
             android:name="currentChargingStation"
             app:argType="com.example.goev.database.ChargingStation" />
+        <action
+            android:id="@+id/action_viewStationFragment_to_editStationFragment"
+            app:destination="@id/editStationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editStationFragment"
+        android:name="com.example.goev.EditStationFragment"
+        android:label="@string/fragment_edit_station_label"
+        tools:layout="@layout/fragment_edit_station" >
+        <action
+            android:id="@+id/action_editStationFragment_to_viewStationFragment"
+            app:destination="@id/viewStationFragment"
+            app:popUpTo="@id/viewStationFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="currentChargingStation"
+            app:argType="com.example.goev.database.ChargingStation" />
     </fragment>
 </navigation>

@@ -1,32 +1,31 @@
 package com.example.goev
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.goev.database.ChargingStation
+import com.example.goev.database.ChargingStationViewModel
+import com.example.goev.databinding.FragmentEditStationBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditStationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EditStationFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
+    private var _binding: FragmentEditStationBinding? = null
+    private val binding get() = _binding!!
+
+    private val args by navArgs<EditStationFragmentArgs>()
+
+    private lateinit var mChargingStationViewModel: ChargingStationViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -34,26 +33,101 @@ class EditStationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_station, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_station, container, false)
+
+        // Initialize viewModel
+        mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditStationFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditStationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //Update edit station with the item passed from view station
+        binding.editChargingStationNameEditText.setText(args.currentChargingStation.name)
+        binding.editChargingStationAddressEditText.setText(args.currentChargingStation.address)
+
+        //edit button
+        binding.saveBtn.setOnClickListener {
+            updateDatabase()
+        }
+
+        binding.cancelBtn.setOnClickListener {
+            navigateToViewStationFragment(args.currentChargingStation)
+        }
+
+        binding.editChargingStationAddressEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.editChargingStationAddressTextfield.error = null
             }
+        }
+
+
+        binding.editChargingStationNameEditText.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.editChargingStationNameTextfield.error = null
+            }
+
+        }
+    }
+
+    private fun updateDatabase() {
+        val chargingStationName = binding.editChargingStationNameEditText.text.toString()
+        val chargingStationAddress = binding.editChargingStationAddressEditText.text.toString()
+
+
+        if(inputCheck(chargingStationName, chargingStationAddress)) {
+            // Create chargingStation Object
+            val chargingStation = ChargingStation(args.currentChargingStation.id, chargingStationName, chargingStationAddress)
+            // Update current chargingStation
+            mChargingStationViewModel.updateChargingStation(chargingStation)
+            Toast.makeText(requireContext(), "Successfully edited charging station.", Toast.LENGTH_SHORT).show()
+            // navigate back
+            navigateToViewStationFragment(chargingStation)
+        } else {
+//            mChargingStationViewModel.setIsError(true)
+            binding.editChargingStationNameEditText.clearFocus()
+            binding.editChargingStationAddressEditText.clearFocus()
+            if (TextUtils.isEmpty(chargingStationName))
+                binding.editChargingStationNameTextfield.error = "Empty Field"
+            if (TextUtils.isEmpty(chargingStationAddress))
+                binding.editChargingStationAddressTextfield.error = "Empty Field"
+            val contextView = binding.saveBtn
+            Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.divider)
+                .show()
+        }
+    }
+    override fun onResume() {
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        super.onResume()
+    }
+
+    override fun onPause() {
+        // Unhides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        super.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.empty_action_bar_menu, menu)
+    }
+
+    private fun navigateToViewStationFragment(chargingStation: ChargingStation) {
+        val action = EditStationFragmentDirections.actionEditStationFragmentToViewStationFragment(chargingStation)
+        findNavController().navigate(action)
+    }
+
+    // Check if user inputted all fields
+    private fun inputCheck(chargingStationName: String, chargingStationAddress: String): Boolean {
+        return !(TextUtils.isEmpty(chargingStationName) || TextUtils.isEmpty(chargingStationAddress))
     }
 }

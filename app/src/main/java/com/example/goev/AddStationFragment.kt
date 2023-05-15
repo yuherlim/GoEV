@@ -49,6 +49,10 @@ class AddStationFragment : Fragment() {
             insertDataToDatabase()
         }
 
+        binding.cancelBtn.setOnClickListener {
+            navigateToTrackerFragment()
+        }
+
         binding.chargingStationAddressEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.chargingStationAddressTextfield.error = null
@@ -84,7 +88,7 @@ class AddStationFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
-        inflater.inflate(R.menu.add_station_action_bar_menu, menu)
+        inflater.inflate(R.menu.empty_action_bar_menu, menu)
     }
 
     private fun navigateToTrackerFragment() {
@@ -108,18 +112,18 @@ class AddStationFragment : Fragment() {
             val chargingStation = ChargingStation(0, chargingStationName, chargingStationAddress)
             // Add data to database
             mChargingStationViewModel.addChargingStation(chargingStation)
-            Toast.makeText(requireContext(), "Successsfully added charging station.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Successfully added charging station.", Toast.LENGTH_SHORT).show()
             // navigate back
-//            mChargingStationViewModel.setOnAdd(true)
             navigateToTrackerFragment()
         } else {
-//            mChargingStationViewModel.setIsError(true)
             binding.chargingStationNameEditText.clearFocus()
             binding.chargingStationAddressEditText.clearFocus()
+            // Check for empty fields, give error message to those that are empty
             if (TextUtils.isEmpty(chargingStationName))
                 binding.chargingStationNameTextfield.error = "Empty Field"
             if (TextUtils.isEmpty(chargingStationAddress))
                 binding.chargingStationAddressTextfield.error = "Empty Field"
+
             val contextView = binding.addBtn
             Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
                 .setAnchorView(binding.divider)

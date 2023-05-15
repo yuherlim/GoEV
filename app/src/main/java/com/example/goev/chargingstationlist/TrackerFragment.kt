@@ -15,14 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goev.R
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentTrackerBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
-class TrackerFragment : Fragment() {
+class TrackerFragment : Fragment(), SearchView.OnQueryTextListener {
     private var _binding: FragmentTrackerBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
-
+    private val adapter = TrackerListAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -36,7 +37,7 @@ class TrackerFragment : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracker, container, false)
 
         // RecyclerView
-        val adapter = TrackerListAdapter()
+
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -58,21 +59,6 @@ class TrackerFragment : Fragment() {
         }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        Log.i("TrackerFragment", "onResume triggered.")
-//        if (mChargingStationViewModel.onAdd.value == true) {
-//            Log.i("TrackerFragment", "onAdd is true")
-//            //snackbar message: record added
-//            val contextView = binding.constraintLayout
-//            Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
-//                .setAnchorView(binding.floatingActionButton)
-//                .show()
-//            //reset record added status
-//            mChargingStationViewModel.setOnAdd(false)
-//        }
-//    }
-
     private fun navigateToAddStationFragment() {
         val action = TrackerFragmentDirections.actionTrackerFragmentToAddStationFragment()
         findNavController().navigate(action)
@@ -85,9 +71,12 @@ class TrackerFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.tracker_action_bar_menu, menu)
 
         val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
 
         // make sure the searchView takes up the whole app bar
         searchItem.setOnActionExpandListener(onActionExpandListener(menu))
@@ -109,8 +98,28 @@ class TrackerFragment : Fragment() {
                 Toast.makeText(requireContext(), "User profile selected", Toast.LENGTH_SHORT).show()
                 true
             }
+            R.id.action_delete_all -> {
+                deleteAllChargingStations()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun deleteAllChargingStations() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.delete_all_dialog_title))
+            .setMessage(resources.getString(R.string.delete_all_supporting_text))
+            .setNegativeButton(resources.getString(R.string.decline)) { _, _ ->
+                // Respond to negative button press
+            }
+            .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
+                mChargingStationViewModel.deleteAllChargingStations()
+                Toast.makeText(requireContext(),
+                    getString(R.string.delete_all_success_msg),
+                    Toast.LENGTH_SHORT).show()
+            }
+            .show()
     }
 
     private fun onActionExpandListener(menu: Menu) =
@@ -118,17 +127,38 @@ class TrackerFragment : Fragment() {
 
             override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
                 // Hide the other menu items when the search view is expanded
-                val profileItem = menu.findItem(R.id.action_view_user_info)
-                profileItem.isVisible = false
+                menu.findItem(R.id.action_view_user_info).isVisible = false
+//                menu.findItem(R.id.action_delete).isVisible = false
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
                 // Show the other menu items when the search view is collapsed
-                val profileItem = menu.findItem(R.id.action_view_user_info)
-                profileItem.isVisible = true
+                menu.findItem(R.id.action_view_user_info).isVisible = true
+//                menu.findItem(R.id.action_delete).isVisible = true
                 return true
             }
         }
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            searchDatabase(query)
+        }
+        return true
+    }
+
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+
+        mChargingStationViewModel.searchDatabase(searchQuery).observe(this) { list ->
+            list.let {
+                adapter.setData(it)
+            }
+        }
+    }
 }

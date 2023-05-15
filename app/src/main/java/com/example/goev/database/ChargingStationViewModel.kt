@@ -1,10 +1,7 @@
 package com.example.goev.database
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,6 +30,27 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
         }
     }
 
+    fun updateChargingStation(chargingStation: ChargingStation) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateChargingStation(chargingStation)
+        }
+    }
+
+    fun deleteChargingStation(chargingStation: ChargingStation) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteChargingStation(chargingStation)
+        }
+    }
+
+    fun deleteAllChargingStations() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllChargingStations()
+        }
+    }
+
+    fun searchDatabase(searchQuery: String): LiveData<List<ChargingStation>> {
+        return repository.searchDatabase(searchQuery).asLiveData()
+    }
 //    fun setIsError(value: Boolean) {
 //        _isError.value = value
 //    }
