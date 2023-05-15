@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class ChargingStationViewModel(application: Application): AndroidViewModel(application) {
 
-    private val readAllData: LiveData<List<ChargingStation>>
+    val readAllData: LiveData<List<ChargingStation>>
     private val repository: ChargingStationRepository
 
 //    private var _isError = MutableLiveData<Boolean>()

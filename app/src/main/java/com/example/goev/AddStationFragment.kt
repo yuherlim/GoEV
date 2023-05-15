@@ -35,9 +35,15 @@ class AddStationFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_station, container, false)
 
-//        binding.lifecycleOwner = viewLifecycleOwner
-
         mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+
+        return binding.root
+    }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.addBtn.setOnClickListener {
             insertDataToDatabase()
@@ -56,47 +62,6 @@ class AddStationFragment : Fragment() {
             }
 
         }
-
-        return binding.root
-    }
-
-    // Check if user inputted all fields
-    private fun inputCheck(chargingStationName: String, chargingStationAddress: String): Boolean {
-        return !(TextUtils.isEmpty(chargingStationName) || TextUtils.isEmpty(chargingStationAddress))
-    }
-
-
-    private fun insertDataToDatabase() {
-        val chargingStationName = binding.chargingStationNameEditText.text.toString()
-        val chargingStationAddress = binding.chargingStationAddressEditText.text.toString()
-
-
-        if(inputCheck(chargingStationName, chargingStationAddress)) {
-            // Create chargingStation Object
-            val chargingStation = ChargingStation(0, chargingStationName, chargingStationAddress)
-            // Add data to database
-            mChargingStationViewModel.addChargingStation(chargingStation)
-            Toast.makeText(requireContext(), "Successsfully added charging station.", Toast.LENGTH_SHORT).show()
-            // navigate back
-            mChargingStationViewModel.setOnAdd(true)
-            navigateToTrackerFragment()
-        } else {
-//            mChargingStationViewModel.setIsError(true)
-            binding.chargingStationNameEditText.clearFocus()
-            binding.chargingStationAddressEditText.clearFocus()
-            if (TextUtils.isEmpty(chargingStationName))
-                binding.chargingStationNameTextfield.error = "Empty Field"
-            if (TextUtils.isEmpty(chargingStationAddress))
-                binding.chargingStationAddressTextfield.error = "Empty Field"
-            val contextView = binding.addBtn
-            Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.divider)
-                .show()
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onResume() {
@@ -125,5 +90,40 @@ class AddStationFragment : Fragment() {
     private fun navigateToTrackerFragment() {
         val action = AddStationFragmentDirections.actionAddStationFragmentToTrackerFragment()
         findNavController().navigate(action)
+    }
+
+    // Check if user inputted all fields
+    private fun inputCheck(chargingStationName: String, chargingStationAddress: String): Boolean {
+        return !(TextUtils.isEmpty(chargingStationName) || TextUtils.isEmpty(chargingStationAddress))
+    }
+
+
+    private fun insertDataToDatabase() {
+        val chargingStationName = binding.chargingStationNameEditText.text.toString()
+        val chargingStationAddress = binding.chargingStationAddressEditText.text.toString()
+
+
+        if(inputCheck(chargingStationName, chargingStationAddress)) {
+            // Create chargingStation Object
+            val chargingStation = ChargingStation(0, chargingStationName, chargingStationAddress)
+            // Add data to database
+            mChargingStationViewModel.addChargingStation(chargingStation)
+            Toast.makeText(requireContext(), "Successsfully added charging station.", Toast.LENGTH_SHORT).show()
+            // navigate back
+//            mChargingStationViewModel.setOnAdd(true)
+            navigateToTrackerFragment()
+        } else {
+//            mChargingStationViewModel.setIsError(true)
+            binding.chargingStationNameEditText.clearFocus()
+            binding.chargingStationAddressEditText.clearFocus()
+            if (TextUtils.isEmpty(chargingStationName))
+                binding.chargingStationNameTextfield.error = "Empty Field"
+            if (TextUtils.isEmpty(chargingStationAddress))
+                binding.chargingStationAddressTextfield.error = "Empty Field"
+            val contextView = binding.addBtn
+            Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
+                .setAnchorView(binding.divider)
+                .show()
+        }
     }
 }

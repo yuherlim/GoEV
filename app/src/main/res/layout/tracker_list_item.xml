@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tracker_list_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/default_padding"
+    android:paddingStart="@dimen/default_padding"
+    android:paddingEnd="@dimen/default_padding">
+
+    <ImageView
+        android:id="@+id/ev_station_icon_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_circle" />
+
+    <ImageView
+        android:id="@+id/ev_station_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_ev_station"
+        app:layout_constraintBottom_toBottomOf="@+id/ev_station_icon_background"
+        app:layout_constraintEnd_toEndOf="@+id/ev_station_icon_background"
+        app:layout_constraintStart_toStartOf="@+id/ev_station_icon_background"
+        app:layout_constraintTop_toTopOf="@+id/ev_station_icon_background"
+        tools:srcCompat="@drawable/ic_ev_station" />
+
+    <TextView
+        android:id="@+id/view_ev_station_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintBottom_toTopOf="@+id/ev_station_address"
+        app:layout_constraintStart_toEndOf="@+id/ev_station_icon_background"
+        app:layout_constraintTop_toTopOf="@+id/ev_station_icon_background"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/ev_station_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@+id/ev_station_icon_background"
+        app:layout_constraintStart_toEndOf="@+id/ev_station_icon_background"
+        app:layout_constraintTop_toBottomOf="@+id/view_ev_station_name"
+        tools:text="Address" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ev_station_icon_background" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

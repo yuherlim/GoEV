@@ -20,4 +20,8 @@
     <string name="add_charging_station_btn_text">Add</string>
     <string name="cancel_add_btn_text">Cancel</string>
     <string name="error_add_message">Please fill out all fields.</string>
+    <string name="edit_btn_text">Edit</string>
+    <string name="view_station_extended_fab_content_desc">Navigate to charging station address</string>
+    <string name="view_station_extended_fab_label">Navigate</string>
+    <string name="fragment_view_station_label" />
 </resources>

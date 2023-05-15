@@ -7,9 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goev.R
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentTrackerBinding
@@ -19,7 +21,7 @@ class TrackerFragment : Fragment() {
     private var _binding: FragmentTrackerBinding? = null
     private val binding get() = _binding!!
 
-//    private lateinit var mChargingStationViewModel: ChargingStationViewModel
+    private lateinit var mChargingStationViewModel: ChargingStationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,17 @@ class TrackerFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracker, container, false)
 
-//        mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+        // RecyclerView
+        val adapter = TrackerListAdapter()
+        val recyclerView = binding.recyclerView
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // charging station view model
+        mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+        mChargingStationViewModel.readAllData.observe(viewLifecycleOwner, Observer { chargingStation ->
+            adapter.setData(chargingStation)
+        })
 
         return binding.root
     }
