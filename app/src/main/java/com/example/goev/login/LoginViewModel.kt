@@ -3,8 +3,8 @@ package com.example.goev.login
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
+import com.example.goev.databases.TipsAndKnowledgeDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,7 +14,7 @@ class LoginViewModel (application: Application) : AndroidViewModel(application){
     private val repository: UserRepository
 
     init {
-        val userDao = UserDatabase.getInstance(application).userDao()
+        val userDao = TipsAndKnowledgeDatabase.getInstance(application).userDAO
         repository = UserRepository(userDao)
     }
 

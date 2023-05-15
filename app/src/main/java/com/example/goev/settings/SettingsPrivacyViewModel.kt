@@ -3,8 +3,8 @@ package com.example.goev.settings
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
+import com.example.goev.databases.TipsAndKnowledgeDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,7 +13,7 @@ class SettingsPrivacyViewModel (application: Application) : AndroidViewModel(app
     private val repository: UserRepository
 
     init {
-        val userDao = UserDatabase.getInstance(application).userDao()
+        val userDao = TipsAndKnowledgeDatabase.getInstance(application).userDAO
         repository = UserRepository(userDao)
     }
 

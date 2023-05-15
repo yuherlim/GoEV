@@ -16,6 +16,9 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE email=:email AND password=:password")
     fun getUserByEmailAndPassword(email: String, password: String): UserData?
 
+    @Query("SELECT * FROM users WHERE id= :id")
+    fun getUserByID(id: Int): UserData?
+
     // Update a user's profile pic, profile name, phone number, email, and gender by user ID
     @Query("UPDATE users SET profileImage = :newProfilePic, profileName = :newProfileName, phoneNumber = :newPhoneNumber WHERE is_logged_in = 1")
     fun updateUserProfileInfo(newProfilePic: ByteArray, newProfileName: String, newPhoneNumber: String)

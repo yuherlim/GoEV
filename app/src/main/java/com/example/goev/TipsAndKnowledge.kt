@@ -9,11 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goev.database.user.UserData
-import com.example.goev.database.user.UserDatabase
+import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.post.PostViewModel
 import com.example.goev.databinding.FragmentTipsAndKnowledgeBinding
 import kotlinx.coroutines.Dispatchers
@@ -30,19 +28,21 @@ class TipsAndKnowledge : Fragment() {
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val loggedInUser =
-                    UserDatabase.getInstance(requireContext()).userDao().getLoggedInUser()
+                    TipsAndKnowledgeDatabase.getInstance(requireContext()).userDAO.getLoggedInUser()
                 val profilePic = ProfilePicConverter().extractImage(loggedInUser.profileImage!!)
                 //top right corner profile pic
-                binding.topBarUserProfilePic.setImageBitmap(profilePic)
+                lifecycleScope.launch(Dispatchers.Main){
+                    binding.topBarUserProfilePic.setImageBitmap(profilePic)
 
 
-                //add new post (by admin only)
-                // maybe add check function to see if a user login via admin acc / normal acc
-                if(loggedInUser!!.is_super){
-                    binding.addPostButton?.visibility = View.VISIBLE
-                }
-                else{
-                    binding.addPostButton?.visibility = View.GONE
+                    //add new post (by admin only)
+                    // maybe add check function to see if a user login via admin acc / normal acc
+                    if(loggedInUser!!.is_super){
+                        binding.addPostButton?.visibility = View.VISIBLE
+                    }
+                    else{
+                        binding.addPostButton?.visibility = View.GONE
+                    }
                 }
             }
         }

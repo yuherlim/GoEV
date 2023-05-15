@@ -5,16 +5,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goev.database.user.UserDao
 import com.example.goev.database.user.UserData
+import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.postcomment.TkPostCommentData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class PostCommentAdapter(val user: UserData,
-                         private val onDeleteComment: (comment: TkPostCommentData) -> Unit,
-                         private val onEditComment: (comment: TkPostCommentData) -> Unit):
+class PostCommentAdapter(val userDAO: UserDao,
+                         val user: UserData,
+    private val onDeleteComment: (comment: TkPostCommentData) -> Unit,
+    private val onEditComment: (comment: TkPostCommentData) -> Unit):
     RecyclerView.Adapter<PostCommentAdapter.ViewHolder>() {
     var comments = mutableListOf<TkPostCommentData>()
-
     fun settingComments(comments: List<TkPostCommentData>) {
         this.comments.clear()
         this.comments.addAll(comments)
@@ -34,9 +44,15 @@ class PostCommentAdapter(val user: UserData,
         holder.commentTime.text = comment.commentTime.toString()
         //profile pic has to modified based on kajie database. most likely will need
         // to retrieve and convert into bitmap
-        val profilePic = TkImageConverter().extractImage(user.profileImage!!)
-        holder.itemView.findViewById<ImageView>(R.id.userProfilePic).setImageBitmap(profilePic)
-
+        GlobalScope.launch(Dispatchers.IO) {
+            //profile pic has to modified based on kajie database. most likely will need
+            // to retrieve and convert into bitmap
+            val userData = userDAO.getUserByID(comment.userId)
+            val profilePicInBitmap = ProfilePicConverter().extractImage(userData!!.profileImage)
+            withContext(Dispatchers.Main) {
+                holder.itemView.findViewById<ImageView>(R.id.userProfilePic).setImageBitmap(profilePicInBitmap)
+            }
+        }
         // if it is admin user, everyone's edit comment and delete comment button is visible
         //&& user.isSuper
         if (comment.userId == user.id || user.is_super) {

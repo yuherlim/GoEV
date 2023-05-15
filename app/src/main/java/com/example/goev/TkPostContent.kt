@@ -18,8 +18,6 @@ import com.example.goev.databinding.ActivityTkPostContentBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.example.goev.database.user.UserData
-import com.example.goev.database.user.UserDatabase
 
 class TkPostContent : AppCompatActivity() {
     lateinit var binding: ActivityTkPostContentBinding
@@ -50,13 +48,13 @@ class TkPostContent : AppCompatActivity() {
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val userData = UserDatabase.getInstance(application).userDao().getLoggedInUser()
+                val userData = TipsAndKnowledgeDatabase.getInstance(application).userDAO.getLoggedInUser()
                 val userID = userData.id
                 postContentVM.userReactionPreviously(userID, postID)
-
+                val profilePic = ProfilePicConverter().extractImage(userData.profileImage!!)
+                binding.topBarUserProfilePic.setImageBitmap(profilePic)
                 lifecycleScope.launch {
                     binding.postContentCommentButton.setOnClickListener {
-
                         val postCommentDialog = PostComment(postID, userData)
                         postCommentDialog.show(supportFragmentManager, "post_comment_dialog")
                         //Log.d("postCommentDialog", "postContentCommentButton clicked");

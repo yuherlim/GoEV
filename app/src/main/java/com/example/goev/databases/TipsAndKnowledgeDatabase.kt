@@ -15,10 +15,11 @@ import com.example.goev.database.user.UserData
 import com.example.goev.database.user.UserDao
 
 //
-@Database(entities=[TkPostData::class, TkPostCommentData::class, UserReactData::class],
+@Database(entities=[UserData::class, TkPostData::class, TkPostCommentData::class, UserReactData::class],
 version = 1,
 exportSchema = false)
 abstract class TipsAndKnowledgeDatabase : RoomDatabase() {
+    abstract val userDAO: UserDao
     abstract val postCommentDAO: TkPostCommentDAO
     abstract val postDAO: TkPostDAO
     abstract val userReactDAO: UserReactDAO

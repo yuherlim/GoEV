@@ -28,7 +28,8 @@ class PostComment(private val postID: Long, private val user:UserData) : BottomS
             R.layout.fragment_post_comment, container, false
         )
 
-        commentAdapter = PostCommentAdapter(user, ::deleteComment, ::updateEditedComment)
+        commentAdapter = PostCommentAdapter(TipsAndKnowledgeDatabase.getInstance(requireContext()).userDAO,
+            user, ::deleteComment, ::updateEditedComment)
         val recyclerView = binding.recyclerView2
         recyclerView.adapter = commentAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

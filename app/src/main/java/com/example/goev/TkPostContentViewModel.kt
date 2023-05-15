@@ -4,16 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.*
-import com.example.goev.database.user.UserDao
-import com.example.goev.database.user.UserData
-import com.example.goev.database.user.UserDatabase
 import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.post.TkPostData
 import com.example.goev.databases.react.UserReactDAO
 import com.example.goev.databases.react.UserReactData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TkPostContentViewModel(application:Application): AndroidViewModel(application) {
     val postUpdateLiveData = MutableLiveData<TkPostData>()
