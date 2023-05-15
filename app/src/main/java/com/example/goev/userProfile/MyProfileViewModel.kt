@@ -8,8 +8,9 @@ import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class EditProfileViewModel (application: Application) : AndroidViewModel(application) {
+class MyProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: UserRepository
 
@@ -18,25 +19,14 @@ class EditProfileViewModel (application: Application) : AndroidViewModel(applica
         repository = UserRepository(userDao)
     }
 
-    fun updateUserProfileInfo(
-        newProfilePic: ByteArray,
-        newProfileName: String,
-        newPhoneNumber: String,
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateUserProfileInfo(
-                newProfilePic,
-                newProfileName,
-                newPhoneNumber,
-            )
-        }
-    }
-
-
     fun getLoggedInUser(callback: (UserData?) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getLoggedInUser()
             callback(result)
         }
+    }
+
+    fun updateUserLoggedIn(userId: Int, is_logged_in: Boolean) {
+        repository.updateUserLoggedIn(userId, is_logged_in)
     }
 }

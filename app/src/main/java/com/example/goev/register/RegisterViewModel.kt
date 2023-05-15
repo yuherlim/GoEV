@@ -42,5 +42,10 @@ class RegisterViewModel (application: Application) : AndroidViewModel(applicatio
             callback(result)
         }
     }
+
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = Regex("[a-zA-Z\\d._-]+@[a-zA-Z\\d.-]+\\.[a-zA-Z]{2,}")
+        return email.matches(emailRegex)
+    }
 }
 

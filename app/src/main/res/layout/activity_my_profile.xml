@@ -23,21 +23,21 @@
 
         <ImageView
             android:id="@+id/userProfileImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
             app:circularflow_radiusInDP="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileTitle"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/baseline_notifications_24" />
 
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/userProfileImage"
@@ -49,13 +49,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/userProfileImage"
             app:layout_constraintTop_toBottomOf="@+id/profileName"
             tools:text="email" />
 
         <Button
-            android:id="@+id/postHistoryButton"
+            android:id="@+id/editProfileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -70,11 +71,11 @@
 
 
         <Button
-            android:id="@+id/myPostButton"
+            android:id="@+id/postHistoryButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:drawableLeft="@drawable/baseline_history_24"
             android:drawableRight="@drawable/baseline_arrow_forward_24"
@@ -88,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@+id/userProfileImage" />
 
         <Button
-            android:id="@+id/bookmarksButton"
+            android:id="@+id/myPostButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
@@ -104,10 +105,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myPostButton" />
+            app:layout_constraintTop_toBottomOf="@+id/postHistoryButton" />
 
         <Button
-            android:id="@+id/logOutButton"
+            android:id="@+id/bookmarksButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
@@ -122,10 +123,10 @@
             app:backgroundTint="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookmarksButton" />
+            app:layout_constraintTop_toBottomOf="@+id/myPostButton" />
 
         <Button
-            android:id="@+id/feedbackButton"
+            android:id="@+id/logOutButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
@@ -140,8 +141,18 @@
             app:backgroundTint="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
+            app:layout_constraintTop_toBottomOf="@+id/bookmarksButton" />
 
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_subdirectory_arrow_left_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

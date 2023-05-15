@@ -1,9 +1,5 @@
 package com.example.goev.database.user
 
-import androidx.lifecycle.LiveData
-
-
-
 
 class UserRepository(private val userDao: UserDao) {
 
@@ -20,8 +16,8 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUserByEmailAndPassword(email, password)
     }
 
-    fun updateUserProfileInfo(userId: Int, newProfileName: String, newPhoneNumber: String, newEmail: String, newGender: String){
-        userDao.updateUserProfileInfo(userId, newProfileName, newPhoneNumber, newEmail, newGender)
+    fun updateUserProfileInfo(newProfilePic : ByteArray, newProfileName: String, newPhoneNumber: String){
+        userDao.updateUserProfileInfo(newProfilePic, newProfileName, newPhoneNumber)
     }
 
     fun updateUserLoggedIn(userId: Int, is_logged_in: Boolean){

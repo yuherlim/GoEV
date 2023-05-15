@@ -84,6 +84,7 @@
     <string name="changePassword">Change Password</string>
     <string name="changeUserName">Change Username</string>
     <string name="changeEmail">Change Email</string>
+    <string name="previousPassword">PREVIOUS PASSWORD</string>
     <array name="gender">
         <item>Gender</item>
         <item>Male</item>

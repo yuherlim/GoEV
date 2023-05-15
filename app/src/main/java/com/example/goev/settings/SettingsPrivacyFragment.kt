@@ -26,6 +26,10 @@ class SettingsPrivacyFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(SettingsPrivacyViewModel::class.java)
 
 
+        binding.backButton.setOnClickListener{view : View ->
+            view.findNavController().navigate(R.id.action_settingsPrivacyFragment_to_settingsFragment)
+        }
+
         binding.accountAndLoginButton.setOnClickListener { view: View ->
             view.findNavController()
                 .navigate(R.id.action_settingsPrivacyFragment_to_settingsPrivacyAccountFragment)

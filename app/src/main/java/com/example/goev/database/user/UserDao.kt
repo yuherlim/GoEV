@@ -15,9 +15,9 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE email=:email AND password=:password")
     fun getUserByEmailAndPassword(email: String, password: String): UserData?
 
-    // Update a user's profile name, phone number, email, and gender by user ID
-    @Query("UPDATE users SET profileName = :newProfileName, phoneNumber = :newPhoneNumber, email = :newEmail, gender = :newGender WHERE id = :userId")
-    fun updateUserProfileInfo(userId: Int, newProfileName: String, newPhoneNumber: String, newEmail: String, newGender: String)
+    // Update a user's profile pic, profile name, phone number, email, and gender by user ID
+    @Query("UPDATE users SET profileImage = :newProfilePic, profileName = :newProfileName, phoneNumber = :newPhoneNumber WHERE is_logged_in = 1")
+    fun updateUserProfileInfo(newProfilePic: ByteArray, newProfileName: String, newPhoneNumber: String)
 
     @Query("UPDATE users SET is_logged_in = :is_logged_in WHERE id = :userId")
     fun updateUserLoggedIn(userId: Int, is_logged_in: Boolean)
@@ -25,10 +25,6 @@ public interface UserDao {
     // Get the ID of the user who is currently logged in
     @Query("SELECT * FROM users WHERE is_logged_in = 1")
     fun getLoggedInUser(): UserData?
-
-    // Get the ID of the user who is currently logged in
-    @Query("SELECT id FROM users WHERE is_logged_in = 1")
-    fun getLoggedInUserId(): Int
 
     @Query("DELETE FROM users WHERE is_logged_in = 1")
     fun deleteUser()

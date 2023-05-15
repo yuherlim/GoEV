@@ -22,6 +22,9 @@ class SettingsPrivacyPolicyFragment : Fragment() {
 
         binding = ActivitySettingsPrivacyPolicyBinding.inflate(inflater, container, false)
 
+        binding.backButton.setOnClickListener{view : View ->
+            view.findNavController().navigate(R.id.action_settingsPrivacyPolicyFragment_to_settingsPrivacyFragment)
+        }
 
         return binding.root
     }

@@ -51,6 +51,7 @@ class RegisterFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                     } else {
                         viewModel.isUserEmailExists(email){ success->
                             if(success){
@@ -61,8 +62,16 @@ class RegisterFragment : Fragment() {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                            } else {
-                                val user = UserData(0, name, email, password1, "","", "" , "",
+                            } else if (!viewModel.isEmailValid(email)){
+                                requireActivity().runOnUiThread {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Fill in the email in valid format",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }else {
+                                val user = UserData(0, name, email, password1,ByteArray(0), "" , "",
                                     is_logged_in = false,
                                     is_super = false
                                 )

@@ -45,6 +45,12 @@ class SettingsFragment : Fragment() {
         }
 
 
+        //navigate to my profile (will change to the top nav bar profile pic)
+        binding.profilePicButton.setOnClickListener{view : View ->
+            view.findNavController().navigate(R.id.action_settingsFragment_to_myProfileFragment)
+        }
+
+
         return binding.root
     }
 

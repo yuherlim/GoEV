@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:contentDescription="ratingstar"
             android:isIndicator="false"
             android:max="5"
             android:numStars="5"
@@ -65,7 +66,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/editTextTextMultiLine"
+                    android:id="@+id/editTextComment"
                     android:layout_width="350dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="15dp"
@@ -102,6 +103,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedbackCommentContainer" />
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="3dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="backButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_subdirectory_arrow_left_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
