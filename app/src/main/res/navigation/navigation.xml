@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_myProfileFragment"
             app:destination="@id/myProfileFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_nav"
+            app:destination="@id/nav" />
     </fragment>
     <fragment
         android:id="@+id/settingsFeedbackFragment"
@@ -124,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/myProfileFragment"
-        android:name="com.example.goev.userProfile.MyProfileFragment"
+        android:name="com.example.goev.userProfile.userProfile.MyProfileFragment"
         android:label="MyProfileFragment"
         tools:layout="@layout/activity_my_profile">
         <action
@@ -139,11 +142,12 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.goev.userProfile.EditProfileFragment"
+        android:name="com.example.goev.userProfile.userProfile.EditProfileFragment"
         android:label="EditProfileFragment"
         tools:layout="@layout/activity_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_myProfileFragment"
             app:destination="@id/myProfileFragment" />
     </fragment>
+    <include app:graph="@navigation/nav" />
 </navigation>

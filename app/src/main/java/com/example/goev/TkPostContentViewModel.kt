@@ -3,14 +3,14 @@ package com.example.goev
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
+import com.example.goev.database.user.UserDao
+import com.example.goev.database.user.UserData
+import com.example.goev.database.user.UserDatabase
 import com.example.goev.databases.TipsAndKnowledgeDatabase
-import com.example.goev.databases.post.PostViewModel
 import com.example.goev.databases.post.TkPostData
 import com.example.goev.databases.react.UserReactDAO
 import com.example.goev.databases.react.UserReactData
-import com.example.goev.databases.tempUser.UserViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,7 +19,9 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
     val postUpdateLiveData = MutableLiveData<TkPostData>()
     val userReactLiveData = MutableLiveData<UserReactData?>()
     val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
+//    val loggedInUser = MutableLiveData<UserData>()
     private val userReactDao: UserReactDAO = TipsAndKnowledgeDatabase.getInstance(application).userReactDAO
+//    private val userDao: UserDao = UserDatabase.getInstance(application).userDao()
 
 
     fun setSpecificPost(postID: Long){
@@ -29,7 +31,7 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
         }
     }
 
-    fun userReactionPreviously(userID: Long, postID: Long) {
+    fun userReactionPreviously(userID: Int, postID: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val userReact = userReactDao.getAUserReactOnAPost(userID, postID)
             userReactLiveData.postValue(userReact)
@@ -111,4 +113,10 @@ class TkPostContentViewModel(application:Application): AndroidViewModel(applicat
         context.startActivity(shareIntent)
     }
 
+
+//    fun getCurrentUser(){
+//            viewModelScope.launch(Dispatchers.IO){
+//                loggedInUser.postValue(userDao.getLoggedInUser())
+//            }
+//    }
 }

@@ -5,8 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.goev.databases.TipsAndKnowledgeDatabase
-import com.example.goev.databases.post.PostRepository
-import com.example.goev.databases.post.TkPostData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

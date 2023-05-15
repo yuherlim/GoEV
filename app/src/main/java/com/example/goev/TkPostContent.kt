@@ -1,35 +1,30 @@
 package com.example.goev
 
-import android.app.Activity
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.post.PostViewModel
-import com.example.goev.databases.post.TkPostDAO
 import com.example.goev.databases.react.UserReactDAO
 import com.example.goev.databases.react.UserReactData
-import com.example.goev.databases.tempUser.UserViewModel
 import com.example.goev.databinding.ActivityTkPostContentBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.goev.database.user.UserData
+import com.example.goev.database.user.UserDatabase
 
 class TkPostContent : AppCompatActivity() {
     lateinit var binding: ActivityTkPostContentBinding
     lateinit var postContentVM: TkPostContentViewModel
     lateinit var postViewModel: PostViewModel
-    lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,16 +43,46 @@ class TkPostContent : AppCompatActivity() {
 
         //assume the user ID 1 logging into the app, this must be delete later on when combined
         //user.userID instead depend on how kajie do his login
-        val userID = 1L
+        //val userID = 1L
+
+
         postContentVM = ViewModelProvider(this).get(TkPostContentViewModel::class.java)
-        postContentVM.userReactionPreviously(userID, postID)
-        postContentVM.userReactLiveData.observe(this) { userReact ->
-            if (userReact?.reaction != null && userReact.reaction == 1) {
-                binding.postContentLikeButton.setImageResource(R.drawable.thumb_up_green)
-            } else if (userReact?.reaction != null && userReact.reaction == 0) {
-                binding.postContentDislikeButton.setImageResource(R.drawable.thumb_down_red)
-            } else if (userReact == null) {
-                Log.d("test", "its null")
+        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                val userData = UserDatabase.getInstance(application).userDao().getLoggedInUser()
+                val userID = userData.id
+                postContentVM.userReactionPreviously(userID, postID)
+
+                lifecycleScope.launch {
+                    binding.postContentCommentButton.setOnClickListener {
+
+                        val postCommentDialog = PostComment(postID, userData)
+                        postCommentDialog.show(supportFragmentManager, "post_comment_dialog")
+                        //Log.d("postCommentDialog", "postContentCommentButton clicked");
+                    }
+                }
+
+
+                binding.postContentLikeButton.setOnClickListener {
+                    likeButtonReact(
+                        postContentVM, postViewModel,
+                        TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
+                    )
+                }
+                binding.postContentDislikeButton.setOnClickListener {
+                    dislikeButtonReact(
+                        postContentVM, postViewModel,
+                        TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
+                    )
+                }
+                if(userData.is_super){
+                    binding.deletePostButton?.visibility = View.VISIBLE
+                    binding.editPostButton?.visibility = View.VISIBLE
+                }else{
+                    binding.deletePostButton?.visibility = View.GONE
+                    binding.editPostButton?.visibility = View.GONE
+                }
             }
         }
 
@@ -72,46 +97,25 @@ class TkPostContent : AppCompatActivity() {
             binding.postContentCommentAmount.text = postUpdate.totalComments.toString()
         }
 
-        // Initialize the userViewModel
-        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
-//        ensure that the UI interaction is performed on the correct thread
-//        and that the coroutine is cancelled when the Activity or Fragment is destroyed.
-        lifecycleScope.launch {
-            val user = userViewModel.getUserById(userID)
-            binding.postContentCommentButton.setOnClickListener {
-
-                val postCommentDialog = PostComment(postID, user)
-                postCommentDialog.show(supportFragmentManager, "post_comment_dialog")
-                //Log.d("postCommentDialog", "postContentCommentButton clicked");
+        postContentVM.userReactLiveData.observe(this) { userReact ->
+            if (userReact?.reaction != null && userReact.reaction == 1) {
+                binding.postContentLikeButton.setImageResource(R.drawable.thumb_up_green)
+            } else if (userReact?.reaction != null && userReact.reaction == 0) {
+                binding.postContentDislikeButton.setImageResource(R.drawable.thumb_down_red)
+            } else if (userReact == null) {
+                Log.d("test", "its null")
             }
         }
 
-        postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
-        binding.postContentLikeButton.setOnClickListener {
-            likeButtonReact(
-                postContentVM, postViewModel,
-                TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
-            )
-        }
-        binding.postContentDislikeButton.setOnClickListener {
-            dislikeButtonReact(
-                postContentVM, postViewModel,
-                TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
-            )
-        }
+//        ensure that the UI interaction is performed on the correct thread
+//        and that the coroutine is cancelled when the Activity or Fragment is destroyed.
+
 
         binding.toolbarBackButton?.setOnClickListener {
             onBackPressed()
         }
 
-//        if(user.isSuper){
-//            binding.deletePostButton?.visibility = View.VISIBLE
-//            binding.editPostButton?.visibility = View.VISIBLE
-//        }else{
-//            binding.deletePostButton?.visibility = View.GONE
-//            binding.editPostButton?.visibility = View.GONE
-//        }
+
 
         binding.deletePostButton?.setOnClickListener {
             AlertDialog.Builder(this@TkPostContent)
@@ -151,7 +155,7 @@ class TkPostContent : AppCompatActivity() {
     }
 
     private fun likeButtonReact(postContentVM: TkPostContentViewModel,postViewModel: PostViewModel,
-                                userReactDao: UserReactDAO,userID: Long, postID: Long){
+                                userReactDao: UserReactDAO,userID: Int, postID: Long){
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val currentUserReaction: UserReactData? =
@@ -194,7 +198,7 @@ class TkPostContent : AppCompatActivity() {
     }
 
     private fun dislikeButtonReact(postContentVM: TkPostContentViewModel,postViewModel: PostViewModel,
-                                   userReactDao: UserReactDAO,userID: Long, postID: Long){
+                                   userReactDao: UserReactDAO,userID: Int, postID: Long){
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val currentUserReaction: UserReactData? =

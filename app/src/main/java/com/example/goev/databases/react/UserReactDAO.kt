@@ -13,16 +13,16 @@ interface UserReactDAO {
     fun updateUserReaction(userReactData: UserReactData)
 
     @Query("DELETE FROM reacts WHERE postID = :postId AND userID = :userId")
-    fun deleteUserReaction(userId:Long,postId: Long)
+    fun deleteUserReaction(userId:Int,postId: Long)
 
     @Query("SELECT * FROM reacts WHERE postID = :postID")
     fun getAllReactsOfAPost(postID: Long): LiveData<List<UserReactData>>
 
     @Query("SELECT * FROM reacts WHERE userID = :userId AND postID = :postId")
-    fun getAUserReactOnAPost(userId: Long, postId: Long): UserReactData?
+    fun getAUserReactOnAPost(userId: Int, postId: Long): UserReactData?
 
     @Query("UPDATE reacts SET reaction = :react WHERE userID = :userID AND postID = :postID")
-    suspend fun updateLikeDislikeCount(userID: Long, postID: Long, react: Int)
+    suspend fun updateLikeDislikeCount(userID: Int, postID: Long, react: Int)
 
 //    @Query("UPDATE posts SET likes = likes + 1 WHERE postID = :postId")
 //    suspend fun incrementLikes(postId: Long)

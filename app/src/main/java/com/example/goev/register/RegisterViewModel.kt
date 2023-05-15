@@ -8,7 +8,6 @@ import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RegisterViewModel (application: Application) : AndroidViewModel(application) {
 

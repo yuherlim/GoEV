@@ -3,6 +3,7 @@ package com.example.goev.database.user
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+
 @Dao
 public interface UserDao {
 
@@ -24,7 +25,7 @@ public interface UserDao {
 
     // Get the ID of the user who is currently logged in
     @Query("SELECT * FROM users WHERE is_logged_in = 1")
-    fun getLoggedInUser(): UserData?
+    fun getLoggedInUser(): UserData
 
     @Query("DELETE FROM users WHERE is_logged_in = 1")
     fun deleteUser()

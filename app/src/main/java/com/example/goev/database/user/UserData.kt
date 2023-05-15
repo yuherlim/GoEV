@@ -1,5 +1,5 @@
 package com.example.goev.database.user
-
+import com.example.goev.*
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,7 +14,7 @@ data class UserData(
     @ColumnInfo(name = "userName") val userName: String,
     @ColumnInfo(name = "email") val email: String,
     @ColumnInfo(name = "password") val password: String,
-    @ColumnInfo(name = "profileImage") val profileImage: ByteArray?,
+    @ColumnInfo(name = "profileImage") var profileImage: ByteArray?,
     @ColumnInfo(name = "profileName") val profileName : String,
     @ColumnInfo(name = "phoneNumber") val phoneNumber: String,
     @ColumnInfo(name = "is_logged_in") val is_logged_in: Boolean,

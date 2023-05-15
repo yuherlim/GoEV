@@ -1,4 +1,4 @@
-package com.example.goev.userProfile
+package com.example.goev.userProfile.userProfile
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,7 +8,6 @@ import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MyProfileViewModel(application: Application) : AndroidViewModel(application) {
 

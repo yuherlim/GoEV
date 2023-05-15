@@ -2,19 +2,15 @@ package com.example.goev
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goev.databases.post.TkPostData
-import com.example.goev.databases.tempUser.UserViewModel
 
 
 class ListAdapter(private val contextFromParent: Context): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {

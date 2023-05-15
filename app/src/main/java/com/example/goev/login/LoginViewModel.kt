@@ -3,7 +3,6 @@ package com.example.goev.login
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.goev.database.user.UserData
 import com.example.goev.database.user.UserDatabase
 import com.example.goev.database.user.UserRepository
 import kotlinx.coroutines.Dispatchers

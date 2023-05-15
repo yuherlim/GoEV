@@ -5,8 +5,8 @@ import androidx.room.ForeignKey.Companion.CASCADE
 import com.example.goev.DateConverters
 import com.example.goev.TkImageConverter
 import com.example.goev.databases.post.TkPostData
-import com.example.goev.databases.tempUser.UserData
 import java.util.*
+import com.example.goev.database.user.UserData
 
 @Entity(tableName="comments",
     foreignKeys = [ForeignKey(entity = TkPostData::class,
@@ -14,12 +14,12 @@ import java.util.*
         childColumns = ["postID"],
         onDelete = CASCADE),
         ForeignKey(entity = UserData::class,
-        parentColumns = ["userID"],
+        parentColumns = ["id"],
         childColumns = ["userID"],
         onDelete = CASCADE)])
 @TypeConverters(TkImageConverter::class, DateConverters::class)
 data class TkPostCommentData(
-    @ColumnInfo(name="userID")val userId:Long,
+    @ColumnInfo(name="userID")val userId: Int,
     @ColumnInfo(name="userName")val userName: String,
     @ColumnInfo(name="comment")val comment: String,
     @ColumnInfo(name="postID")val postId: Long

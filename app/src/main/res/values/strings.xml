@@ -65,9 +65,7 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="deleteUser">Delete Account</string>
-    <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
     <string name="myProfile">My Profile</string>
     <string name="profileName">Profile name</string>
@@ -92,8 +90,6 @@
         <item>Not Sure</item>
     </array>
 
-    <string name="app_name">GoEV</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_tips_and_knowledge">TipsAndKnowledge</string>
     <!-- Strings used for fragments for navigation -->

@@ -1,8 +1,6 @@
 package com.example.goev
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,22 +8,46 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.goev.database.user.UserData
+import com.example.goev.database.user.UserDatabase
 import com.example.goev.databases.post.PostViewModel
-import com.example.goev.databases.tempUser.UserData
-import com.example.goev.databases.tempUser.UserViewModel
 import com.example.goev.databinding.FragmentTipsAndKnowledgeBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TipsAndKnowledge : Fragment() {
     private lateinit var mPostViewModel: PostViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentTipsAndKnowledgeBinding>(inflater,
             R.layout.fragment_tips_and_knowledge,container,false)
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                val loggedInUser =
+                    UserDatabase.getInstance(requireContext()).userDao().getLoggedInUser()
+                val profilePic = ProfilePicConverter().extractImage(loggedInUser.profileImage!!)
+                //top right corner profile pic
+                binding.topBarUserProfilePic.setImageBitmap(profilePic)
 
-        //add new post (by admin only)
-        // maybe add check function to see if a user login via admin acc / normal acc
+
+                //add new post (by admin only)
+                // maybe add check function to see if a user login via admin acc / normal acc
+                if(loggedInUser!!.is_super){
+                    binding.addPostButton?.visibility = View.VISIBLE
+                }
+                else{
+                    binding.addPostButton?.visibility = View.GONE
+                }
+            }
+        }
+
+
         binding.addPostButton?.setOnClickListener{
                 view : View ->
             view.findNavController().navigate(R.id.action_tipsAndKnowledge_to_addPostAdmin)

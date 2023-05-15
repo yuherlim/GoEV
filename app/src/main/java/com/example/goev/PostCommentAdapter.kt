@@ -5,10 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goev.database.user.UserData
 import com.example.goev.databases.postcomment.TkPostCommentData
-import com.example.goev.databases.tempUser.UserData
 
 class PostCommentAdapter(val user: UserData,
                          private val onDeleteComment: (comment: TkPostCommentData) -> Unit,
@@ -35,11 +34,12 @@ class PostCommentAdapter(val user: UserData,
         holder.commentTime.text = comment.commentTime.toString()
         //profile pic has to modified based on kajie database. most likely will need
         // to retrieve and convert into bitmap
-        holder.itemView.findViewById<ImageView>(R.id.userProfilePic).setImageResource(R.drawable.ellipse_71)
+        val profilePic = TkImageConverter().extractImage(user.profileImage!!)
+        holder.itemView.findViewById<ImageView>(R.id.userProfilePic).setImageBitmap(profilePic)
 
         // if it is admin user, everyone's edit comment and delete comment button is visible
         //&& user.isSuper
-        if (comment.userId == user.userID) {
+        if (comment.userId == user.id || user.is_super) {
             holder.itemView.findViewById<ImageView>(R.id.deleteCommentButton).visibility = View.VISIBLE
             holder.itemView.findViewById<ImageView>(R.id.editCommentButton).visibility = View.VISIBLE
         } else {

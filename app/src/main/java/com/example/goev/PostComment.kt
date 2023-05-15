@@ -1,30 +1,24 @@
 package com.example.goev
 
-import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.postcomment.TkPostCommentData
-import com.example.goev.databases.tempUser.UserData
-import com.example.goev.databases.tempUser.UserViewModel
 import com.example.goev.databinding.FragmentPostCommentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.goev.database.user.UserData
 
-class PostComment(private val postID: Long, private val user: UserData) : BottomSheetDialogFragment() {
+class PostComment(private val postID: Long, private val user:UserData) : BottomSheetDialogFragment() {
     private lateinit var commentAdapter: PostCommentAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +38,7 @@ class PostComment(private val postID: Long, private val user: UserData) : Bottom
         binding.postComment.setOnClickListener {
             val comment = binding.writeComment.text.toString()
             if (comment.isNotEmpty()) {
-                val newComment = TkPostCommentData(user.userID, user.userName, comment, postID)
+                val newComment = TkPostCommentData(user.id, user.userName, comment, postID)
                 insertComment(newComment)
                 binding.writeComment.text.clear()
                 loadComments(postID)
