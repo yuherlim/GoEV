@@ -1,8 +1,13 @@
 package com.example.goev
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,9 +24,14 @@ class AddStationFragment : Fragment() {
     private var _binding: FragmentAddStationBinding? = null
     private val binding get() = _binding!!
 
-    
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
+    private lateinit var imageView: ImageView
+    private var byteArray: ByteArray? = null
+    private lateinit var imageInBitmap: Bitmap
 
+    companion object{
+        const val IMAGE_REQUEST_CODE = 100
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +47,7 @@ class AddStationFragment : Fragment() {
 
         mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
 
+
         return binding.root
     }
 
@@ -44,6 +55,12 @@ class AddStationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.addImgButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.type = "image/jpeg"
+            startActivityForResult(intent, IMAGE_REQUEST_CODE)
+        }
 
         binding.addBtn.setOnClickListener {
             insertDataToDatabase()
@@ -68,6 +85,17 @@ class AddStationFragment : Fragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            val imageUri = data?.data
+            if(imageUri != null){
+                imageView.setImageURI(imageUri)
+                imageInBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+                byteArray = ProfilePicConverter().convertImage(imageInBitmap)
+            }
+        }
+    }
     override fun onResume() {
         // Hides bottom navigation
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE

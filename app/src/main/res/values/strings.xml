@@ -38,6 +38,6 @@
     <string name="delete_all_supporting_text">Are you sure you want to delete all tracked charging stations? This action is undoable.</string>
     <string name="delete_all_success_msg">Successfully deleted all charging stations.</string>
     <string name="no_google_maps_message">Google maps not installed.</string>
-    <string name="Add_img_btn_text">Add image</string>
+    <string name="add_img_btn_text">Add image</string>
     <string name="edit_image_btn_text">Edit image</string>
 </resources>

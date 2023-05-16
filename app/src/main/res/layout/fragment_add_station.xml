@@ -87,12 +87,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/edit_button"
+                android:id="@+id/add_img_button"
                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/Add_img_btn_text"
+                android:text="@string/add_img_btn_text"
                 app:icon="@drawable/ic_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

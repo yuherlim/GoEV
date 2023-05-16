@@ -10,18 +10,10 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
     val readAllData: LiveData<List<ChargingStation>>
     private val repository: ChargingStationRepository
 
-//    private var _isError = MutableLiveData<Boolean>()
-//    val isError: LiveData<Boolean> = _isError
-//    private var _onAdd = MutableLiveData<Boolean>()
-//    val onAdd: LiveData<Boolean> = _onAdd
-
     init {
         val chargingStationDao = ChargingStationDatabase.getDatabase(application).chargingStationDao()
         repository = ChargingStationRepository(chargingStationDao)
         readAllData = repository.readAllData
-
-        //for addStationFragment
-//        _isError.value = false
     }
 
     fun addChargingStation(chargingStation: ChargingStation){
@@ -51,12 +43,11 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
     fun searchDatabase(searchQuery: String): LiveData<List<ChargingStation>> {
         return repository.searchDatabase(searchQuery).asLiveData()
     }
-//    fun setIsError(value: Boolean) {
-//        _isError.value = value
-//    }
 
-//    fun setOnAdd(status: Boolean) {
-//        _onAdd.value = status
-//    }
+    fun updateChargingStationImage(uploadedImage: ByteArray) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateChargingStationImage(uploadedImage)
+        }
+    }
 
 }

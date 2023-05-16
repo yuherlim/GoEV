@@ -27,4 +27,8 @@ class ChargingStationRepository(private val chargingStationDao: ChargingStationD
         return chargingStationDao.searchDatabase(searchQuery)
     }
 
+    fun updateChargingStationImage(uploadedImage: ByteArray) {
+        chargingStationDao.updateChargingStationImage(uploadedImage)
+    }
+
 }
