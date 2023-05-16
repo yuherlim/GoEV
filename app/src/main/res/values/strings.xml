@@ -157,10 +157,7 @@
     <string name="forum">Forum</string>
     <string name="addPost">addPost</string>
     <string name="searchPost">Search Post</string>
-    <string name="user_profile">user profile</string>
     <string name="go_ev">GoEV</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
