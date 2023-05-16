@@ -7,7 +7,7 @@ class ChargingStationRepository(private val chargingStationDao: ChargingStationD
 
     val readAllData: LiveData<List<ChargingStation>> = chargingStationDao.readAllData()
 
-    suspend fun addChargingStation(chargingStation: ChargingStation){
+    suspend fun addChargingStation(chargingStation: ChargingStation) {
         chargingStationDao.addChargingStation(chargingStation)
     }
 
@@ -27,13 +27,11 @@ class ChargingStationRepository(private val chargingStationDao: ChargingStationD
         return chargingStationDao.searchDatabase(searchQuery)
     }
 
-
-
-    fun updateChargingStationImage(uploadedImage: ByteArray, id: Int) {
+    suspend fun updateChargingStationImage(uploadedImage: ByteArray, id: Int) {
         chargingStationDao.updateChargingStationImage(uploadedImage, id)
     }
 
-    fun getChargingStationById(id: Int) : ChargingStation? {
+    suspend fun getChargingStationById(id: Int): ChargingStation? {
         return chargingStationDao.getChargingStationById(id)
     }
 

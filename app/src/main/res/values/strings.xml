@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GoEV</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Tracker">Tracker</string>
     <string name="action_search">search</string>
@@ -41,5 +40,12 @@
     <string name="add_img_btn_text">Add image</string>
     <string name="edit_image_btn_text">Edit image</string>
     <string name="image_edit_success_msg">Image edit successful.</string>
-    <string name="img_add_success_msg">Image uploded successfully.</string>
+    <string name="img_add_success_msg">Image uploaded successfully.</string>
+    <string name="edit_success_msg">Successfully edited charging station.</string>
+    <string name="empty_field_helper_msg">Empty Field</string>
+    <string name="id_validation_msg">Valid id is not passed in.</string>
+    <string name="google_maps_uri_template">geo:0,0?q=%s</string>
+    <string name="web_google_maps_uri_template">https://www.google.com/maps/search/?api=1&amp;query=%s"</string>
+    <string name="delete_success_msg">"Successfully deleted: %s"</string>
+    <string name="add_success_msg">Successfully added charging station.</string>
 </resources>

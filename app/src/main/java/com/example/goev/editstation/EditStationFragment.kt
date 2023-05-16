@@ -1,17 +1,16 @@
 package com.example.goev.editstation
 
+
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-
-
 import com.example.goev.R
 import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
@@ -21,16 +20,14 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class EditStationFragment : Fragment() {
 
     private var _binding: FragmentEditStationBinding? = null
     private val binding get() = _binding!!
-
     private val args by navArgs<EditStationFragmentArgs>()
-
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
     private lateinit var editStationViewModel: EditStationViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,17 +37,17 @@ class EditStationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_edit_station, container, false)
 
         // Initialize viewModel to retrieve chargingStation data from database
         mChargingStationViewModel =
-            ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+            ViewModelProvider(this)[ChargingStationViewModel::class.java]
 
         // Initialize edit station view model to maintain edit text data on configuration changes
-        editStationViewModel = ViewModelProvider(this).get(EditStationViewModel::class.java)
+        editStationViewModel = ViewModelProvider(this)[EditStationViewModel::class.java]
 
         return binding.root
     }
@@ -83,27 +80,28 @@ class EditStationFragment : Fragment() {
                         }
                     }
 
-
                     binding.editChargingStationNameEditText.setOnFocusChangeListener { _, hasFocus ->
                         if (hasFocus) {
                             binding.editChargingStationNameTextfield.error = null
                         }
-
-
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.id_validation_msg),
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 navigateToViewStationFragment()
             }
         }
     }
 
-    private fun updateDatabase(chargingStation: ChargingStation) {
+    private fun updateDatabase(currentChargingStation: ChargingStation) {
         val chargingStationName = binding.editChargingStationNameEditText.text.toString()
         val chargingStationAddress = binding.editChargingStationAddressEditText.text.toString()
-        val chargingStationImage = chargingStation.image
+        val chargingStationImage = currentChargingStation.image
 
         if (inputCheck(chargingStationName, chargingStationAddress)) {
             // Create chargingStation Object
@@ -115,11 +113,7 @@ class EditStationFragment : Fragment() {
             )
             // Update current chargingStation
             mChargingStationViewModel.updateChargingStation(chargingStation)
-            Toast.makeText(
-                requireContext(),
-                "Successfully edited charging station.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showEditSuccessMessage()
 
             // Introduce a short delay before navigating
             lifecycleScope.launch {
@@ -132,15 +126,29 @@ class EditStationFragment : Fragment() {
                 binding.editChargingStationNameEditText.clearFocus()
                 binding.editChargingStationAddressEditText.clearFocus()
                 if (TextUtils.isEmpty(chargingStationName))
-                    binding.editChargingStationNameTextfield.error = "Empty Field"
+                    binding.editChargingStationNameTextfield.error =
+                        getString(R.string.empty_field_helper_msg)
                 if (TextUtils.isEmpty(chargingStationAddress))
-                    binding.editChargingStationAddressTextfield.error = "Empty Field"
-                val contextView = binding.saveBtn
-                Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.divider)
-                    .show()
+                    binding.editChargingStationAddressTextfield.error =
+                        getString(R.string.empty_field_helper_msg)
+                showEmptyInputMessage()
             }
         }
+    }
+
+    private fun showEditSuccessMessage() {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.edit_success_msg),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showEmptyInputMessage() {
+        val contextView = binding.saveBtn
+        Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding.divider)
+            .show()
     }
 
     override fun onResume() {
@@ -151,7 +159,7 @@ class EditStationFragment : Fragment() {
     }
 
     override fun onPause() {
-        // Unhides bottom navigation
+        // Unhidden bottom navigation
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
             View.VISIBLE
         super.onPause()
@@ -159,11 +167,14 @@ class EditStationFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Save current edit text info into EditChargingStationViewModel
         editStationViewModel.stationName = binding.editChargingStationNameEditText.text.toString()
-        editStationViewModel.stationAddress = binding.editChargingStationAddressEditText.text.toString()
+        editStationViewModel.stationAddress =
+            binding.editChargingStationAddressEditText.text.toString()
         _binding = null
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()

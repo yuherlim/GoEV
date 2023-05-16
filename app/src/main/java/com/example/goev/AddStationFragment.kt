@@ -23,6 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
+@Suppress("DEPRECATION")
 class AddStationFragment : Fragment() {
     private var _binding: FragmentAddStationBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +32,7 @@ class AddStationFragment : Fragment() {
     private var byteArray: ByteArray? = null
     private lateinit var imageInBitmap: Bitmap
 
-    companion object{
+    companion object {
         const val IMAGE_REQUEST_CODE = 100
     }
 
@@ -43,16 +44,17 @@ class AddStationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_station, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_station, container, false)
 
         // Initialize charging station view model
-        mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+        mChargingStationViewModel =
+            ViewModelProvider(this)[ChargingStationViewModel::class.java]
 
         return binding.root
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,12 +93,14 @@ class AddStationFragment : Fragment() {
         startActivityForResult(intent, IMAGE_REQUEST_CODE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageUri = data?.data
-            if(imageUri != null){
-                imageInBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+            if (imageUri != null) {
+                imageInBitmap =
+                    MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
                 byteArray = ChargingStationImageConverter().convertImage(imageInBitmap)
                 imageUploadedSuccessMessage()
             }
@@ -112,13 +116,15 @@ class AddStationFragment : Fragment() {
 
     override fun onResume() {
         // Hides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
         super.onResume()
     }
 
     override fun onPause() {
-        // Unhides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
         super.onPause()
     }
 
@@ -127,6 +133,7 @@ class AddStationFragment : Fragment() {
         _binding = null
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
@@ -148,13 +155,22 @@ class AddStationFragment : Fragment() {
         val chargingStationName = binding.chargingStationNameEditText.text.toString()
         val chargingStationAddress = binding.chargingStationAddressEditText.text.toString()
         val chargingStationImage = byteArray
-        
-        if(inputCheck(chargingStationName, chargingStationAddress)) {
+
+        if (inputCheck(chargingStationName, chargingStationAddress)) {
             // Create chargingStation Object
-            val chargingStation = ChargingStation(0, chargingStationName, chargingStationAddress, chargingStationImage)
+            val chargingStation = ChargingStation(
+                0,
+                chargingStationName,
+                chargingStationAddress,
+                chargingStationImage
+            )
             // Add data to database
             mChargingStationViewModel.addChargingStation(chargingStation)
-            Toast.makeText(requireContext(), "Successfully added charging station.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.add_success_msg),
+                Toast.LENGTH_SHORT
+            ).show()
 
             // Introduce a short delay before navigating
             lifecycleScope.launch {
@@ -168,9 +184,11 @@ class AddStationFragment : Fragment() {
 
             // Check for empty fields, give error message to those that are empty
             if (TextUtils.isEmpty(chargingStationName))
-                binding.chargingStationNameTextfield.error = "Empty Field"
+                binding.chargingStationNameTextfield.error =
+                    getString(R.string.empty_field_helper_msg)
             if (TextUtils.isEmpty(chargingStationAddress))
-                binding.chargingStationAddressTextfield.error = "Empty Field"
+                binding.chargingStationAddressTextfield.error =
+                    getString(R.string.empty_field_helper_msg)
 
             emptyFieldsErrorMessage()
         }

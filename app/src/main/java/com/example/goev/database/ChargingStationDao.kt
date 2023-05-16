@@ -11,7 +11,7 @@ interface ChargingStationDao {
     suspend fun addChargingStation(chargingStation: ChargingStation)
 
     @Update
-    suspend fun updateChargingStation(chargingStation:ChargingStation)
+    suspend fun updateChargingStation(chargingStation: ChargingStation)
 
     @Delete
     suspend fun deleteChargingStation(chargingStation: ChargingStation)
@@ -26,11 +26,9 @@ interface ChargingStationDao {
     fun searchDatabase(searchQuery: String): Flow<List<ChargingStation>>
 
     @Query("UPDATE charging_station_table SET image = :uploadedImage WHERE id = :id")
-    fun updateChargingStationImage(uploadedImage: ByteArray, id: Int)
+    suspend fun updateChargingStationImage(uploadedImage: ByteArray, id: Int)
 
     @Query("SELECT * FROM charging_station_table WHERE id= :id")
-    fun getChargingStationById(id: Int): ChargingStation?
+    suspend fun getChargingStationById(id: Int): ChargingStation?
 
-//    @Query("SELECT * FROM charging_station_table WHERE id = :id")
-//    fun getChargingStation(id: Int): ChargingStation?
 }

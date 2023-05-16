@@ -14,12 +14,12 @@ abstract class ChargingStationDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: ChargingStationDatabase? = null
 
-        fun getDatabase(context: Context): ChargingStationDatabase{
+        fun getDatabase(context: Context): ChargingStationDatabase {
             val tempInstance = INSTANCE
-            if(tempInstance != null){
+            if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this){
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ChargingStationDatabase::class.java,

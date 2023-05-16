@@ -1,14 +1,17 @@
 package com.example.goev
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.goev.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun setupActionBar(toolBar: MaterialToolbar) {
+    private fun setupActionBar(toolBar: MaterialToolbar) {
 
         setSupportActionBar(toolBar)
 
@@ -56,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         setupLogo(navController)
     }
-
 
 
     // Hide the logo when navigating to any fragment other than the top level destination fragments
@@ -83,11 +85,9 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setupWithNavController(navController)
         //Navigates to the top-level of the following navigation icon selected
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.trackerFragment -> {
-                    // Respond to navigation item 2 click
                     navController.navigate(R.id.trackerFragment)
-//                    Log.i("MainActivity", "charging station list icon selected")
                     true
                 }
                 else -> {

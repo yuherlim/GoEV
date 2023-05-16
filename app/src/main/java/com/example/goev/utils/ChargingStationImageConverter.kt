@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream
 
 class ChargingStationImageConverter {
     @TypeConverter
-    fun convertImage(bitmap: Bitmap): ByteArray{
+    fun convertImage(bitmap: Bitmap): ByteArray {
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         return outputStream.toByteArray()

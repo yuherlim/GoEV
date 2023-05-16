@@ -30,6 +30,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ImageContrastCheck"
                     tools:src="@drawable/default_station_img" />
 
                 <TextView
@@ -67,7 +68,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view_address_icon"
                     app:layout_constraintTop_toBottomOf="@id/view_ev_station_name"
-                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae fringilla lorem, sed lacinia lorem. Nulla convallis nibh a nisi venenatis mollis. Nunc eleifend accumsan mauris feugiat tristique. Cras aliquet varius iaculis. Nunc dictum pharetra mollis. Fusce felis diam, imperdiet id dictum id, viverra in dolor. Nullam sit amet pulvinar elit. Vestibulum iaculis tempus sem eget tincidunt." />
+                    tools:text="Lorem ipsum dolor sit amet." />
 
                 <Button
                     android:id="@+id/edit_image_button"

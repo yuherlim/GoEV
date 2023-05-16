@@ -1,22 +1,26 @@
 package com.example.goev.database
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ChargingStationViewModel(application: Application): AndroidViewModel(application) {
+class ChargingStationViewModel(application: Application) : AndroidViewModel(application) {
 
     val readAllData: LiveData<List<ChargingStation>>
     private val repository: ChargingStationRepository
 
     init {
-        val chargingStationDao = ChargingStationDatabase.getDatabase(application).chargingStationDao()
+        val chargingStationDao =
+            ChargingStationDatabase.getDatabase(application).chargingStationDao()
         repository = ChargingStationRepository(chargingStationDao)
         readAllData = repository.readAllData
     }
 
-    fun addChargingStation(chargingStation: ChargingStation){
+    fun addChargingStation(chargingStation: ChargingStation) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addChargingStation(chargingStation)
         }
@@ -49,6 +53,7 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
     fun searchDatabase(searchQuery: String): LiveData<List<ChargingStation>> {
         return repository.searchDatabase(searchQuery).asLiveData()
     }
+
     fun getChargingStationById(id: Int, callback: (ChargingStation?) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = repository.getChargingStationById(id)

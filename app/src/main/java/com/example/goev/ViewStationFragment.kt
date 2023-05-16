@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class ViewStationFragment : Fragment() {
 
     private var _binding: FragmentViewStationBinding? = null
@@ -33,7 +34,6 @@ class ViewStationFragment : Fragment() {
     private val args by navArgs<ViewStationFragmentArgs>()
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
-
 
 
     private var byteArray: ByteArray? = null
@@ -47,12 +47,14 @@ class ViewStationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_station, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_view_station, container, false)
 
         // Initialize viewModel
-        mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+        mChargingStationViewModel =
+            ViewModelProvider(this)[ChargingStationViewModel::class.java]
 
         return binding.root
     }
@@ -83,7 +85,12 @@ class ViewStationFragment : Fragment() {
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.id_validation_msg),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
                 navigateToTrackerFragment()
             }
         }
@@ -103,7 +110,10 @@ class ViewStationFragment : Fragment() {
     private fun updateDatabaseWithImage() {
         if (byteArray != null) {
             // Update current chargingStation
-            mChargingStationViewModel.updateChargingStationImage(byteArray!!, args.currentChargingStationId)
+            mChargingStationViewModel.updateChargingStationImage(
+                byteArray!!,
+                args.currentChargingStationId
+            )
             imageEditSuccessMsg()
         }
     }
@@ -117,8 +127,9 @@ class ViewStationFragment : Fragment() {
 
     private fun googleMapsIntent(chargingStation: ChargingStation) {
         val encodedAddress = Uri.encode(chargingStation.address)
-        val googleMapsUri = Uri.parse("geo:0,0?q=$encodedAddress")
-        val webMapsUri = Uri.parse("https://www.google.com/maps/search/?api=1&query=$encodedAddress")
+        val googleMapsUri = Uri.parse(getString(R.string.google_maps_uri_template, encodedAddress))
+        val webMapsUri =
+            Uri.parse(getString(R.string.web_google_maps_uri_template, encodedAddress))
         val intent = Intent(Intent.ACTION_VIEW, googleMapsUri)
         val webIntent = Intent(Intent.ACTION_VIEW, webMapsUri)
 
@@ -132,7 +143,11 @@ class ViewStationFragment : Fragment() {
                 activity?.runOnUiThread {
                     // Handle the case where neither Google Maps nor a web browser is available
                     val contextView = binding.navigateFab
-                    Snackbar.make(contextView, R.string.no_google_maps_message, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(
+                        contextView,
+                        R.string.no_google_maps_message,
+                        Snackbar.LENGTH_SHORT
+                    )
                         .setAnchorView(binding.navigateFab)
                         .show()
                 }
@@ -142,7 +157,8 @@ class ViewStationFragment : Fragment() {
 
     override fun onResume() {
         // Hides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
 
         // Update image with new edited image
         updateViewImage()
@@ -150,8 +166,9 @@ class ViewStationFragment : Fragment() {
     }
 
     override fun onPause() {
-        // Unhides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
         super.onPause()
     }
 
@@ -171,12 +188,14 @@ class ViewStationFragment : Fragment() {
         _binding = null
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.view_tracker_action_bar_menu, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_delete -> {
@@ -200,9 +219,7 @@ class ViewStationFragment : Fragment() {
                         }
                         .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
                             mChargingStationViewModel.deleteChargingStation(chargingStation)
-                            Toast.makeText(requireContext(),
-                                "Successfully deleted: ${chargingStation.name}",
-                                Toast.LENGTH_SHORT).show()
+                            showDeleteSuccessMessage(chargingStation)
                             // Introduce a short delay before navigating
                             lifecycleScope.launch {
                                 delay(500)
@@ -212,10 +229,19 @@ class ViewStationFragment : Fragment() {
                         .show()
                 }
             } else {
-                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.id_validation_msg), Toast.LENGTH_SHORT)
+                    .show()
                 navigateToTrackerFragment()
             }
         }
+    }
+
+    private fun showDeleteSuccessMessage(chargingStation: ChargingStation) {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.delete_success_msg, chargingStation.name),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun navigateToTrackerFragment() {
@@ -224,7 +250,8 @@ class ViewStationFragment : Fragment() {
     }
 
     private fun navigateToEditStationFragment() {
-        val action = ViewStationFragmentDirections.actionViewStationFragmentToEditStationFragment(args.currentChargingStationId)
+        val action =
+            ViewStationFragmentDirections.actionViewStationFragmentToEditStationFragment(args.currentChargingStationId)
         findNavController().navigate(action)
     }
 
@@ -234,12 +261,14 @@ class ViewStationFragment : Fragment() {
         startActivityForResult(intent, AddStationFragment.IMAGE_REQUEST_CODE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == AddStationFragment.IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == AddStationFragment.IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val imageUri = data?.data
-            if(imageUri != null){
-                imageInBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+            if (imageUri != null) {
+                imageInBitmap =
+                    MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
                 byteArray = ChargingStationImageConverter().convertImage(imageInBitmap)
                 updateDatabaseWithImage()
             }
