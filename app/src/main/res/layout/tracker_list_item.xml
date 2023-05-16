@@ -33,24 +33,26 @@
 
     <TextView
         android:id="@+id/view_ev_station_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         app:layout_constraintBottom_toTopOf="@+id/ev_station_address"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ev_station_icon_background"
         app:layout_constraintTop_toTopOf="@+id/ev_station_icon_background"
-        tools:text="Name" />
+        tools:text="This is going to be a very long name to test the behaviour when it gets long" />
 
     <TextView
         android:id="@+id/ev_station_address"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="@+id/ev_station_icon_background"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ev_station_icon_background"
         app:layout_constraintTop_toBottomOf="@+id/view_ev_station_name"
-        tools:text="Address" />
+        tools:text="This is going to be a very long name to test the behaviour when it gets long" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider"

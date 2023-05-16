@@ -30,9 +30,17 @@ class TrackerListAdapter: RecyclerView.Adapter<TrackerListAdapter.MyViewHolder>(
         holder.name.text = currentItem.name
         holder.address.text = currentItem.address
         holder.trackerListItem.setOnClickListener{
-            val action = TrackerFragmentDirections.actionTrackerFragmentToViewStationFragment(currentItem.id)
-            holder.itemView.findNavController().navigate(action)
+            navigateToViewStationFragment(currentItem, holder)
         }
+    }
+
+    private fun navigateToViewStationFragment(
+        currentItem: ChargingStation,
+        holder: MyViewHolder
+    ) {
+        val action =
+            TrackerFragmentDirections.actionTrackerFragmentToViewStationFragment(currentItem.id)
+        holder.itemView.findNavController().navigate(action)
     }
 
 

@@ -4,118 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EditStationFragment">
 
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/view_station_scroll_view_bottom_margin"
+            android:fillViewport="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/icon_charging_station_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@id/edit_charging_station_name_textfield"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/edit_charging_station_name_textfield"
-                app:srcCompat="@drawable/ic_charging_station_name" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_charging_station_name_textfield"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:hint="@string/charging_station_name_label"
-                app:endIconMode="clear_text"
-                app:errorEnabled="true"
-                app:helperText="@string/name_helper_text"
-                app:helperTextEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon_charging_station_name"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_charging_station_name_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/icon_charging_station_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="@id/edit_charging_station_address_textfield"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/edit_charging_station_address_textfield"
-                app:srcCompat="@drawable/ic_charging_station_address" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_charging_station_address_textfield"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/edit_text_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:hint="@string/charging_station_address_label"
-                app:counterEnabled="true"
-                app:counterMaxLength="255"
-                app:endIconMode="clear_text"
-
-                app:errorEnabled="true"
-                app:helperText="@string/address_helper_text"
-                app:helperTextEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon_charging_station_address"
-                app:layout_constraintTop_toBottomOf="@id/edit_charging_station_name_textfield">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_charging_station_address_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/default_margin"
-                app:layout_constraintBottom_toTopOf="@id/save_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/save_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:text="@string/save_charging_station_btn_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <ImageView
+                    android:id="@+id/icon_charging_station_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@id/edit_charging_station_name_textfield"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edit_charging_station_name_textfield"
+                    app:srcCompat="@drawable/ic_charging_station_name" />
 
-            <Button
-                android:id="@+id/cancel_btn"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:text="@string/cancel_add_btn_text"
-                app:layout_constraintBottom_toBottomOf="@id/save_btn"
-                app:layout_constraintStart_toEndOf="@id/save_btn"
-                app:layout_constraintTop_toTopOf="@id/save_btn" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edit_charging_station_name_textfield"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:hint="@string/charging_station_name_label"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:helperText="@string/name_helper_text"
+                    app:helperTextEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon_charging_station_name"
+                    app:layout_constraintTop_toTopOf="parent">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_charging_station_name_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/icon_charging_station_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@id/edit_charging_station_address_textfield"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/edit_charging_station_address_textfield"
+                    app:srcCompat="@drawable/ic_charging_station_address" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edit_charging_station_address_textfield"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/edit_text_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:hint="@string/charging_station_address_label"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="255"
+                    app:endIconMode="clear_text"
+
+                    app:errorEnabled="true"
+                    app:helperText="@string/address_helper_text"
+                    app:helperTextEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon_charging_station_address"
+                    app:layout_constraintTop_toBottomOf="@id/edit_charging_station_name_textfield">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_charging_station_address_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_margin"
+            app:layout_constraintBottom_toTopOf="@id/save_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:text="@string/save_charging_station_btn_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/cancel_btn"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@string/cancel_add_btn_text"
+            app:layout_constraintBottom_toBottomOf="@id/save_btn"
+            app:layout_constraintStart_toEndOf="@id/save_btn"
+            app:layout_constraintTop_toTopOf="@id/save_btn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

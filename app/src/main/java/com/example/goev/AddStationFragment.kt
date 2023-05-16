@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
@@ -18,6 +19,8 @@ import com.example.goev.databinding.FragmentAddStationBinding
 import com.example.goev.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class AddStationFragment : Fragment() {
@@ -44,16 +47,9 @@ class AddStationFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_station, container, false)
 
+        // Initialize charging station view model
         mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
 
-
-        return binding.root
-    }
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.addImgButton.setOnClickListener {
             intentToRetrieveImage()
@@ -80,6 +76,16 @@ class AddStationFragment : Fragment() {
             }
 
         }
+
+        return binding.root
+    }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
     }
 
     private fun intentToRetrieveImage() {
@@ -152,8 +158,13 @@ class AddStationFragment : Fragment() {
             // Add data to database
             mChargingStationViewModel.addChargingStation(chargingStation)
             Toast.makeText(requireContext(), "Successfully added charging station.", Toast.LENGTH_SHORT).show()
-            // navigate back
-            navigateToTrackerFragment()
+
+            // Introduce a short delay before navigating
+            lifecycleScope.launch {
+                delay(500)
+                // navigate back
+                navigateToTrackerFragment()
+            }
         } else {
             binding.chargingStationNameEditText.clearFocus()
             binding.chargingStationAddressEditText.clearFocus()

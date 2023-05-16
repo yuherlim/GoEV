@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.goev.database.ChargingStation
@@ -21,6 +22,8 @@ import com.example.goev.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ViewStationFragment : Fragment() {
 
@@ -28,7 +31,6 @@ class ViewStationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args by navArgs<ViewStationFragmentArgs>()
-    private var currentChargingStation: ChargingStation? = null
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
 
@@ -51,45 +53,45 @@ class ViewStationFragment : Fragment() {
 
         // Initialize viewModel
         mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         // Retrieve current charging station from database
-        mChargingStationViewModel.getChargingStationById(args.currentChargingStationId) {chargingStation ->
+        mChargingStationViewModel.getChargingStationById(args.currentChargingStationId) { chargingStation ->
             if (chargingStation != null) {
-                currentChargingStation = chargingStation
+                // Ensure view updates are done on ui thread
+                activity?.runOnUiThread {
+                    //Update view station with the item passed from recyclerView
+                    binding.viewEvStationName.text = chargingStation.name
+                    binding.viewEvStationAddress.text = chargingStation.address
+                    setViewImage(chargingStation)
+
+                    binding.navigateFab.setOnClickListener {
+                        googleMapsIntent(chargingStation)
+                    }
+
+                    binding.editImageButton.setOnClickListener {
+                        intentToRetrieveImage()
+                    }
+
+                    binding.editButton.setOnClickListener {
+                        navigateToEditStationFragment()
+                    }
+                }
             } else {
                 Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT).show()
                 navigateToTrackerFragment()
             }
         }
 
-        //Update view station with the item passed from recyclerView
-        binding.viewEvStationName.text = currentChargingStation!!.name
-        binding.viewEvStationAddress.text = currentChargingStation!!.address
-        setViewImage()
-
-        binding.navigateFab.setOnClickListener {
-            googleMapsIntent()
-        }
-
-        binding.editImageButton.setOnClickListener {
-            intentToRetrieveImage()
-        }
-
-        binding.editButton.setOnClickListener {
-            navigateToEditStationFragment()
-        }
-
-
+        return binding.root
     }
 
-    private fun setViewImage() {
-        if (currentChargingStation!!.image != null) {
-            val bitmap = ChargingStationImageConverter().extractImage(currentChargingStation!!.image)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setViewImage(chargingStation: ChargingStation) {
+        if (chargingStation.image != null) {
+            val bitmap = ChargingStationImageConverter().extractImage(chargingStation.image)
             if (bitmap != null) {
                 activity?.runOnUiThread {
                     binding.viewEvStationImage.setImageBitmap(bitmap)
@@ -113,8 +115,8 @@ class ViewStationFragment : Fragment() {
             .show()
     }
 
-    private fun googleMapsIntent() {
-        val encodedAddress = Uri.encode(currentChargingStation!!.address)
+    private fun googleMapsIntent(chargingStation: ChargingStation) {
+        val encodedAddress = Uri.encode(chargingStation.address)
         val googleMapsUri = Uri.parse("geo:0,0?q=$encodedAddress")
         val webMapsUri = Uri.parse("https://www.google.com/maps/search/?api=1&query=$encodedAddress")
         val intent = Intent(Intent.ACTION_VIEW, googleMapsUri)
@@ -127,11 +129,13 @@ class ViewStationFragment : Fragment() {
             try {
                 startActivity(webIntent)
             } catch (e: ActivityNotFoundException) {
-                // Handle the case where neither Google Maps nor a web browser is available
-                val contextView = binding.navigateFab
-                Snackbar.make(contextView, R.string.no_google_maps_message, Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.navigateFab)
-                    .show()
+                activity?.runOnUiThread {
+                    // Handle the case where neither Google Maps nor a web browser is available
+                    val contextView = binding.navigateFab
+                    Snackbar.make(contextView, R.string.no_google_maps_message, Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.navigateFab)
+                        .show()
+                }
             }
         }
     }
@@ -145,6 +149,12 @@ class ViewStationFragment : Fragment() {
         super.onResume()
     }
 
+    override fun onPause() {
+        // Unhides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        super.onPause()
+    }
+
     private fun updateViewImage() {
         if (byteArray != null) {
             val bitmap = ChargingStationImageConverter().extractImage(byteArray)
@@ -154,12 +164,6 @@ class ViewStationFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onPause() {
-        // Unhides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
-        super.onPause()
     }
 
     override fun onDestroyView() {
@@ -184,20 +188,34 @@ class ViewStationFragment : Fragment() {
     }
 
     private fun deleteChargingStation() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.delete_dialog_title))
-            .setMessage(resources.getString(R.string.delete_supporting_text))
-            .setNegativeButton(resources.getString(R.string.decline)) { _, _ ->
-                // Respond to negative button press
-            }
-            .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
-                mChargingStationViewModel.deleteChargingStation(currentChargingStation!!)
-                Toast.makeText(requireContext(),
-                    "Successfully deleted: ${currentChargingStation!!.name}",
-                    Toast.LENGTH_SHORT).show()
+        mChargingStationViewModel.getChargingStationById(args.currentChargingStationId) { chargingStation ->
+            if (chargingStation != null) {
+                // run dialog on main thread
+                activity?.runOnUiThread {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle(resources.getString(R.string.delete_dialog_title))
+                        .setMessage(resources.getString(R.string.delete_supporting_text))
+                        .setNegativeButton(resources.getString(R.string.decline)) { _, _ ->
+                            // Respond to negative button press
+                        }
+                        .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
+                            mChargingStationViewModel.deleteChargingStation(chargingStation)
+                            Toast.makeText(requireContext(),
+                                "Successfully deleted: ${chargingStation.name}",
+                                Toast.LENGTH_SHORT).show()
+                            // Introduce a short delay before navigating
+                            lifecycleScope.launch {
+                                delay(500)
+                                navigateToTrackerFragment()
+                            }
+                        }
+                        .show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT).show()
                 navigateToTrackerFragment()
             }
-            .show()
+        }
     }
 
     private fun navigateToTrackerFragment() {
