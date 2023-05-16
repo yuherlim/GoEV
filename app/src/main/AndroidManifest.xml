@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoEV"
         tools:targetApi="31">
+
         <activity
             android:name=".TkPostContent"
             android:exported="false" />

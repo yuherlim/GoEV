@@ -11,4 +11,6 @@
     <dimen name="view_fab_margin_bottom">88dp</dimen>
     <dimen name="add_station_scroll_view_bottom_margin">88dp</dimen>
     <dimen name="view_station_scroll_view_bottom_margin">88dp</dimen>
+    <dimen name="top_app_bar_icon_size">64dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
