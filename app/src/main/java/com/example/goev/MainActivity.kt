@@ -116,4 +116,12 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.tracker_action_bar_menu, menu)
         return true
     }
+
+    fun hideTopAppBar() {
+        supportActionBar?.hide()
+    }
+
+    fun showTopAppBar() {
+        supportActionBar?.show()
+    }
 }
