@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goev.R
-import com.example.goev.chargingstationlist.TrackerFragmentDirections
 import com.example.goev.databaseChargingStation.ChargingStationViewModel
 import com.example.goev.databinding.FragmentTrackerBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

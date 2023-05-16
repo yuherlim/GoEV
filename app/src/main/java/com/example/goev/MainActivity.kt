@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.goev.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationBarView.LABEL_VISIBILITY_LABELED
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -82,14 +83,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavMenu(navController: NavController) {
         val bottomNav = binding.bottomNavigation
+        bottomNav.labelVisibilityMode = LABEL_VISIBILITY_LABELED
         bottomNav.setupWithNavController(navController)
         //Navigates to the top-level of the following navigation icon selected
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
+        bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.trackerFragment -> {
                     navController.navigate(R.id.trackerFragment)
                     true
                 }
+//                R.id.tipsAndKnowledgeFragment -> {
+//                    navController.navigate(R.id.tipsAndKnowledgeFragment)
+//                    true
+//                }
+//                R.id.forumFragment -> {
+//                    navController.navigate(R.id.forumFragment)
+//                    true
+//                }
+//                R.id.settingsFragment -> {
+//                    navController.navigate(R.id.settingsFragment)
+//                    true
+//                }
                 else -> {
                     Toast.makeText(this, "No such navigation item", Toast.LENGTH_SHORT).show()
                     false
