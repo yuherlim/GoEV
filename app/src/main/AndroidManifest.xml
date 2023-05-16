@@ -20,9 +20,6 @@
             android:name=".TkPostContent"
             android:exported="false" />
         <activity
-            android:name=".TkIntoPostAct"
-            android:exported="false" />
-        <activity
             android:name=".TipsAndKnowledge"
             android:exported="false"
             android:label="@string/title_activity_tips_and_knowledge"
