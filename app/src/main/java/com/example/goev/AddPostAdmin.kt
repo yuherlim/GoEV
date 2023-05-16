@@ -27,6 +27,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.goev.databases.post.PostViewModel
 import com.example.goev.databases.post.TkPostData
 import com.example.goev.databinding.FragmentAddPostAdminBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.ByteArrayOutputStream
 
 class AddPostAdmin : Fragment() {
@@ -94,4 +95,17 @@ class AddPostAdmin : Fragment() {
         }
     }
 
+    override fun onResume() {
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
+    }
 }
