@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <style name="Theme.App" parent="Theme.Material3.Light.NoActionBar">-->
-<!--        <item name="colorSurface">@color/md_theme_light_surface</item>-->
-<!--        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>-->
-<!--        <item name="textAppearanceTitleLarge">@style/TextAppearance.App.TitleLarge</item>-->
-<!--        <item name="textAppearanceTitleMedium">@style/TextAppearance.App.TitleMedium</item>-->
-<!--        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>-->
-<!--    </style>-->
 
-<!--    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">-->
-<!--        <item name="fontFamily">@font/rubik</item>-->
-<!--        <item name="android:fontFamily">@font/rubik</item>-->
-<!--    </style>-->
+    <style name="titleTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">24sp</item>
+    </style>
 
-<!--    <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">-->
-<!--        <item name="fontFamily">@font/rubik</item>-->
-<!--        <item name="android:fontFamily">@font/rubik</item>-->
-<!--    </style>-->
-
-<!--    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">-->
-<!--        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>-->
-<!--        <item name="titleTextAppearance">@style/TextAppearance.App.TitleLarge</item>-->
-<!--        <item name="subtitleTextAppearance">@style/TextAppearance.App.TitleMedium</item>-->
-<!--    </style>-->
-
-<!--    <style name="ThemeOverlay.App.Toolbar" parent="">-->
-<!--        <item name="colorSurface">@color/md_theme_light_surface</item>-->
-<!--        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>-->
-<!--    </style>-->
+    <style name="contentTextStyle">
+        <item name="android:layout_width">357dp</item>
+        <item name="android:layout_height">111dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

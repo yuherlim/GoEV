@@ -30,4 +30,10 @@
     </style>
 
     <style name="Theme.GoEV" parent="Base.Theme.GoEV" />
+    <style name="Theme.GoEV.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.GoEV.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.GoEV.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
