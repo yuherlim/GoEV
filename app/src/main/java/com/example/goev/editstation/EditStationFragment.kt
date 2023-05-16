@@ -1,4 +1,4 @@
-package com.example.goev
+package com.example.goev.editstation
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+
+
+import com.example.goev.R
 import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentEditStationBinding
@@ -26,6 +29,7 @@ class EditStationFragment : Fragment() {
     private val args by navArgs<EditStationFragmentArgs>()
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
+    private lateinit var editStationViewModel: EditStationViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,18 +42,31 @@ class EditStationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_station, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_edit_station, container, false)
 
-        // Initialize viewModel
-        mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+        // Initialize viewModel to retrieve chargingStation data from database
+        mChargingStationViewModel =
+            ViewModelProvider(this).get(ChargingStationViewModel::class.java)
+
+        // Initialize edit station view model to maintain edit text data on configuration changes
+        editStationViewModel = ViewModelProvider(this).get(EditStationViewModel::class.java)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Retrieve current charging station from database
         mChargingStationViewModel.getChargingStationById(args.currentChargingStationId) { chargingStation ->
             if (chargingStation != null) {
                 activity?.runOnUiThread {
                     //Update edit station with the item passed from view station
-                    binding.editChargingStationNameEditText.setText(chargingStation.name)
-                    binding.editChargingStationAddressEditText.setText(chargingStation.address)
+                    if (editStationViewModel.stationAddress == null && editStationViewModel.stationName == null) {
+                        binding.editChargingStationNameEditText.setText(chargingStation.name)
+                        binding.editChargingStationAddressEditText.setText(chargingStation.address)
+                    }
 
                     //edit button
                     binding.saveBtn.setOnClickListener {
@@ -71,21 +88,16 @@ class EditStationFragment : Fragment() {
                         if (hasFocus) {
                             binding.editChargingStationNameTextfield.error = null
                         }
+
+
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT)
+                    .show()
                 navigateToViewStationFragment()
             }
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
     }
 
     private fun updateDatabase(chargingStation: ChargingStation) {
@@ -93,12 +105,21 @@ class EditStationFragment : Fragment() {
         val chargingStationAddress = binding.editChargingStationAddressEditText.text.toString()
         val chargingStationImage = chargingStation.image
 
-        if(inputCheck(chargingStationName, chargingStationAddress)) {
+        if (inputCheck(chargingStationName, chargingStationAddress)) {
             // Create chargingStation Object
-            val chargingStation = ChargingStation(args.currentChargingStationId, chargingStationName, chargingStationAddress, chargingStationImage)
+            val chargingStation = ChargingStation(
+                args.currentChargingStationId,
+                chargingStationName,
+                chargingStationAddress,
+                chargingStationImage
+            )
             // Update current chargingStation
             mChargingStationViewModel.updateChargingStation(chargingStation)
-            Toast.makeText(requireContext(), "Successfully edited charging station.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Successfully edited charging station.",
+                Toast.LENGTH_SHORT
+            ).show()
 
             // Introduce a short delay before navigating
             lifecycleScope.launch {
@@ -121,20 +142,25 @@ class EditStationFragment : Fragment() {
             }
         }
     }
+
     override fun onResume() {
         // Hides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.GONE
         super.onResume()
     }
 
     override fun onPause() {
         // Unhides bottom navigation
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility =
+            View.VISIBLE
         super.onPause()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        editStationViewModel.stationName = binding.editChargingStationNameEditText.text.toString()
+        editStationViewModel.stationAddress = binding.editChargingStationAddressEditText.text.toString()
         _binding = null
     }
 
@@ -145,7 +171,8 @@ class EditStationFragment : Fragment() {
     }
 
     private fun navigateToViewStationFragment() {
-        val action = EditStationFragmentDirections.actionEditStationFragmentToViewStationFragment(args.currentChargingStationId)
+        val action =
+            EditStationFragmentDirections.actionEditStationFragmentToViewStationFragment(args.currentChargingStationId)
         findNavController().navigate(action)
     }
 

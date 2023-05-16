@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/editStationFragment"
-        android:name="com.example.goev.EditStationFragment"
+        android:name="com.example.goev.editstation.EditStationFragment"
         android:label="@string/fragment_edit_station_label"
         tools:layout="@layout/fragment_edit_station" >
         <action

@@ -54,6 +54,12 @@ class ViewStationFragment : Fragment() {
         // Initialize viewModel
         mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         // Retrieve current charging station from database
         mChargingStationViewModel.getChargingStationById(args.currentChargingStationId) { chargingStation ->
             if (chargingStation != null) {
@@ -81,12 +87,6 @@ class ViewStationFragment : Fragment() {
                 navigateToTrackerFragment()
             }
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setViewImage(chargingStation: ChargingStation) {

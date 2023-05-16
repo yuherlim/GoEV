@@ -50,6 +50,13 @@ class AddStationFragment : Fragment() {
         // Initialize charging station view model
         mChargingStationViewModel = ViewModelProvider(this).get(ChargingStationViewModel::class.java)
 
+        return binding.root
+    }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.addImgButton.setOnClickListener {
             intentToRetrieveImage()
@@ -76,16 +83,6 @@ class AddStationFragment : Fragment() {
             }
 
         }
-
-        return binding.root
-    }
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
     }
 
     private fun intentToRetrieveImage() {
