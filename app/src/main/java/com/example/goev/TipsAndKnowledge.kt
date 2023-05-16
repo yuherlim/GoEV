@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.post.PostViewModel
@@ -34,6 +35,10 @@ class TipsAndKnowledge : Fragment() {
                 lifecycleScope.launch(Dispatchers.Main){
                     binding.topBarUserProfilePic.setImageBitmap(profilePic)
 
+                    // Navigate to user profile when clicked
+                    binding.topBarUserProfilePic.setOnClickListener {
+                        findNavController().navigate(R.id.myProfileFragment)
+                    }
 
                     //add new post (by admin only)
                     // maybe add check function to see if a user login via admin acc / normal acc
