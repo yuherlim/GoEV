@@ -1,4 +1,4 @@
-package com.example.goev.editstation
+package com.example.goev.chargingstationtracker.editchargingstation
 
 import androidx.lifecycle.ViewModel
 

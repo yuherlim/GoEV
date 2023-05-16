@@ -1,4 +1,4 @@
-package com.example.goev.chargingstationlist
+package com.example.goev.chargingstationtracker.chargingstationlist
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goev.R
+import com.example.goev.chargingstationlist.TrackerFragmentDirections
 import com.example.goev.database.ChargingStation
 
 class TrackerListAdapter : RecyclerView.Adapter<TrackerListAdapter.MyViewHolder>() {

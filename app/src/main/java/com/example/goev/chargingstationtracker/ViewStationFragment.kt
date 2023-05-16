@@ -1,4 +1,4 @@
-package com.example.goev
+package com.example.goev.chargingstationtracker
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -15,10 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.goev.R
+import com.example.goev.ViewStationFragmentArgs
+import com.example.goev.ViewStationFragmentDirections
 import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentViewStationBinding
-import com.example.goev.utils.ChargingStationImageConverter
+import com.example.goev.chargingstationtracker.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/trackerFragment"
-        android:name="com.example.goev.chargingstationlist.TrackerFragment"
+        android:name="com.example.goev.chargingstationtracker.chargingstationlist.TrackerFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_tracker" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/addStationFragment"
-        android:name="com.example.goev.AddStationFragment"
+        android:name="com.example.goev.chargingstationtracker.AddStationFragment"
         android:label="@string/fragment_add_station_label"
         tools:layout="@layout/fragment_add_station" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewStationFragment"
-        android:name="com.example.goev.ViewStationFragment"
+        android:name="com.example.goev.chargingstationtracker.ViewStationFragment"
         android:label="@string/fragment_view_station_label"
         tools:layout="@layout/fragment_view_station" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/editStationFragment"
-        android:name="com.example.goev.editstation.EditStationFragment"
+        android:name="com.example.goev.chargingstationtracker.editchargingstation.EditStationFragment"
         android:label="@string/fragment_edit_station_label"
         tools:layout="@layout/fragment_edit_station" >
         <action

@@ -1,4 +1,4 @@
-package com.example.goev.editstation
+package com.example.goev.chargingstationtracker.editchargingstation
 
 
 import android.os.Bundle
@@ -15,6 +15,8 @@ import com.example.goev.R
 import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentEditStationBinding
+import com.example.goev.editstation.EditStationFragmentArgs
+import com.example.goev.editstation.EditStationFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay

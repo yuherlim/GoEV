@@ -1,4 +1,4 @@
-package com.example.goev.utils
+package com.example.goev.chargingstationtracker.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
