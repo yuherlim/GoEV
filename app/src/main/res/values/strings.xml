@@ -40,4 +40,6 @@
     <string name="no_google_maps_message">Google maps not installed.</string>
     <string name="add_img_btn_text">Add image</string>
     <string name="edit_image_btn_text">Edit image</string>
+    <string name="image_edit_success_msg">Image edit successful.</string>
+    <string name="img_add_success_msg">Image uploded successfully.</string>
 </resources>

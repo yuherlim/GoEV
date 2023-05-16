@@ -23,6 +23,8 @@ class EditStationFragment : Fragment() {
     private val args by navArgs<EditStationFragmentArgs>()
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -74,18 +76,17 @@ class EditStationFragment : Fragment() {
     private fun updateDatabase() {
         val chargingStationName = binding.editChargingStationNameEditText.text.toString()
         val chargingStationAddress = binding.editChargingStationAddressEditText.text.toString()
-
+        val chargingStationImage = args.currentChargingStation.image
 
         if(inputCheck(chargingStationName, chargingStationAddress)) {
             // Create chargingStation Object
-            val chargingStation = ChargingStation(args.currentChargingStation.id, chargingStationName, chargingStationAddress)
+            val chargingStation = ChargingStation(args.currentChargingStation.id, chargingStationName, chargingStationAddress, chargingStationImage)
             // Update current chargingStation
             mChargingStationViewModel.updateChargingStation(chargingStation)
             Toast.makeText(requireContext(), "Successfully edited charging station.", Toast.LENGTH_SHORT).show()
             // navigate back
             navigateToViewStationFragment(chargingStation)
         } else {
-//            mChargingStationViewModel.setIsError(true)
             binding.editChargingStationNameEditText.clearFocus()
             binding.editChargingStationAddressEditText.clearFocus()
             if (TextUtils.isEmpty(chargingStationName))

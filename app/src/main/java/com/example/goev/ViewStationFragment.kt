@@ -1,9 +1,13 @@
 package com.example.goev
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -12,8 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentViewStationBinding
+import com.example.goev.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +32,9 @@ class ViewStationFragment : Fragment() {
     private val args by navArgs<ViewStationFragmentArgs>()
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
+
+    private var byteArray: ByteArray? = null
+    private lateinit var imageInBitmap: Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +59,19 @@ class ViewStationFragment : Fragment() {
         binding.viewEvStationName.text = args.currentChargingStation.name
         binding.viewEvStationAddress.text = args.currentChargingStation.address
 
+        if (args.currentChargingStation.image != null) {
+            val bitmap = ChargingStationImageConverter().extractImage(args.currentChargingStation.image)
+            if (bitmap != null) {
+                activity?.runOnUiThread {
+                    binding.viewEvStationImage.setImageBitmap(bitmap)
+                }
+            }
+        }
+
+        binding.editImageButton.setOnClickListener {
+            intentToRetrieveImage()
+        }
+
         binding.editButton.setOnClickListener {
             navigateToEditStationFragment()
         }
@@ -57,6 +79,28 @@ class ViewStationFragment : Fragment() {
         binding.navigateFab.setOnClickListener {
             googleMapsIntent()
         }
+    }
+
+    private fun updateDatabaseWithImage() {
+        val chargingStationImage = byteArray
+        if (byteArray != null) {
+            // Create chargingStation Object
+            val chargingStation = ChargingStation(args.currentChargingStation.id,
+                args.currentChargingStation.name,
+                args.currentChargingStation.address,
+                chargingStationImage)
+            // Update current chargingStation
+            mChargingStationViewModel.updateChargingStation(chargingStation)
+
+            imageEditSuccessMsg()
+        }
+    }
+
+    private fun imageEditSuccessMsg() {
+        val contextView = binding.navigateFab
+        Snackbar.make(contextView, R.string.image_edit_success_msg, Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding.navigateFab)
+            .show()
     }
 
     private fun googleMapsIntent() {
@@ -85,6 +129,8 @@ class ViewStationFragment : Fragment() {
     override fun onResume() {
         // Hides bottom navigation
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+
+        // Reapplies the profile pic
         super.onResume()
     }
 
@@ -140,5 +186,23 @@ class ViewStationFragment : Fragment() {
     private fun navigateToEditStationFragment() {
         val action = ViewStationFragmentDirections.actionViewStationFragmentToEditStationFragment(args.currentChargingStation)
         findNavController().navigate(action)
+    }
+
+    private fun intentToRetrieveImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/jpeg")
+        startActivityForResult(intent, AddStationFragment.IMAGE_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == AddStationFragment.IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            val imageUri = data?.data
+            if(imageUri != null){
+                imageInBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+                byteArray = ChargingStationImageConverter().convertImage(imageInBitmap)
+                updateDatabaseWithImage()
+            }
+        }
     }
 }

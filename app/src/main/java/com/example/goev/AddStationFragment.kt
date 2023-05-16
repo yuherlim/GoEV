@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.*
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.goev.database.ChargingStation
 import com.example.goev.database.ChargingStationViewModel
 import com.example.goev.databinding.FragmentAddStationBinding
+import com.example.goev.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 
@@ -25,7 +25,6 @@ class AddStationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
-    private lateinit var imageView: ImageView
     private var byteArray: ByteArray? = null
     private lateinit var imageInBitmap: Bitmap
 
@@ -57,9 +56,7 @@ class AddStationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addImgButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.type = "image/jpeg"
-            startActivityForResult(intent, IMAGE_REQUEST_CODE)
+            intentToRetrieveImage()
         }
 
         binding.addBtn.setOnClickListener {
@@ -85,17 +82,31 @@ class AddStationFragment : Fragment() {
         }
     }
 
+    private fun intentToRetrieveImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/jpeg")
+        startActivityForResult(intent, IMAGE_REQUEST_CODE)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK){
             val imageUri = data?.data
             if(imageUri != null){
-                imageView.setImageURI(imageUri)
                 imageInBitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
-                byteArray = ProfilePicConverter().convertImage(imageInBitmap)
+                byteArray = ChargingStationImageConverter().convertImage(imageInBitmap)
+                imageUploadedSuccessMessage()
             }
         }
     }
+
+    private fun imageUploadedSuccessMessage() {
+        val contextView = binding.addImgButton
+        Snackbar.make(contextView, R.string.img_add_success_msg, Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding.divider)
+            .show()
+    }
+
     override fun onResume() {
         // Hides bottom navigation
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
@@ -133,11 +144,11 @@ class AddStationFragment : Fragment() {
     private fun insertDataToDatabase() {
         val chargingStationName = binding.chargingStationNameEditText.text.toString()
         val chargingStationAddress = binding.chargingStationAddressEditText.text.toString()
-
-
+        val chargingStationImage = byteArray
+        
         if(inputCheck(chargingStationName, chargingStationAddress)) {
             // Create chargingStation Object
-            val chargingStation = ChargingStation(0, chargingStationName, chargingStationAddress)
+            val chargingStation = ChargingStation(0, chargingStationName, chargingStationAddress, chargingStationImage)
             // Add data to database
             mChargingStationViewModel.addChargingStation(chargingStation)
             Toast.makeText(requireContext(), "Successfully added charging station.", Toast.LENGTH_SHORT).show()
@@ -146,16 +157,22 @@ class AddStationFragment : Fragment() {
         } else {
             binding.chargingStationNameEditText.clearFocus()
             binding.chargingStationAddressEditText.clearFocus()
+
             // Check for empty fields, give error message to those that are empty
             if (TextUtils.isEmpty(chargingStationName))
                 binding.chargingStationNameTextfield.error = "Empty Field"
             if (TextUtils.isEmpty(chargingStationAddress))
                 binding.chargingStationAddressTextfield.error = "Empty Field"
 
-            val contextView = binding.addBtn
-            Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
-                .setAnchorView(binding.divider)
-                .show()
+            emptyFieldsErrorMessage()
         }
     }
+
+    private fun emptyFieldsErrorMessage() {
+        val contextView = binding.addBtn
+        Snackbar.make(contextView, R.string.error_add_message, Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding.divider)
+            .show()
+    }
+
 }
