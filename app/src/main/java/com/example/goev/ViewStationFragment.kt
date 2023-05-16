@@ -58,15 +58,8 @@ class ViewStationFragment : Fragment() {
         //Update view station with the item passed from recyclerView
         binding.viewEvStationName.text = args.currentChargingStation.name
         binding.viewEvStationAddress.text = args.currentChargingStation.address
+        setViewImage()
 
-        if (args.currentChargingStation.image != null) {
-            val bitmap = ChargingStationImageConverter().extractImage(args.currentChargingStation.image)
-            if (bitmap != null) {
-                activity?.runOnUiThread {
-                    binding.viewEvStationImage.setImageBitmap(bitmap)
-                }
-            }
-        }
 
         binding.editImageButton.setOnClickListener {
             intentToRetrieveImage()
@@ -81,17 +74,21 @@ class ViewStationFragment : Fragment() {
         }
     }
 
-    private fun updateDatabaseWithImage() {
-        val chargingStationImage = byteArray
-        if (byteArray != null) {
-            // Create chargingStation Object
-            val chargingStation = ChargingStation(args.currentChargingStation.id,
-                args.currentChargingStation.name,
-                args.currentChargingStation.address,
-                chargingStationImage)
-            // Update current chargingStation
-            mChargingStationViewModel.updateChargingStation(chargingStation)
+    private fun setViewImage() {
+        if (args.currentChargingStation.image != null) {
+            val bitmap = ChargingStationImageConverter().extractImage(args.currentChargingStation.image)
+            if (bitmap != null) {
+                activity?.runOnUiThread {
+                    binding.viewEvStationImage.setImageBitmap(bitmap)
+                }
+            }
+        }
+    }
 
+    private fun updateDatabaseWithImage() {
+        if (byteArray != null) {
+            // Update current chargingStation
+            mChargingStationViewModel.updateChargingStationImage(byteArray!!, args.currentChargingStation.id)
             imageEditSuccessMsg()
         }
     }
@@ -130,8 +127,20 @@ class ViewStationFragment : Fragment() {
         // Hides bottom navigation
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
 
-        // Reapplies the profile pic
+        // Update image with new edited image
+        updateViewImage()
         super.onResume()
+    }
+
+    private fun updateViewImage() {
+        if (byteArray != null) {
+            val bitmap = ChargingStationImageConverter().extractImage(byteArray)
+            if (bitmap != null) {
+                activity?.runOnUiThread {
+                    binding.viewEvStationImage.setImageBitmap(bitmap)
+                }
+            }
+        }
     }
 
     override fun onPause() {

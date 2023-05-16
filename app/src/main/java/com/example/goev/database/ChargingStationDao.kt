@@ -25,6 +25,9 @@ interface ChargingStationDao {
     @Query("SELECT * FROM charging_station_table WHERE name LIKE :searchQuery OR address LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): Flow<List<ChargingStation>>
 
-    @Query("UPDATE charging_station_table SET image = :uploadedImage")
-    fun updateChargingStationImage(uploadedImage: ByteArray)
+    @Query("UPDATE charging_station_table SET image = :uploadedImage WHERE id = :id")
+    fun updateChargingStationImage(uploadedImage: ByteArray, id: Int)
+
+//    @Query("SELECT * FROM charging_station_table WHERE id = :id")
+//    fun getChargingStation(id: Int): ChargingStation?
 }

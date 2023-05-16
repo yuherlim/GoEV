@@ -28,6 +28,12 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
         }
     }
 
+    fun updateChargingStationImage(uploadedImage: ByteArray, id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateChargingStationImage(uploadedImage, id)
+        }
+    }
+
     fun deleteChargingStation(chargingStation: ChargingStation) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteChargingStation(chargingStation)
@@ -44,10 +50,8 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
         return repository.searchDatabase(searchQuery).asLiveData()
     }
 
-    fun updateChargingStationImage(uploadedImage: ByteArray) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateChargingStationImage(uploadedImage)
-        }
-    }
+
+
+//    fun getChargingStation()
 
 }
