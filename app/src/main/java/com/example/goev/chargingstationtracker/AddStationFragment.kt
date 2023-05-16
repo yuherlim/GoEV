@@ -15,8 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.goev.AddStationFragmentDirections
 import com.example.goev.R
-import com.example.goev.database.ChargingStation
-import com.example.goev.database.ChargingStationViewModel
+import com.example.goev.databaseChargingStation.ChargingStation
+import com.example.goev.databaseChargingStation.ChargingStationViewModel
 import com.example.goev.databinding.FragmentAddStationBinding
 import com.example.goev.chargingstationtracker.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView

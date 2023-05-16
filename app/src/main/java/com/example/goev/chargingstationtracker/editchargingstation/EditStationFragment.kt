@@ -12,8 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.goev.R
-import com.example.goev.database.ChargingStation
-import com.example.goev.database.ChargingStationViewModel
+import com.example.goev.databaseChargingStation.ChargingStation
+import com.example.goev.databaseChargingStation.ChargingStationViewModel
 import com.example.goev.databinding.FragmentEditStationBinding
 import com.example.goev.editstation.EditStationFragmentArgs
 import com.example.goev.editstation.EditStationFragmentDirections

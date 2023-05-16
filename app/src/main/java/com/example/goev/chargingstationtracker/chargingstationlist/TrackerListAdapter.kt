@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goev.R
 import com.example.goev.chargingstationlist.TrackerFragmentDirections
-import com.example.goev.database.ChargingStation
+import com.example.goev.databaseChargingStation.ChargingStation
 
 class TrackerListAdapter : RecyclerView.Adapter<TrackerListAdapter.MyViewHolder>() {
 

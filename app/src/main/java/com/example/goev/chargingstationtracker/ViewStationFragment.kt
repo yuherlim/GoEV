@@ -18,8 +18,8 @@ import androidx.navigation.fragment.navArgs
 import com.example.goev.R
 import com.example.goev.ViewStationFragmentArgs
 import com.example.goev.ViewStationFragmentDirections
-import com.example.goev.database.ChargingStation
-import com.example.goev.database.ChargingStationViewModel
+import com.example.goev.databaseChargingStation.ChargingStation
+import com.example.goev.databaseChargingStation.ChargingStationViewModel
 import com.example.goev.databinding.FragmentViewStationBinding
 import com.example.goev.chargingstationtracker.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView

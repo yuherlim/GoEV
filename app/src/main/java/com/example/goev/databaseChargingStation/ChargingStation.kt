@@ -1,4 +1,4 @@
-package com.example.goev.database
+package com.example.goev.databaseChargingStation
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

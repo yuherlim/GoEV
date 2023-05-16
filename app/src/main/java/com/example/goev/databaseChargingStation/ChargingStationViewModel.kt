@@ -1,4 +1,4 @@
-package com.example.goev.database
+package com.example.goev.databaseChargingStation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

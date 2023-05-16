@@ -1,4 +1,4 @@
-package com.example.goev.database
+package com.example.goev.databaseChargingStation
 
 import android.content.Context
 import androidx.room.Database
