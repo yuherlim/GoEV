@@ -7,8 +7,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -30,8 +28,11 @@ class ViewStationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args by navArgs<ViewStationFragmentArgs>()
+    private var currentChargingStation: ChargingStation? = null
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
+
+
 
     private var byteArray: ByteArray? = null
     private lateinit var imageInBitmap: Bitmap
@@ -55,11 +56,25 @@ class ViewStationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Retrieve current charging station from database
+        mChargingStationViewModel.getChargingStationById(args.currentChargingStationId) {chargingStation ->
+            if (chargingStation != null) {
+                currentChargingStation = chargingStation
+            } else {
+                Toast.makeText(requireContext(), "Valid id is not passed in.", Toast.LENGTH_SHORT).show()
+                navigateToTrackerFragment()
+            }
+        }
+
         //Update view station with the item passed from recyclerView
-        binding.viewEvStationName.text = args.currentChargingStation.name
-        binding.viewEvStationAddress.text = args.currentChargingStation.address
+        binding.viewEvStationName.text = currentChargingStation!!.name
+        binding.viewEvStationAddress.text = currentChargingStation!!.address
         setViewImage()
 
+        binding.navigateFab.setOnClickListener {
+            googleMapsIntent()
+        }
 
         binding.editImageButton.setOnClickListener {
             intentToRetrieveImage()
@@ -69,14 +84,12 @@ class ViewStationFragment : Fragment() {
             navigateToEditStationFragment()
         }
 
-        binding.navigateFab.setOnClickListener {
-            googleMapsIntent()
-        }
+
     }
 
     private fun setViewImage() {
-        if (args.currentChargingStation.image != null) {
-            val bitmap = ChargingStationImageConverter().extractImage(args.currentChargingStation.image)
+        if (currentChargingStation!!.image != null) {
+            val bitmap = ChargingStationImageConverter().extractImage(currentChargingStation!!.image)
             if (bitmap != null) {
                 activity?.runOnUiThread {
                     binding.viewEvStationImage.setImageBitmap(bitmap)
@@ -88,7 +101,7 @@ class ViewStationFragment : Fragment() {
     private fun updateDatabaseWithImage() {
         if (byteArray != null) {
             // Update current chargingStation
-            mChargingStationViewModel.updateChargingStationImage(byteArray!!, args.currentChargingStation.id)
+            mChargingStationViewModel.updateChargingStationImage(byteArray!!, args.currentChargingStationId)
             imageEditSuccessMsg()
         }
     }
@@ -101,7 +114,7 @@ class ViewStationFragment : Fragment() {
     }
 
     private fun googleMapsIntent() {
-        val encodedAddress = Uri.encode(args.currentChargingStation.address)
+        val encodedAddress = Uri.encode(currentChargingStation!!.address)
         val googleMapsUri = Uri.parse("geo:0,0?q=$encodedAddress")
         val webMapsUri = Uri.parse("https://www.google.com/maps/search/?api=1&query=$encodedAddress")
         val intent = Intent(Intent.ACTION_VIEW, googleMapsUri)
@@ -178,9 +191,9 @@ class ViewStationFragment : Fragment() {
                 // Respond to negative button press
             }
             .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
-                mChargingStationViewModel.deleteChargingStation(args.currentChargingStation)
+                mChargingStationViewModel.deleteChargingStation(currentChargingStation!!)
                 Toast.makeText(requireContext(),
-                    "Successfully deleted: ${args.currentChargingStation.name}",
+                    "Successfully deleted: ${currentChargingStation!!.name}",
                     Toast.LENGTH_SHORT).show()
                 navigateToTrackerFragment()
             }
@@ -193,7 +206,7 @@ class ViewStationFragment : Fragment() {
     }
 
     private fun navigateToEditStationFragment() {
-        val action = ViewStationFragmentDirections.actionViewStationFragmentToEditStationFragment(args.currentChargingStation)
+        val action = ViewStationFragmentDirections.actionViewStationFragmentToEditStationFragment(args.currentChargingStationId)
         findNavController().navigate(action)
     }
 

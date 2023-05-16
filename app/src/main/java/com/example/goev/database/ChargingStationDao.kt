@@ -28,6 +28,9 @@ interface ChargingStationDao {
     @Query("UPDATE charging_station_table SET image = :uploadedImage WHERE id = :id")
     fun updateChargingStationImage(uploadedImage: ByteArray, id: Int)
 
+    @Query("SELECT * FROM charging_station_table WHERE id= :id")
+    fun getChargingStationById(id: Int): ChargingStation?
+
 //    @Query("SELECT * FROM charging_station_table WHERE id = :id")
 //    fun getChargingStation(id: Int): ChargingStation?
 }

@@ -49,9 +49,11 @@ class ChargingStationViewModel(application: Application): AndroidViewModel(appli
     fun searchDatabase(searchQuery: String): LiveData<List<ChargingStation>> {
         return repository.searchDatabase(searchQuery).asLiveData()
     }
-
-
-
-//    fun getChargingStation()
+    fun getChargingStationById(id: Int, callback: (ChargingStation?) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getChargingStationById(id)
+            callback(result)
+        }
+    }
 
 }

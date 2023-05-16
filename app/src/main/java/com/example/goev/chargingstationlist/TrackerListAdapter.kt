@@ -30,14 +30,11 @@ class TrackerListAdapter: RecyclerView.Adapter<TrackerListAdapter.MyViewHolder>(
         holder.name.text = currentItem.name
         holder.address.text = currentItem.address
         holder.trackerListItem.setOnClickListener{
-            navigateToViewStationFragment(holder, currentItem)
+            val action = TrackerFragmentDirections.actionTrackerFragmentToViewStationFragment(currentItem.id)
+            holder.itemView.findNavController().navigate(action)
         }
     }
 
-    private fun navigateToViewStationFragment(holder: MyViewHolder, currentItem: ChargingStation) {
-        val action = TrackerFragmentDirections.actionTrackerFragmentToViewStationFragment(currentItem)
-        holder.itemView.findNavController().navigate(action)
-    }
 
     // used to update recylcerview every time there is a data change
     fun setData(chargingStation: List<ChargingStation>) {
