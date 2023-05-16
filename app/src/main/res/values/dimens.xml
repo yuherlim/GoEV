@@ -8,4 +8,5 @@
     <dimen name="tracker_list_padding">16dp</dimen>
     <dimen name="ev_station_name_view_size">25sp</dimen>
     <dimen name="fragment_bottom_nav_margin">80dp</dimen>
+    <dimen name="view_fab_margin_bottom">88dp</dimen>
 </resources>
