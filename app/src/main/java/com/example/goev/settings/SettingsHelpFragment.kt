@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.navigation.findNavController
+import com.example.goev.MainActivity
 import com.example.goev.R
 import com.example.goev.databinding.ActivityRegisterBinding
 import com.example.goev.databinding.ActivitySettingsHelpBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsHelpFragment : Fragment() {
 
@@ -60,6 +62,20 @@ class SettingsHelpFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onResume() {
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
     }
 
 }

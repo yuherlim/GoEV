@@ -1,19 +1,24 @@
 package com.example.goev.settings
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.goev.R
 import com.example.goev.databinding.ActivitySettingsBinding
 
+@Suppress("DEPRECATION")
 class SettingsFragment : Fragment() {
 
     private lateinit var viewModel: SettingsViewModel
     private lateinit var binding: ActivitySettingsBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,18 +46,25 @@ class SettingsFragment : Fragment() {
         }
 
 
-        //navigate to my profile (will change to the top nav bar profile pic)
-        binding.profilePicButton.setOnClickListener{view : View ->
-            view.findNavController().navigate(R.id.action_settingsFragment_to_myProfileFragment)
-        }
-
-        //this one button need change to the bottom navigation bar button
-        binding.tempButton.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_settingsFragment_to_tipsAndKnowledge)
-        }
-
-
         return binding.root
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.settings_action_bar_menu, menu)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_view_user_info -> {
+                findNavController().navigate(R.id.myProfileFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

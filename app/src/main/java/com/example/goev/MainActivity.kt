@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val topLevelDestinations = setOf(R.id.trackerFragment)
+    private val topLevelDestinations = setOf(R.id.trackerFragment, R.id.settingsFragment, R.id.tipsAndKnowledge)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -92,18 +92,18 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.trackerFragment)
                     true
                 }
-//                R.id.tipsAndKnowledgeFragment -> {
-//                    navController.navigate(R.id.tipsAndKnowledgeFragment)
-//                    true
-//                }
+                R.id.tipsAndKnowledge -> {
+                    navController.navigate(R.id.tipsAndKnowledge)
+                    true
+                }
 //                R.id.forumFragment -> {
 //                    navController.navigate(R.id.forumFragment)
 //                    true
 //                }
-//                R.id.settingsFragment -> {
-//                    navController.navigate(R.id.settingsFragment)
-//                    true
-//                }
+                R.id.settingsFragment -> {
+                    navController.navigate(R.id.settingsFragment)
+                    true
+                }
                 else -> {
                     Toast.makeText(this, "No such navigation item", Toast.LENGTH_SHORT).show()
                     false

@@ -85,7 +85,7 @@ class TrackerFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_view_user_info -> {
-                // Save profile changes.
+                findNavController().navigate(R.id.myProfileFragment)
                 true
             }
             R.id.action_delete_all -> {

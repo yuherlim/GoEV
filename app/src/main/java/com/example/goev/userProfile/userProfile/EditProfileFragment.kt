@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.goev.MainActivity
 import com.example.goev.ProfilePicConverter
 import com.example.goev.R
 import com.example.goev.databinding.ActivityEditProfileBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class EditProfileFragment : Fragment() {
 
@@ -107,5 +109,16 @@ class EditProfileFragment : Fragment() {
                 }
             }
         }
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
     }
 }

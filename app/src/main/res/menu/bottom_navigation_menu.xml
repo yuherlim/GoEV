@@ -6,14 +6,17 @@
         android:icon="@drawable/ic_tracker"
         android:title="@string/tracker"/>
     <item
+        android:id="@+id/tipsAndKnowledge"
         android:enabled="true"
         android:icon="@drawable/ic_tips_and_knowledge"
         android:title="@string/tips_and_knowledge"/>
     <item
+
         android:enabled="true"
         android:icon="@drawable/ic_forum"
         android:title="@string/forum"/>
     <item
+        android:id="@+id/settingsFragment"
         android:enabled="true"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings" />

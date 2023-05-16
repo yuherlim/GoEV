@@ -1,11 +1,10 @@
 package com.example.goev.database.user
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 
 @Dao
-public interface UserDao {
+interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addUser(userdata: UserData)
@@ -21,7 +20,11 @@ public interface UserDao {
 
     // Update a user's profile pic, profile name, phone number, email, and gender by user ID
     @Query("UPDATE users SET profileImage = :newProfilePic, profileName = :newProfileName, phoneNumber = :newPhoneNumber WHERE is_logged_in = 1")
-    fun updateUserProfileInfo(newProfilePic: ByteArray, newProfileName: String, newPhoneNumber: String)
+    fun updateUserProfileInfo(
+        newProfilePic: ByteArray,
+        newProfileName: String,
+        newPhoneNumber: String
+    )
 
     @Query("UPDATE users SET is_logged_in = :is_logged_in WHERE id = :userId")
     fun updateUserLoggedIn(userId: Int, is_logged_in: Boolean)
@@ -42,14 +45,17 @@ public interface UserDao {
     fun isUserEmailExists(email: String): Boolean
 
     @Query("UPDATE users SET userName = :newUserName WHERE is_logged_in = 1")
-    fun updateUserName(newUserName : String)
+    fun updateUserName(newUserName: String)
 
     @Query("UPDATE users SET email = :newUserEmail WHERE is_logged_in = 1")
-    fun updateUserEmail(newUserEmail : String)
+    fun updateUserEmail(newUserEmail: String)
 
     @Query("UPDATE users SET password = :newUserPassword WHERE is_logged_in = 1")
-    fun updateUserPassword(newUserPassword : String)
+    fun updateUserPassword(newUserPassword: String)
 
     @Query("UPDATE users SET is_logged_in = 0")
     fun updateAllUsersLoggedOut()
+
+    @Query("SELECT COUNT(*) FROM users")
+    fun getRowCount(): Int
 }

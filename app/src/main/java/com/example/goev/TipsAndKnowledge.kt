@@ -88,4 +88,14 @@ class TipsAndKnowledge : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
+    }
+
 }

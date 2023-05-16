@@ -7,8 +7,10 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.goev.MainActivity
 import com.example.goev.R
 import com.example.goev.databinding.ActivitySettingsPrivacyBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsPrivacyFragment : Fragment() {
 
@@ -72,6 +74,20 @@ class SettingsPrivacyFragment : Fragment() {
 
         dialog.show()
         dialog.window!!.attributes = layoutParams
+    }
+
+    override fun onResume() {
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
     }
 }
 
