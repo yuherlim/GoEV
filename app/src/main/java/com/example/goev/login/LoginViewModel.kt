@@ -31,6 +31,12 @@ class LoginViewModel (application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun updateAllUsersLoggedOut(){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.updateAllUsersLoggedOut()
+        }
+    }
+
 
 
 }

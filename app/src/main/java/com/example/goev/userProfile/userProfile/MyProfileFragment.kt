@@ -49,17 +49,14 @@ class MyProfileFragment : Fragment() {
             view.findNavController().navigate(R.id.action_myProfileFragment_to_editProfileFragment)
         }
 
-        binding.postHistoryButton.setOnClickListener { view : View ->
+        binding.postHistoryButton.setOnClickListener {
             //navigate to post history
         }
 
-        binding.myPostButton.setOnClickListener { view : View ->
+        binding.myPostButton.setOnClickListener {
             //navigate to myPost
         }
 
-        binding.bookmarksButton.setOnClickListener { view : View ->
-            //navigate to bookmarks
-        }
 
         binding.logOutButton.setOnClickListener { view : View ->
             viewModel.getLoggedInUser { userData ->

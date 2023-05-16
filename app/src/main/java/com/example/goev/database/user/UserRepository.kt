@@ -8,8 +8,8 @@ class UserRepository(private val userDao: UserDao) {
         userDao.addUser(userdata)
     }
 
-    fun updateUser(userdata: UserData){
-        userDao.updateUser(userdata)
+    fun updateAllUsersLoggedOut(){
+        userDao.updateAllUsersLoggedOut()
     }
 
     fun getUserByEmailAndPassword(email: String, password: String): UserData? {

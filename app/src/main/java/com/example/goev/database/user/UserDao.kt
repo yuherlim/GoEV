@@ -49,4 +49,7 @@ public interface UserDao {
 
     @Query("UPDATE users SET password = :newUserPassword WHERE is_logged_in = 1")
     fun updateUserPassword(newUserPassword : String)
+
+    @Query("UPDATE users SET is_logged_in = 0")
+    fun updateAllUsersLoggedOut()
 }

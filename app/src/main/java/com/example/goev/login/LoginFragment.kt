@@ -26,6 +26,8 @@ class LoginFragment : Fragment() {
         binding = ActivityLoginBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
+        viewModel.updateAllUsersLoggedOut()
+
         //button on click...
         binding.loginButton.setOnClickListener {view: View ->
 

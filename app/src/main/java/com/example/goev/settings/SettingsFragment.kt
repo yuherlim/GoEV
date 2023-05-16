@@ -24,10 +24,6 @@ class SettingsFragment : Fragment() {
         binding = ActivitySettingsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
-        binding.notificationButton.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_settingsFragment_to_settingsNotificationsFragment)
-        }
-
         binding.privacyButton.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_settingsFragment_to_settingsPrivacyFragment)
         }
@@ -50,8 +46,9 @@ class SettingsFragment : Fragment() {
             view.findNavController().navigate(R.id.action_settingsFragment_to_myProfileFragment)
         }
 
+        //this one button need change to the bottom navigation bar button
         binding.tempButton.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_settingsFragment_to_nav)
+            view?.findNavController()?.navigate(R.id.action_settingsFragment_to_tipsAndKnowledge)
         }
 
 

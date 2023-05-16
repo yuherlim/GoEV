@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import com.example.goev.R
 import com.example.goev.databinding.ActivityRegisterBinding
@@ -49,11 +50,8 @@ class SettingsHelpFragment : Fragment() {
 
         binding.contactToCallText2.setOnClickListener{
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:01111954489")
-
-            if (intent.resolveActivity(requireContext().packageManager) != null) {
-                startActivity(intent)
-            }
+            intent.data = "tel:0123456789".toUri()
+            startActivity(intent)
         }
 
         binding.backButton.setOnClickListener{view : View ->
