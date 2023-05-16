@@ -10,9 +10,11 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.goev.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goev.MainActivity
 import com.example.goev.databinding.FragmentForumMainPageBinding
 
 
@@ -40,6 +42,9 @@ class ForumMainPageFragment : Fragment(), ForumPostAdapter.OnForumPostAdapterBut
         }
         binding?.searchIcon?.setOnClickListener(){
             view?.findNavController()?.navigate(R.id.action_forumMainPageFragment_to_forumSearchFragment)
+        }
+        binding?.profilePicture?.setOnClickListener {
+            findNavController().navigate(R.id.myProfileFragment)
         }
         recyclerView = binding?.forumPostRecycleView
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
@@ -88,7 +93,15 @@ class ForumMainPageFragment : Fragment(), ForumPostAdapter.OnForumPostAdapterBut
         view?.findNavController()?.navigate(R.id.action_forumMainPageFragment_to_forumPostDetailsFragment,bundle)
     }
 
+    override fun onResume() {
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
 
+    override fun onPause() {
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
+    }
 
 
 }

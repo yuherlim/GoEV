@@ -96,10 +96,10 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.tipsAndKnowledge)
                     true
                 }
-//                R.id.forumFragment -> {
-//                    navController.navigate(R.id.forumFragment)
-//                    true
-//                }
+                R.id.forumMainPageFragment -> {
+                    navController.navigate(R.id.forumMainPageFragment)
+                    true
+                }
                 R.id.settingsFragment -> {
                     navController.navigate(R.id.settingsFragment)
                     true

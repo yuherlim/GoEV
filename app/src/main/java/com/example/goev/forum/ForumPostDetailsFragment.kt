@@ -11,10 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goev.MainActivity
 import com.example.goev.R
 import com.example.goev.database.forum.ForumPost
 import com.example.goev.databinding.FragmentForumPostDetailsBinding
 import com.github.marlonlom.utilities.timeago.TimeAgo
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -191,6 +193,20 @@ class ForumPostDetailsFragment : Fragment(),ForumCommentAdapter.OnForumCommentAd
 
     }
 
+
+    override fun onResume() {
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
+    }
 
 }
 

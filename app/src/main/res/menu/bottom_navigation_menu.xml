@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_tips_and_knowledge"
         android:title="@string/tips_and_knowledge"/>
     <item
-
+        android:id="@+id/forumMainPageFragment"
         android:enabled="true"
         android:icon="@drawable/ic_forum"
         android:title="@string/forum"/>

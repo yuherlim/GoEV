@@ -14,8 +14,10 @@ import androidx.navigation.findNavController
 import com.example.goev.R
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goev.MainActivity
 import com.example.goev.databinding.FragmentForumMainPageBinding
 import com.example.goev.databinding.FragmentForumSearchBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class ForumSearchFragment : Fragment(), ForumSearchAdapter.OnForumSearchAdapterButtonClickListener {
@@ -68,7 +70,19 @@ class ForumSearchFragment : Fragment(), ForumSearchAdapter.OnForumSearchAdapterB
         view?.findNavController()?.navigate(R.id.action_forumSearchFragment_to_forumPostDetailsFragment,bundle)
     }
 
+    override fun onResume() {
+        // Hides bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
+        (requireActivity() as MainActivity).hideTopAppBar()
+        super.onResume()
+    }
 
+    override fun onPause() {
+        // Unhidden bottom navigation
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.VISIBLE
+        (requireActivity() as MainActivity).showTopAppBar()
+        super.onPause()
+    }
 
 
 }

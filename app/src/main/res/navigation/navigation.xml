@@ -6,6 +6,87 @@
     app:startDestination="@id/registerFragment">
 
     <action
+        android:id="@+id/action_forumAddPostFragment_to_forumMainPageFragment"
+        app:destination="@id/forumMainPageFragment" />
+    <fragment
+        android:id="@+id/forumAddComment"
+        android:name="com.example.goev.forum.ForumAddComment"
+        android:label="ForumAddComment"
+        tools:layout="@layout/fragment_forum_add_comment">
+        <action
+            android:id="@+id/action_forumAddComment_to_forumPostDetailsFragment"
+            app:destination="@id/forumPostDetailsFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_forumSearchFragment_to_forumMainPageFragment"
+        app:destination="@id/forumMainPageFragment" />
+    <fragment
+        android:id="@+id/forumPostDetailsFragment"
+        android:name="com.example.goev.forum.ForumPostDetailsFragment"
+        android:label="ForumPostDetailsFragment"
+        tools:layout="@layout/fragment_forum_post_details">
+        <action
+            android:id="@+id/action_forumPostDetailsFragment_to_forumMainPageFragment"
+            app:destination="@id/forumMainPageFragment" />
+        <action
+            android:id="@+id/action_forumPostDetailsFragment_to_forumAddComment"
+            app:destination="@id/forumAddComment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forumSearchFragment"
+        android:name="com.example.goev.forum.ForumSearchFragment"
+        android:label="ForumSearchFragment"
+        tools:layout="@layout/fragment_forum_search">
+        <action
+            android:id="@+id/action_forumSearchFragment_to_forumMainPageFragment"
+            app:destination="@id/forumMainPageFragment" />
+        <action
+            android:id="@+id/action_forumSearchFragment_to_forumPostDetailsFragment"
+            app:destination="@id/forumPostDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forumMainPageFragment"
+        android:name="com.example.goev.forum.ForumMainPageFragment"
+        android:label="ForumMainPageFragment"
+        tools:layout="@layout/fragment_forum_main_page">
+        <action
+            android:id="@+id/action_forumMainPageFragment_to_forumAddPostFragment"
+            app:destination="@id/forumAddPostFragment" />
+        <action
+            android:id="@+id/action_forumMainPageFragment_to_forumPostDetailsFragment"
+            app:destination="@id/forumPostDetailsFragment" />
+        <action
+            android:id="@+id/action_forumMainPageFragment_to_forumSearchFragment"
+            app:destination="@id/forumSearchFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_forumMainPageFragment_to_forumPostDetailsFragment"
+        app:destination="@id/forumPostDetailsFragment" />
+    <fragment
+        android:id="@+id/forumAddPostFragment"
+        android:name="com.example.goev.forum.ForumAddPostFragment"
+        android:label="ForumAddPostFragment"
+        tools:layout="@layout/fragment_forum_add_post">
+        <action
+            android:id="@+id/action_forumAddPostFragment_to_forumMainPageFragment"
+            app:destination="@id/forumMainPageFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_forumAddComment_to_forumPostDetailsFragment"
+        app:destination="@id/forumPostDetailsFragment" />
+    <action
+        android:id="@+id/action_forumPostDetailsFragment_to_forumMainPageFragment"
+        app:destination="@id/forumMainPageFragment" />
+    <action
+        android:id="@+id/action_forumSearchFragment_to_forumPostDetailsFragment"
+        app:destination="@id/forumPostDetailsFragment" />
+    <action
+        android:id="@+id/action_forumMainPageFragment_to_forumSearchFragment"
+        app:destination="@id/forumSearchFragment" />
+    <action
+        android:id="@+id/action_forumMainPageFragment_to_forumAddPostFragment"
+        app:destination="@id/forumAddPostFragment" />
+    <action
         android:id="@+id/action_trackerFragment_to_viewStationFragment"
         app:destination="@id/viewStationFragment" />
     <action
