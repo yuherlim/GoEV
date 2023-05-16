@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,15 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.goev.MainActivity
-import com.example.goev.ProfilePicConverter
 import com.example.goev.R
 import com.example.goev.chargingstationtracker.utils.ChargingStationImageConverter
 import com.example.goev.databaseChargingStation.ChargingStation
 import com.example.goev.databaseChargingStation.ChargingStationViewModel
 import com.example.goev.databinding.FragmentViewStationBinding
-import com.example.goev.userProfile.userProfile.EditProfileViewModel
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -40,7 +35,6 @@ class ViewStationFragment : Fragment() {
     private val args by navArgs<ViewStationFragmentArgs>()
 
     private lateinit var mChargingStationViewModel: ChargingStationViewModel
-    private lateinit var editProfileViewModel: EditProfileViewModel
 
     private var byteArray: ByteArray? = null
     private lateinit var imageInBitmap: Bitmap
@@ -61,26 +55,6 @@ class ViewStationFragment : Fragment() {
         // Initialize viewModel
         mChargingStationViewModel =
             ViewModelProvider(this)[ChargingStationViewModel::class.java]
-
-        //Initialize editProfileViewModel
-        editProfileViewModel = ViewModelProvider(this)[EditProfileViewModel::class.java]
-
-        editProfileViewModel.getLoggedInUser { userData ->
-            if (userData != null) {
-                activity?.runOnUiThread {
-                    if (userData.profileImage != null) {
-                        val bitmap = ProfilePicConverter().extractImage(userData.profileImage)
-                        if (bitmap != null) {
-                            activity?.runOnUiThread {
-                                val menu: Menu = (requireActivity() as MainActivity).findViewById<MaterialToolbar>(R.id.topAppBar).menu
-                                val profileMenuItem: MenuItem? = menu.findItem(R.id.action_view_user_info)
-                                profileMenuItem?.icon = BitmapDrawable(resources, bitmap)
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         return binding.root
     }
