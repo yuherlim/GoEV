@@ -1,6 +1,5 @@
 package com.example.goev.databaseChargingStation
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
@@ -16,11 +15,14 @@ interface ChargingStationDao {
     @Delete
     suspend fun deleteChargingStation(chargingStation: ChargingStation)
 
-    @Query("DELETE FROM charging_station_table")
-    suspend fun deleteAllChargingStations()
+    @Query("DELETE FROM charging_station_table where userId = :userId")
+    suspend fun deleteAllChargingStations(userId: Int)
+
+//    @Query("SELECT * FROM charging_station_table ORDER BY id ASC")
+//    fun readAllData(): LiveData<List<ChargingStation>>
 
     @Query("SELECT * FROM charging_station_table ORDER BY id ASC")
-    fun readAllData(): LiveData<List<ChargingStation>>
+    suspend fun getAllChargingStations(): List<ChargingStation>?
 
     @Query("SELECT * FROM charging_station_table WHERE name LIKE :searchQuery OR address LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): Flow<List<ChargingStation>>

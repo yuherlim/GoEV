@@ -5,14 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.goev.database.forum.*
+import com.example.goev.database.user.UserDao
+import com.example.goev.database.user.UserData
+import com.example.goev.databaseChargingStation.ChargingStation
+import com.example.goev.databaseChargingStation.ChargingStationDao
 import com.example.goev.databases.post.TkPostDAO
 import com.example.goev.databases.post.TkPostData
 import com.example.goev.databases.postcomment.TkPostCommentDAO
 import com.example.goev.databases.postcomment.TkPostCommentData
 import com.example.goev.databases.react.UserReactDAO
 import com.example.goev.databases.react.UserReactData
-import com.example.goev.database.user.UserData
-import com.example.goev.database.user.UserDao
 
 //
 @Database(
@@ -24,7 +26,8 @@ import com.example.goev.database.user.UserDao
         ForumCommentDislikeData::class,
         ForumRepliesData::class,
         ForumHashtagData::class,
-        ForumPostHashtagData::class],
+        ForumPostHashtagData::class,
+        ChargingStation::class],
     version = 1,
     exportSchema = false
 )
@@ -42,6 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val forumHashtagDao: ForumHashtagDao
     abstract val forumRepliesDao: ForumRepliesDao
     abstract val forumPostHashtagDao: ForumPostHashtagDao
+    abstract val chargingStationDao: ChargingStationDao
 
     companion object {
         @Volatile

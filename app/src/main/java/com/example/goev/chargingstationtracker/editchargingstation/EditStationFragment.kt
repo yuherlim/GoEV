@@ -46,6 +46,8 @@ class EditStationFragment : Fragment() {
         mChargingStationViewModel =
             ViewModelProvider(this)[ChargingStationViewModel::class.java]
 
+        mChargingStationViewModel.getCurrentLoginUser()
+
         // Initialize edit station view model to maintain edit text data on configuration changes
         editStationViewModel = ViewModelProvider(this)[EditStationViewModel::class.java]
 
@@ -99,6 +101,7 @@ class EditStationFragment : Fragment() {
     }
 
     private fun updateDatabase(currentChargingStation: ChargingStation) {
+        val chargingStationUserId = mChargingStationViewModel.currentLoginUserId.value!!
         val chargingStationName = binding.editChargingStationNameEditText.text.toString()
         val chargingStationAddress = binding.editChargingStationAddressEditText.text.toString()
         val chargingStationImage = currentChargingStation.image
@@ -107,6 +110,7 @@ class EditStationFragment : Fragment() {
             // Create chargingStation Object
             val chargingStation = ChargingStation(
                 args.currentChargingStationId,
+                chargingStationUserId,
                 chargingStationName,
                 chargingStationAddress,
                 chargingStationImage

@@ -14,10 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.goev.R
+import com.example.goev.chargingstationtracker.utils.ChargingStationImageConverter
 import com.example.goev.databaseChargingStation.ChargingStation
 import com.example.goev.databaseChargingStation.ChargingStationViewModel
 import com.example.goev.databinding.FragmentAddStationBinding
-import com.example.goev.chargingstationtracker.utils.ChargingStationImageConverter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
@@ -54,6 +54,7 @@ class AddStationFragment : Fragment() {
         mChargingStationViewModel =
             ViewModelProvider(this)[ChargingStationViewModel::class.java]
 
+        mChargingStationViewModel.getCurrentLoginUser()
         return binding.root
     }
 
@@ -153,6 +154,7 @@ class AddStationFragment : Fragment() {
 
 
     private fun insertDataToDatabase() {
+        val chargingStationUserId = mChargingStationViewModel.currentLoginUserId.value!!
         val chargingStationName = binding.chargingStationNameEditText.text.toString()
         val chargingStationAddress = binding.chargingStationAddressEditText.text.toString()
         val chargingStationImage = byteArray
@@ -161,6 +163,7 @@ class AddStationFragment : Fragment() {
             // Create chargingStation Object
             val chargingStation = ChargingStation(
                 0,
+                chargingStationUserId,
                 chargingStationName,
                 chargingStationAddress,
                 chargingStationImage

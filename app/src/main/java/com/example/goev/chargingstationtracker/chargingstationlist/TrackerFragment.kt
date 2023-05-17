@@ -54,10 +54,15 @@ class TrackerFragment : Fragment(), SearchView.OnQueryTextListener {
         // Initialize editProfileViewModel
         editProfileViewModel = ViewModelProvider(this)[EditProfileViewModel::class.java]
 
-        mChargingStationViewModel.readAllData.observe(
+        mChargingStationViewModel.getCurrentLoginUser()
+
+        mChargingStationViewModel.loadChargingStations()
+        mChargingStationViewModel.currentChargingStationList.observe(
             viewLifecycleOwner
         ) { chargingStation ->
-            adapter.setData(chargingStation)
+            if (chargingStation != null) {
+                adapter.setData(chargingStation)
+            }
         }
 
         updateProfilePic()
@@ -143,7 +148,7 @@ class TrackerFragment : Fragment(), SearchView.OnQueryTextListener {
             .setNegativeButton(resources.getString(R.string.decline)) { _, _ ->
                 // Respond to negative button press
             }.setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
-                mChargingStationViewModel.deleteAllChargingStations()
+                mChargingStationViewModel.deleteAllChargingStations(mChargingStationViewModel.currentLoginUserId.value!!)
                 Toast.makeText(
                     requireContext(), getString(R.string.delete_all_success_msg), Toast.LENGTH_SHORT
                 ).show()

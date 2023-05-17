@@ -1,11 +1,14 @@
 package com.example.goev.databaseChargingStation
 
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 
 class ChargingStationRepository(private val chargingStationDao: ChargingStationDao) {
 
-    val readAllData: LiveData<List<ChargingStation>> = chargingStationDao.readAllData()
+//    val readAllData: LiveData<List<ChargingStation>> = chargingStationDao.readAllData()
+
+    suspend fun getAllChargingStations(): List<ChargingStation>? {
+        return chargingStationDao.getAllChargingStations()
+    }
 
     suspend fun addChargingStation(chargingStation: ChargingStation) {
         chargingStationDao.addChargingStation(chargingStation)
@@ -19,8 +22,8 @@ class ChargingStationRepository(private val chargingStationDao: ChargingStationD
         chargingStationDao.deleteChargingStation(chargingStation)
     }
 
-    suspend fun deleteAllChargingStations() {
-        chargingStationDao.deleteAllChargingStations()
+    suspend fun deleteAllChargingStations(userId: Int) {
+        chargingStationDao.deleteAllChargingStations(userId)
     }
 
     fun searchDatabase(searchQuery: String): Flow<List<ChargingStation>> {
