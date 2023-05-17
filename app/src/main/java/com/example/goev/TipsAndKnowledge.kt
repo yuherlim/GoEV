@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import com.example.goev.databases.post.PostViewModel
 import com.example.goev.databinding.FragmentTipsAndKnowledgeBinding
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ class TipsAndKnowledge : Fragment() {
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 val loggedInUser =
-                    TipsAndKnowledgeDatabase.getInstance(requireContext()).userDAO.getLoggedInUser()
+                    AppDatabase.getInstance(requireContext()).userDAO.getLoggedInUser()
                 val profilePic = ProfilePicConverter().extractImage(loggedInUser.profileImage!!)
                 //top right corner profile pic
                 lifecycleScope.launch(Dispatchers.Main){

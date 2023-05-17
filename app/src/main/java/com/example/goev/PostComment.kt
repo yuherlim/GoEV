@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import com.example.goev.databases.postcomment.TkPostCommentData
 import com.example.goev.databinding.FragmentPostCommentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -28,7 +28,7 @@ class PostComment(private val postID: Long, private val user:UserData) : BottomS
             R.layout.fragment_post_comment, container, false
         )
 
-        commentAdapter = PostCommentAdapter(TipsAndKnowledgeDatabase.getInstance(requireContext()).userDAO,
+        commentAdapter = PostCommentAdapter(AppDatabase.getInstance(requireContext()).userDAO,
             user, ::deleteComment, ::updateEditedComment)
         val recyclerView = binding.recyclerView2
         recyclerView.adapter = commentAdapter
@@ -75,7 +75,7 @@ class PostComment(private val postID: Long, private val user:UserData) : BottomS
     }
 
     private fun loadComments(postID: Long, isAscending: Boolean = false) {
-        val commentDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postCommentDAO
+        val commentDao = AppDatabase.getInstance(requireContext()).postCommentDAO
         commentDao.getCommentsForPost(postID).observe(viewLifecycleOwner, Observer { comments ->
             val sortedComments = if (isAscending) {
                 comments.sortedBy { it.commentTime }
@@ -87,8 +87,8 @@ class PostComment(private val postID: Long, private val user:UserData) : BottomS
     }
 
     private fun insertComment(comment: TkPostCommentData) {
-        val commentDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postCommentDAO
-        val postDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postDAO
+        val commentDao = AppDatabase.getInstance(requireContext()).postCommentDAO
+        val postDao = AppDatabase.getInstance(requireContext()).postDAO
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
@@ -99,8 +99,8 @@ class PostComment(private val postID: Long, private val user:UserData) : BottomS
     }
 
     private fun deleteComment(comment: TkPostCommentData) {
-        val commentDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postCommentDAO
-        val postDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postDAO
+        val commentDao = AppDatabase.getInstance(requireContext()).postCommentDAO
+        val postDao = AppDatabase.getInstance(requireContext()).postDAO
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 commentDao.deleteComment(comment)
@@ -110,7 +110,7 @@ class PostComment(private val postID: Long, private val user:UserData) : BottomS
     }
 
     private fun updateEditedComment(comment: TkPostCommentData){
-        val commentDao = TipsAndKnowledgeDatabase.getInstance(requireContext()).postCommentDAO
+        val commentDao = AppDatabase.getInstance(requireContext()).postCommentDAO
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 commentDao.editComment(comment)

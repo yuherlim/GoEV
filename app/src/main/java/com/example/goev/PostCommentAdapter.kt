@@ -5,14 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goev.database.user.UserDao
 import com.example.goev.database.user.UserData
-import com.example.goev.databases.TipsAndKnowledgeDatabase
 import com.example.goev.databases.postcomment.TkPostCommentData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

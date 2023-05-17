@@ -2,7 +2,6 @@ package com.example.goev.databases.react
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.goev.databases.TipsAndKnowledgeDatabase
 
 @Dao
 interface UserReactDAO {

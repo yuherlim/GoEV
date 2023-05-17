@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.goev.database.forum.*
 import com.example.goev.database.user.UserData
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -590,16 +590,16 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
 
 
     init {
-        val forumPostDao = TipsAndKnowledgeDatabase.getInstance(application).forumPostDao
-        val forumPostLikeDao = TipsAndKnowledgeDatabase.getInstance(application).forumPostLikeDao
-        val forumPostDislikeDao = TipsAndKnowledgeDatabase.getInstance(application).forumPostDislikeDao
-        val forumCommentDao = TipsAndKnowledgeDatabase.getInstance(application).forumCommentDao
-        val forumCommentLikeDao = TipsAndKnowledgeDatabase.getInstance(application).forumCommentLikeDao
-        val forumCommentDislikeDao = TipsAndKnowledgeDatabase.getInstance(application).forumCommentDislikeDao
-        val forumHashtagDao = TipsAndKnowledgeDatabase.getInstance(application).forumHashtagDao
-        val userDao = TipsAndKnowledgeDatabase.getInstance(application).userDAO
-        val forumRepliesDao = TipsAndKnowledgeDatabase.getInstance(application).forumRepliesDao
-        val forumPostHashtagDao = TipsAndKnowledgeDatabase.getInstance(application).forumPostHashtagDao
+        val forumPostDao = AppDatabase.getInstance(application).forumPostDao
+        val forumPostLikeDao = AppDatabase.getInstance(application).forumPostLikeDao
+        val forumPostDislikeDao = AppDatabase.getInstance(application).forumPostDislikeDao
+        val forumCommentDao = AppDatabase.getInstance(application).forumCommentDao
+        val forumCommentLikeDao = AppDatabase.getInstance(application).forumCommentLikeDao
+        val forumCommentDislikeDao = AppDatabase.getInstance(application).forumCommentDislikeDao
+        val forumHashtagDao = AppDatabase.getInstance(application).forumHashtagDao
+        val userDao = AppDatabase.getInstance(application).userDAO
+        val forumRepliesDao = AppDatabase.getInstance(application).forumRepliesDao
+        val forumPostHashtagDao = AppDatabase.getInstance(application).forumPostHashtagDao
         forumPostRepository = ForumPostRepository(forumPostDao)
         forumPostLikeRepository = ForumPostLikeRepository(forumPostLikeDao)
         forumPostDislikeRepository = ForumPostDislikeRepository(forumPostDislikeDao)

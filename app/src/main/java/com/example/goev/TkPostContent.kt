@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import com.example.goev.databases.post.PostViewModel
 import com.example.goev.databases.react.UserReactDAO
 import com.example.goev.databases.react.UserReactData
@@ -48,7 +48,7 @@ class TkPostContent : AppCompatActivity() {
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val userData = TipsAndKnowledgeDatabase.getInstance(application).userDAO.getLoggedInUser()
+                val userData = AppDatabase.getInstance(application).userDAO.getLoggedInUser()
                 val userID = userData.id
                 postContentVM.userReactionPreviously(userID, postID)
                 val profilePic = ProfilePicConverter().extractImage(userData.profileImage!!)
@@ -65,13 +65,13 @@ class TkPostContent : AppCompatActivity() {
                 binding.postContentLikeButton.setOnClickListener {
                     likeButtonReact(
                         postContentVM, postViewModel,
-                        TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
+                        AppDatabase.getInstance(application).userReactDAO, userID, postID
                     )
                 }
                 binding.postContentDislikeButton.setOnClickListener {
                     dislikeButtonReact(
                         postContentVM, postViewModel,
-                        TipsAndKnowledgeDatabase.getInstance(application).userReactDAO, userID, postID
+                        AppDatabase.getInstance(application).userReactDAO, userID, postID
                     )
                 }
                 if(userData.is_super){

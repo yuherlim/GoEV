@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.goev.TipsAndKnowledge
 import com.example.goev.database.forum.*
 import com.example.goev.databases.post.TkPostDAO
 import com.example.goev.databases.post.TkPostData
@@ -29,7 +28,7 @@ import com.example.goev.database.user.UserDao
     version = 1,
     exportSchema = false
 )
-abstract class TipsAndKnowledgeDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract val userDAO: UserDao
     abstract val postCommentDAO: TkPostCommentDAO
     abstract val postDAO: TkPostDAO
@@ -46,13 +45,13 @@ abstract class TipsAndKnowledgeDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: TipsAndKnowledgeDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): TipsAndKnowledgeDatabase {
+        fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    TipsAndKnowledgeDatabase::class.java,
+                    AppDatabase::class.java,
                     "TipsAndKnowledgeDatabase"
                 ).build()
                 INSTANCE = instance

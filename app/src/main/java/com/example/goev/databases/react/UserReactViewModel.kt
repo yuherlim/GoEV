@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,7 +13,7 @@ class UserReactViewModel(application: Application, postID: Long): AndroidViewMod
     private val repository: UserReactRepository
 
     init{
-        val userReactDAO = TipsAndKnowledgeDatabase.getInstance(application).userReactDAO
+        val userReactDAO = AppDatabase.getInstance(application).userReactDAO
         repository = UserReactRepository(userReactDAO, postID)
         readPostAllReact = repository.getAllReactOnAPostData
     }

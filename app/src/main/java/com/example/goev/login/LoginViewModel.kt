@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.goev.database.user.UserData
 import com.example.goev.database.user.UserRepository
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +24,7 @@ class LoginViewModel (application: Application) : AndroidViewModel(application){
     )
 
     init {
-        val userDao = TipsAndKnowledgeDatabase.getInstance(application).userDAO
+        val userDao = AppDatabase.getInstance(application).userDAO
         repository = UserRepository(userDao)
     }
 

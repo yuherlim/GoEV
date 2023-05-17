@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -13,7 +13,7 @@ class PostCommentViewModel(application: Application): AndroidViewModel(applicati
     private val repository: PostCommentRepository
 
     init{
-        val tkPostCommentDao = TipsAndKnowledgeDatabase.getInstance(application).postCommentDAO
+        val tkPostCommentDao = AppDatabase.getInstance(application).postCommentDAO
         repository = PostCommentRepository(tkPostCommentDao)
         readAllPostData = repository.readAllPostData
     }

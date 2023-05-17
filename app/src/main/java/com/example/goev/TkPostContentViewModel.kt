@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.*
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import com.example.goev.databases.post.TkPostData
 import com.example.goev.databases.react.UserReactDAO
 import com.example.goev.databases.react.UserReactData
@@ -14,9 +14,9 @@ import kotlinx.coroutines.launch
 class TkPostContentViewModel(application:Application): AndroidViewModel(application) {
     val postUpdateLiveData = MutableLiveData<TkPostData>()
     val userReactLiveData = MutableLiveData<UserReactData?>()
-    val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
+    val tkPostDAO = AppDatabase.getInstance(application).postDAO
 //    val loggedInUser = MutableLiveData<UserData>()
-    private val userReactDao: UserReactDAO = TipsAndKnowledgeDatabase.getInstance(application).userReactDAO
+    private val userReactDao: UserReactDAO = AppDatabase.getInstance(application).userReactDAO
 //    private val userDao: UserDao = UserDatabase.getInstance(application).userDao()
 
 

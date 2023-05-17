@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.goev.databases.TipsAndKnowledgeDatabase
+import com.example.goev.databases.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
 
 
     init{
-        val tkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
+        val tkPostDAO = AppDatabase.getInstance(application).postDAO
         repository = PostRepository(tkPostDAO)
         readAllData = repository.readAllData
     }
@@ -27,7 +27,7 @@ class PostViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    private val postDao: TkPostDAO = TipsAndKnowledgeDatabase.getInstance(application).postDAO
+    private val postDao: TkPostDAO = AppDatabase.getInstance(application).postDAO
 
     val allPosts: LiveData<List<TkPostData>> = postDao.getAllPosts()
 
