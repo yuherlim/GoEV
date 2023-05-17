@@ -155,7 +155,12 @@ class ForumPostAdapter() :
                 forumPostAdapterButtonClickListener?.onPostDetailsClicked(forumPost.forumPostData!!.postId)
             }
 
-            binding.more.visibility = View.INVISIBLE
+            if(forumPost.forumPostData.userId  == forumPost.userId) {
+                binding.more.visibility = View.VISIBLE
+                binding.more.setOnClickListener(){
+                    forumPostAdapterButtonClickListener?.onDialogClicked(forumPost.forumPostData!!.postId)
+                }
+            }
 
         }
     }
@@ -192,6 +197,7 @@ class ForumPostAdapter() :
         fun onLiketoDislikeClicked(position: Int, postId: Int)
         fun onDisliketoLikeClicked(position: Int, postId: Int)
         fun onPostDetailsClicked(postId: Int)
+        fun onDialogClicked(postId: Int)
 
 
     }

@@ -68,6 +68,7 @@ class ForumPostDetailsFragment : Fragment(),ForumCommentAdapter.OnForumCommentAd
         var fragmentBinding = FragmentForumPostDetailsBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         var postId = arguments?.getString("postId")?.toInt()
+        var fromWhere = arguments?.getString("fromWhere")
 
 
         shareViewModel.forumData.observe(viewLifecycleOwner) { forumData ->
@@ -97,8 +98,15 @@ class ForumPostDetailsFragment : Fragment(),ForumCommentAdapter.OnForumCommentAd
         })
 
         binding?.backButton?.setOnClickListener() {
-            view?.findNavController()
-                ?.navigate(R.id.action_forumPostDetailsFragment_to_forumMainPageFragment)
+            when(fromWhere){
+                "MyPost" -> {
+                view?.findNavController()
+                    ?.navigate(R.id.action_forumPostDetailsFragment_to_forumMyPostFragment)}
+                "MainPage","Search" -> {view?.findNavController()
+                    ?.navigate(R.id.action_forumPostDetailsFragment_to_forumMainPageFragment)}
+                "MyLikePost" -> {view?.findNavController()
+                    ?.navigate(R.id.action_forumPostDetailsFragment_to_forumMyLikePost)}
+            }
         }
 
         binding?.likeButton?.setOnClickListener() {

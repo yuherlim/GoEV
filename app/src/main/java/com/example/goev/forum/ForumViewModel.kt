@@ -21,9 +21,7 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
     private val forumCommentRepository: ForumCommentRepository
     private val forumCommentLikeRepository: ForumCommentLikeRepository
     private val forumCommentDislikeRepository: ForumCommentDislikeRepository
-    private val forumHashtagRepository: ForumHashtagRepository
     private val forumRepliesRepository: ForumRepliesRepository
-    private val forumPostHashtagRepository: ForumPostHashtagRepository
     private val userRepository: com.example.goev.database.user.UserRepository
 
     private val _forumDataList = MutableLiveData<List<ForumPost>?>()
@@ -48,21 +46,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
 
     lateinit var currentLoginUser : UserData
 
-
-
-    val forumHashtagRecords = listOf<ForumHashtagData>(
-        ForumHashtagData("hashTag1", "EVCharging"),
-        ForumHashtagData("hashTag2", "ElectricVehicle"),
-        ForumHashtagData("hashTag3", "GreenEnergy"),
-        ForumHashtagData("hashTag4", "Sustainability"),
-        ForumHashtagData("hashTag5", "RenewableEnergy"),
-        ForumHashtagData("hashTag6", "CleanEnergy"),
-        ForumHashtagData("hashTag7", "EnvironmentallyFriendly"),
-        ForumHashtagData("hashTag8", "EVInfrastructure"),
-        ForumHashtagData("hashTag9", "ChargingStation"),
-        ForumHashtagData("hashTag10", "Tesla"),
-        ForumHashtagData("hashTag11", "EVCommunity")
-    )
 
     val forumPostRecords = listOf<ForumPostData>(
         ForumPostData(
@@ -131,29 +114,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
         )
     )
 
-    val forumPostHashtagRecords = listOf<ForumPostHashtagData>(
-        ForumPostHashtagData("1hashTag1", "hashTag1", 1),
-        ForumPostHashtagData("1hashTag2", "hashTag2", 1),
-        ForumPostHashtagData("1hashTag9", "hashTag9", 1),
-        ForumPostHashtagData("2hashTag5", "hashTag5", 2),
-        ForumPostHashtagData("2hashTag6", "hashTag6", 2),
-        ForumPostHashtagData("2hashTag4", "hashTag4", 2),
-        ForumPostHashtagData("3hashTag1", "hashTag1", 3),
-        ForumPostHashtagData("3hashTag2", "hashTag2", 3),
-        ForumPostHashtagData("3hashTag9", "hashTag9", 3),
-        ForumPostHashtagData("3hashTag11", "hashTag11", 3),
-        ForumPostHashtagData("4hashTag2", "hashTag2", 4),
-        ForumPostHashtagData("4hashTag7", "hashTag7", 4),
-        ForumPostHashtagData("4hashTag9", "hashTag9", 4),
-        ForumPostHashtagData("4hashTag10", "hashTag10", 4),
-        ForumPostHashtagData("4hashTag11", "hashTag11", 4),
-        ForumPostHashtagData("5hashTag1", "hashTag1", 5),
-        ForumPostHashtagData("5hashTag2", "hashTag2", 5),
-        ForumPostHashtagData("5hashTag3", "hashTag3", 5),
-        ForumPostHashtagData("5hashTag8", "hashTag8", 5),
-        ForumPostHashtagData("5hashTag9", "hashTag9", 5),
-
-        )
 
     val forumPostLikeRecords = listOf<ForumPostLikeData>(
         ForumPostLikeData(
@@ -596,19 +556,15 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
         val forumCommentDao = AppDatabase.getInstance(application).forumCommentDao
         val forumCommentLikeDao = AppDatabase.getInstance(application).forumCommentLikeDao
         val forumCommentDislikeDao = AppDatabase.getInstance(application).forumCommentDislikeDao
-        val forumHashtagDao = AppDatabase.getInstance(application).forumHashtagDao
         val userDao = AppDatabase.getInstance(application).userDAO
         val forumRepliesDao = AppDatabase.getInstance(application).forumRepliesDao
-        val forumPostHashtagDao = AppDatabase.getInstance(application).forumPostHashtagDao
         forumPostRepository = ForumPostRepository(forumPostDao)
         forumPostLikeRepository = ForumPostLikeRepository(forumPostLikeDao)
         forumPostDislikeRepository = ForumPostDislikeRepository(forumPostDislikeDao)
         forumCommentRepository = ForumCommentRepository(forumCommentDao)
         forumCommentLikeRepository = ForumCommentLikeRepository(forumCommentLikeDao)
         forumCommentDislikeRepository = ForumCommentDislikeRepository(forumCommentDislikeDao)
-        forumHashtagRepository = ForumHashtagRepository(forumHashtagDao)
         forumRepliesRepository = ForumRepliesRepository(forumRepliesDao)
-        forumPostHashtagRepository = ForumPostHashtagRepository(forumPostHashtagDao)
         userRepository = com.example.goev.database.user.UserRepository(userDao)
     }
 
@@ -632,8 +588,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
             val postsDataList = forumPostRepository.getAllPost()
             val postLikeList = forumPostLikeRepository.getAllPostLikeList()
             val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
-            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
-            val hashtagDataList = forumHashtagRepository.getHashTagList()
             val postCommentList = forumCommentRepository.getAllComment()
             val usersList = userRepository.getAllUsers()
             val forumDataList = postsDataList?.map { post ->
@@ -641,10 +595,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 val postLikeCount = postLikeList?.count { it.postId == post.postId } ?: 0
                 val postDislikeCount = postDislikeList?.count { it.postId == post.postId } ?: 0
                 val postCommentCount = postCommentList?.count { it.postId == post.postId } ?: 0
-                val postHashtagIdList =
-                    postsHashtagDataList!!.filter { it.postId == post.postId }.map { it.hashtagId }
-                val postHashtagList =
-                    hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
                 var status: String = ""
                 if (postLikeList?.count { it.postId == post.postId && it.userId == userId } == 1) {
                     status = "like"
@@ -661,7 +611,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                     postLikeCount,
                     postDislikeCount,
                     postCommentCount,
-                    postHashtagList,
                     status,
                     userId
                 )
@@ -681,8 +630,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
             val postsDataList = forumPostRepository.getAllPost()
             val postLikeList = forumPostLikeRepository.getAllPostLikeList()
             val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
-            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
-            val hashtagDataList = forumHashtagRepository.getHashTagList()
             val postCommentList = forumCommentRepository.getAllComment()
             val usersList = userRepository.getAllUsers()
             val forumDataList = postsDataList?.map { post ->
@@ -690,10 +637,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 val postLikeCount = postLikeList?.count { it.postId == post.postId } ?: 0
                 val postDislikeCount = postDislikeList?.count { it.postId == post.postId } ?: 0
                 val postCommentCount = postCommentList?.count { it.postId == post.postId } ?: 0
-                val postHashtagIdList =
-                    postsHashtagDataList!!.filter { it.postId == post.postId }.map { it.hashtagId }
-                val postHashtagList =
-                    hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
                 var status: String = ""
                 if (postLikeList?.count { it.postId == post.postId && it.userId == userId } == 1) {
                     status = "like"
@@ -710,7 +653,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                     postLikeCount,
                     postDislikeCount,
                     postCommentCount,
-                    postHashtagList,
                     status,
                     userId
                 )
@@ -724,15 +666,12 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
     fun loadPostList() {
         viewModelScope.launch(Dispatchers.IO) {
             val userId = currentLoginUser.id
             val postsDataList = forumPostRepository.getAllPost()
             val postLikeList = forumPostLikeRepository.getAllPostLikeList()
             val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
-            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
-            val hashtagDataList = forumHashtagRepository.getHashTagList()
             val postCommentList = forumCommentRepository.getAllComment()
             val usersList = userRepository.getAllUsers()
             val forumDataList = postsDataList?.map { post ->
@@ -740,10 +679,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 val postLikeCount = postLikeList?.count { it.postId == post.postId } ?: 0
                 val postDislikeCount = postDislikeList?.count { it.postId == post.postId } ?: 0
                 val postCommentCount = postCommentList?.count { it.postId == post.postId } ?: 0
-                val postHashtagIdList =
-                    postsHashtagDataList!!.filter { it.postId == post.postId }.map { it.hashtagId }
-                val postHashtagList =
-                    hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
                 var status: String = ""
                 if (postLikeList?.count { it.postId == post.postId && it.userId == userId } == 1) {
                     status = "like"
@@ -760,7 +695,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                     postLikeCount,
                     postDislikeCount,
                     postCommentCount,
-                    postHashtagList,
                     status,
                     userId
                 )
@@ -777,18 +711,12 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
             val postData = forumPostRepository.getPost(postId)
             val postLikeList = forumPostLikeRepository.getAllPostLikeList()
             val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
-            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
-            val hashtagDataList = forumHashtagRepository.getHashTagList()
             val postCommentList = forumCommentRepository.getAllComment()
             val usersList = userRepository.getAllUsers()
             val userData = usersList.filter{it.id == postData.userId} [0]
             val postLikeCount = postLikeList?.count { it.postId == postId } ?: 0
             val postDislikeCount = postDislikeList?.count { it.postId == postId } ?: 0
             val postCommentCount = postCommentList?.count { it.postId == postId } ?: 0
-            val postHashtagIdList =
-                postsHashtagDataList!!.filter { it.postId == postId }.map { it.hashtagId }
-            val postHashtagList =
-                hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
             var status: String
             if (postLikeList?.count { it.postId == postId && it.userId == userId }!! >= 1) {
                 status = "like"
@@ -804,7 +732,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                     postLikeCount,
                     postDislikeCount,
                     postCommentCount,
-                    postHashtagList,
                     status,
                     userId
                 )
@@ -814,7 +741,7 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loadCommentList(postId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val userName =currentLoginUser.userName
+            val userName = currentLoginUser.userName
             val userId = currentLoginUser.id
             val postCommentList = forumCommentRepository.getAllComment()
             val postCommentLikeList = forumCommentLikeRepository.getAllCommentLikeList()
@@ -905,8 +832,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
             val postsDataList = forumPostRepository.getAllPost()
             val postLikeList = forumPostLikeRepository.getAllPostLikeList()
             val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
-            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
-            val hashtagDataList = forumHashtagRepository.getHashTagList()
             val postCommentList = forumCommentRepository.getAllComment()
             val usersList = userRepository.getAllUsers()
 
@@ -915,10 +840,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 val postLikeCount = postLikeList?.count { it.postId == post.postId } ?: 0
                 val postDislikeCount = postDislikeList?.count { it.postId == post.postId } ?: 0
                 val postCommentCount = postCommentList?.count { it.postId == post.postId } ?: 0
-                val postHashtagIdList =
-                    postsHashtagDataList!!.filter { it.postId == post.postId }.map { it.hashtagId }
-                val postHashtagList =
-                    hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
                 var status: String
                 if (postLikeList?.count { it.postId == post.postId && it.userId == userId } == 1) {
                     status = "like"
@@ -933,7 +854,6 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                     postLikeCount,
                     postDislikeCount,
                     postCommentCount,
-                    postHashtagList,
                     status,
                     userId
                 )
@@ -1051,6 +971,198 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 )
             }.await()
             loadPostList()
+        }
+    }
+
+    fun addMyPostListLike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            async {
+                forumPostLikeRepository.addPostLike(
+                    ForumPostLikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyPostList()
+        }
+    }
+
+    fun addMyPostListDislike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            async {
+                forumPostDislikeRepository.addPostDislike(
+                    ForumPostDislikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyPostList()
+        }
+    }
+
+    fun deleteMyPostListLike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val postLike =
+                postLikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postlike type")
+            async {
+                forumPostLikeRepository.deletePostLike(
+                    postLike
+                )
+            }.await()
+            loadMyPostList()
+        }
+    }
+
+    fun deleteMyPostListDislike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val postDislike =
+                postDislikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postDislike type")
+            async { forumPostDislikeRepository.deletePostDislike(postDislike) }.await()
+            loadMyPostList()
+        }
+    }
+
+    fun myPostListDisiketoLike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val postDislike =
+                postDislikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postDislike type")
+            async {
+                forumPostDislikeRepository.deletePostDislike(postDislike)
+                forumPostLikeRepository.addPostLike(
+                    ForumPostLikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyPostList()
+        }
+    }
+
+    fun myPostListLiketoDislike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val postLike =
+                postLikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postlike type")
+            async {
+                forumPostLikeRepository.deletePostLike(
+                    postLike
+                )
+                forumPostDislikeRepository.addPostDislike(
+                    ForumPostDislikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyPostList()
+        }
+    }
+
+    fun addMyLikePostListLike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            async {
+                forumPostLikeRepository.addPostLike(
+                    ForumPostLikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyLikePostList()
+        }
+    }
+
+    fun addMyLikePostListDislike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            async {
+                forumPostDislikeRepository.addPostDislike(
+                    ForumPostDislikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyLikePostList()
+        }
+    }
+
+    fun deleteMyLikePostListLike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val postLike =
+                postLikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postlike type")
+            async {
+                forumPostLikeRepository.deletePostLike(
+                    postLike
+                )
+            }.await()
+            loadMyLikePostList()
+        }
+    }
+
+    fun deleteMyLikePostListDislike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val postDislike =
+                postDislikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postDislike type")
+            async { forumPostDislikeRepository.deletePostDislike(postDislike) }.await()
+            loadMyLikePostList()
+        }
+    }
+
+    fun myLikePostListDisiketoLike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val postDislike =
+                postDislikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postDislike type")
+            async {
+                forumPostDislikeRepository.deletePostDislike(postDislike)
+                forumPostLikeRepository.addPostLike(
+                    ForumPostLikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyLikePostList()
+        }
+    }
+
+    fun myLikePostListLiketoDislike(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val postLike =
+                postLikeList!!.find { it.postId == postId && it.userId == userId }
+                    ?: throw IllegalArgumentException("Invalid postlike type")
+            async {
+                forumPostLikeRepository.deletePostLike(
+                    postLike
+                )
+                forumPostDislikeRepository.addPostDislike(
+                    ForumPostDislikeData(
+                        postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadMyLikePostList()
         }
     }
 
@@ -1328,6 +1440,180 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
         loadPostList()
     }
 
+    fun deletePost(postId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val allPostList = forumPostRepository.getAllPost()
+            val allCommentList = forumCommentRepository.getAllComment()
+            val allPostLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val allPostDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val allCommentLikeList = forumCommentLikeRepository.getAllCommentLikeList()
+            val allCommentDislikeList = forumCommentDislikeRepository.getAllCommentDislikeList()
+            val allRepliesList = forumRepliesRepository.getAllReplies()
+
+            val postDelete = allPostList?.find { it.postId == postId }
+            val commentDelete = allCommentList?.filter { it.postId == postId }
+            val repliesDelete = allRepliesList?.filter { replies ->
+                commentDelete?.any { comment ->
+                    comment.commentId == replies.respondedCommentID
+                } ?: false
+            }
+            val postLikeDelete = allPostLikeList?.filter{it.postId == postId}
+            val postDislikeDelete = allPostDislikeList?.filter{it.postId == postId}
+            val commentLikeDelete = allCommentLikeList?.filter { commentDel ->
+                commentDelete?.any { comment ->
+                    comment.commentId == commentDel.commentId
+                } ?: false}
+            val commentDislikeDelete = allCommentDislikeList?.filter { commentDel ->
+                commentDelete?.any { comment ->
+                    comment.commentId == commentDel.commentId
+                } ?: false}
+
+            async {
+                if (commentLikeDelete != null) {
+                    for (commentlike in commentLikeDelete) {
+                        forumCommentLikeRepository.deleteCommentLike(commentlike)
+                    }
+                }
+            }.await()
+
+            async {
+                    if (commentDislikeDelete != null) {
+                        for (commentDisike in commentDislikeDelete) {
+                            forumCommentDislikeRepository.deleteCommentDislike(commentDisike)
+                        }
+                    }
+            }.await()
+
+            async {
+                if (repliesDelete != null) {
+                    for (replies in repliesDelete) {
+                        forumRepliesRepository.deleteReplies(replies)
+                    }
+                }
+            }.await()
+
+            async {
+                if (commentDelete != null) {
+                    for (comment in commentDelete) {
+                        forumCommentRepository.deleteComment(comment)
+                    }
+                }
+            }.await()
+
+            async {
+                if (postLikeDelete != null) {
+                    for (postlike in postLikeDelete) {
+                        forumPostLikeRepository.deletePostLike(postlike)
+                    }
+                }
+            }.await()
+
+            async {
+                if (postDislikeDelete != null) {
+                    for (postDislike in postDislikeDelete) {
+                        forumPostDislikeRepository.deletePostDislike(postDislike)
+                    }
+                }
+            }.await()
+
+            async {
+                if (postDelete != null) {
+                    forumPostRepository.deletePost(postDelete)
+                }
+            }.await()
+        }
+    }
+
+
+   /* fun deletePostByUser(userId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val allPostList = forumPostRepository.getAllPost()
+            val allCommentList = forumCommentRepository.getAllComment()
+            val allPostLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val allPostDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val allCommentLikeList = forumCommentLikeRepository.getAllCommentLikeList()
+            val allCommentDislikeList = forumCommentDislikeRepository.getAllCommentDislikeList()
+            val allRepliesList = forumRepliesRepository.getAllReplies()
+
+            val postDelete = allPostList?.filter { it.userId == userId }
+            val postlikeDelete =
+            val postDislikeDelete =
+
+            val commentUserDelete = allCommentList?.filter { it.postId == postId }
+
+            val repliesDelete = allRepliesList?.filter { replies ->
+                commentDelete?.any { comment ->
+                    comment.commentId == replies.respondedCommentID
+                } ?: false
+            }
+            val postLikeDelete = allPostLikeList?.filter{it.postId == postId}
+            val postDislikeDelete = allPostDislikeList?.filter{it.postId == postId}
+            val commentLikeDelete = allCommentLikeList?.filter { commentDel ->
+                commentDelete?.any { comment ->
+                    comment.commentId == commentDel.commentId
+                } ?: false}
+            val commentDislikeDelete = allCommentDislikeList?.filter { commentDel ->
+                commentDelete?.any { comment ->
+                    comment.commentId == commentDel.commentId
+                } ?: false}
+
+            async {
+                if (commentLikeDelete != null) {
+                    for (commentlike in commentLikeDelete) {
+                        forumCommentLikeRepository.deleteCommentLike(commentlike)
+                    }
+                }
+            }.await()
+
+            async {
+                if (commentDislikeDelete != null) {
+                    for (commentDisike in commentDislikeDelete) {
+                        forumCommentDislikeRepository.deleteCommentDislike(commentDisike)
+                    }
+                }
+            }.await()
+
+            async {
+                if (repliesDelete != null) {
+                    for (replies in repliesDelete) {
+                        forumRepliesRepository.deleteReplies(replies)
+                    }
+                }
+            }.await()
+
+            async {
+                if (commentDelete != null) {
+                    for (comment in commentDelete) {
+                        forumCommentRepository.deleteComment(comment)
+                    }
+                }
+            }.await()
+
+            async {
+                if (postLikeDelete != null) {
+                    for (postlike in postLikeDelete) {
+                        forumPostLikeRepository.deletePostLike(postlike)
+                    }
+                }
+            }.await()
+
+            async {
+                if (postDislikeDelete != null) {
+                    for (postDislike in postDislikeDelete) {
+                        forumPostDislikeRepository.deletePostDislike(postDislike)
+                    }
+                }
+            }.await()
+
+            async {
+                if (postDelete != null) {
+                    forumPostRepository.deletePost(postDelete)
+                }
+            }.await()
+        }
+    }*/
+
 
     //Insert User Data
     @RequiresApi(Build.VERSION_CODES.O)
@@ -1335,41 +1621,52 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
 
 
         viewModelScope.launch(Dispatchers.IO) {
-            if (userRepository.getAllUsers()?.count() ?: 0 >= 5 && forumPostRepository.getAllPost()?.count() ?: 0 ==0) {
-                async {for (post in forumPostRecords) {
-                    forumPostRepository.addPost(post)
-                }}.await()
-                async { for (hashtag in forumHashtagRecords) {
-                    forumHashtagRepository.addHashTag(hashtag)
-                }}.await()
+            if (userRepository.getAllUsers()?.count() ?: 0 >= 5 && forumPostRepository.getAllPost()
+                    ?.count() ?: 0 == 0
+            ) {
+                async {
+                    for (post in forumPostRecords) {
+                        forumPostRepository.addPost(post)
+                    }
+                }.await()
 
-                    async {for (comment in forumCommentRecords) {
-                    forumCommentRepository.addComment(comment)
-                }}.await()
 
-                        async {  for (reply in forumRepliesRecords) {
-                    forumRepliesRepository.addReplies(reply)
-                }}.await()
+                async {
+                    for (comment in forumCommentRecords) {
+                        forumCommentRepository.addComment(comment)
+                    }
+                }.await()
 
-                            async { for (postHashtag in forumPostHashtagRecords) {
-                    forumPostHashtagRepository.addPostHashtag(postHashtag)
-                }}.await()
+                async {
+                    for (reply in forumRepliesRecords) {
+                        forumRepliesRepository.addReplies(reply)
+                    }
+                }.await()
 
-                                async { for (postLike in forumPostLikeRecords) {
-                    forumPostLikeRepository.addPostLike(postLike)
-                }}.await()
 
-                                    async {    for (postDislike in forumPostDislikeRecords) {
-                    forumPostDislikeRepository.addPostDislike(postDislike)
-                }}.await()
+                async {
+                    for (postLike in forumPostLikeRecords) {
+                        forumPostLikeRepository.addPostLike(postLike)
+                    }
+                }.await()
 
-                                        async { for (commentLike in forumCommentLikeRecords) {
-                    forumCommentLikeRepository.addCommentLike(commentLike)
-                }}.await()
+                async {
+                    for (postDislike in forumPostDislikeRecords) {
+                        forumPostDislikeRepository.addPostDislike(postDislike)
+                    }
+                }.await()
 
-                                            async { for (commentDislike in forumCommentDislikeRecords) {
-                    forumCommentDislikeRepository.addCommentDislike(commentDislike)
-                }}.await()
+                async {
+                    for (commentLike in forumCommentLikeRecords) {
+                        forumCommentLikeRepository.addCommentLike(commentLike)
+                    }
+                }.await()
+
+                async {
+                    for (commentDislike in forumCommentDislikeRecords) {
+                        forumCommentDislikeRepository.addCommentDislike(commentDislike)
+                    }
+                }.await()
             }
         }
 

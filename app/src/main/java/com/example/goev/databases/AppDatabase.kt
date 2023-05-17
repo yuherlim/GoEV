@@ -25,8 +25,6 @@ import com.example.goev.databases.react.UserReactData
         ForumCommentLikeData::class,
         ForumCommentDislikeData::class,
         ForumRepliesData::class,
-        ForumHashtagData::class,
-        ForumPostHashtagData::class,
         ChargingStation::class],
     version = 1,
     exportSchema = false
@@ -42,9 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val forumCommentDao: ForumCommentDao
     abstract val forumCommentLikeDao: ForumCommentLikeDao
     abstract val forumCommentDislikeDao: ForumCommentDislikeDao
-    abstract val forumHashtagDao: ForumHashtagDao
     abstract val forumRepliesDao: ForumRepliesDao
-    abstract val forumPostHashtagDao: ForumPostHashtagDao
     abstract val chargingStationDao: ChargingStationDao
 
     companion object {

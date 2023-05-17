@@ -31,6 +31,12 @@
         <action
             android:id="@+id/action_forumPostDetailsFragment_to_forumAddComment"
             app:destination="@id/forumAddComment" />
+        <action
+            android:id="@+id/action_forumPostDetailsFragment_to_forumMyLikePost"
+            app:destination="@id/forumMyLikePost" />
+        <action
+            android:id="@+id/action_forumPostDetailsFragment_to_forumMyPostFragment"
+            app:destination="@id/forumMyPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/forumSearchFragment"
@@ -315,6 +321,12 @@
         <action
             android:id="@+id/action_myProfileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_forumMyLikePost"
+            app:destination="@id/forumMyLikePost" />
+        <action
+            android:id="@+id/action_myProfileFragment_to_forumMyPostFragment"
+            app:destination="@id/forumMyPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -323,6 +335,30 @@
         tools:layout="@layout/activity_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forumMyLikePost"
+        android:name="com.example.goev.forum.ForumMyLikePost"
+        android:label="fragment_forum_my_like_post"
+        tools:layout="@layout/fragment_forum_my_like_post" >
+        <action
+            android:id="@+id/action_forumMyLikePost_to_forumPostDetailsFragment"
+            app:destination="@id/forumPostDetailsFragment" />
+        <action
+            android:id="@+id/action_forumMyLikePost_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forumMyPostFragment"
+        android:name="com.example.goev.forum.ForumMyPostFragment"
+        android:label="fragment_forum_my_post"
+        tools:layout="@layout/fragment_forum_my_post" >
+        <action
+            android:id="@+id/action_forumMyPostFragment_to_forumPostDetailsFragment"
+            app:destination="@id/forumPostDetailsFragment" />
+        <action
+            android:id="@+id/action_forumMyPostFragment_to_myProfileFragment"
             app:destination="@id/myProfileFragment" />
     </fragment>
 

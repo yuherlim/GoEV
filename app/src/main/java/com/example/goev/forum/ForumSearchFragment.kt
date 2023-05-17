@@ -66,7 +66,8 @@ class ForumSearchFragment : Fragment(), ForumSearchAdapter.OnForumSearchAdapterB
 
     override fun onPostDetailsClicked(postId: Int) {
         shareViewModel.loadPost(postId)
-        bundle.apply {putString("postId", postId.toString())}
+        bundle.apply {putString("postId", postId.toString())
+            putString("fromWhere","Search")}
         view?.findNavController()?.navigate(R.id.action_forumSearchFragment_to_forumPostDetailsFragment,bundle)
     }
 

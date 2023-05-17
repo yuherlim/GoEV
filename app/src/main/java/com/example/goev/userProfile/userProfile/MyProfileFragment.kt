@@ -52,11 +52,11 @@ class MyProfileFragment : Fragment() {
         }
 
         binding.postHistoryButton.setOnClickListener {
-            //navigate to post history
+            view?.findNavController()?.navigate(R.id.action_myProfileFragment_to_forumMyLikePost)
         }
 
         binding.myPostButton.setOnClickListener {
-            //navigate to myPost
+            view?.findNavController()?.navigate(R.id.action_myProfileFragment_to_forumMyPostFragment)
         }
 
 

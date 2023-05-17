@@ -251,4 +251,5 @@
     <string name="add_post_icon">Add Post</string>
     <string name="search_post_icon">Search Post</string>
     <string name="profile_pic_icon">Profile Picture</string>
+    <string name="myLikePost">My Like Post</string>
 </resources>
