@@ -24,7 +24,7 @@ class ForumPostLikeRepository(private val forumPostLikeDao: ForumPostLikeDao) {
         return forumPostLikeDao.getPostLikeCount(postId)
     }
 
-    suspend fun getPostLikeList(userId: String): List<ForumPostLikeData>? {
+    suspend fun getPostLikeList(userId: Int): List<ForumPostLikeData>? {
         return forumPostLikeDao.getPostLikeList(userId)
     }
 

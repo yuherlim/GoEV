@@ -23,7 +23,7 @@ class ForumCommentDislikeRepository(private val forumCommentDislikeDao: ForumCom
     suspend fun getCommentDislikeCount(commentId : Int): Int {
         return forumCommentDislikeDao.getCommentDislikeCount(commentId)}
 
-    suspend fun getCommentDislikeList(userId : String): List<ForumCommentDislikeData>? {
+    suspend fun getCommentDislikeList(userId : Int): List<ForumCommentDislikeData>? {
             return forumCommentDislikeDao.getCommentDislikeList(userId)
     }
 

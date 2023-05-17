@@ -27,6 +27,8 @@ class ForumMainPageFragment : Fragment(), ForumPostAdapter.OnForumPostAdapterBut
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        shareViewModel.getCurrentLoginUser()
+        shareViewModel.insertSampleData()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

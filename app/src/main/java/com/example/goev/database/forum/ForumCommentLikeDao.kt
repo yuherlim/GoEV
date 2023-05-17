@@ -14,7 +14,7 @@ interface ForumCommentLikeDao {
     @Update
     suspend fun updateCommentLike(forumCommentLike : ForumCommentLikeData)
 
-    @Delete()
+    @Delete
     suspend fun deleteCommentLike(forumCommentLike : ForumCommentLikeData)
 
     @Query("SELECT * FROM forumCommentLike_table")
@@ -24,7 +24,7 @@ interface ForumCommentLikeDao {
     suspend fun getCommentLikeCount(commentId : Int): Int
 
     @Query("SELECT * FROM forumCommentLike_table WHERE user_id = :userId")
-    suspend fun getCommentLikeList(userId : String): List<ForumCommentLikeData>?
+    suspend fun getCommentLikeList(userId : Int): List<ForumCommentLikeData>?
 
 
 

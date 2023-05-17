@@ -23,7 +23,7 @@ class ForumCommentLikeRepository(private val forumCommentLikeDao: ForumCommentLi
     suspend fun getCommentLikeCount(commentId : Int): Int {
         return forumCommentLikeDao.getCommentLikeCount(commentId)}
 
-    suspend fun getCommentLikeList(userId : String): List<ForumCommentLikeData>? {
+    suspend fun getCommentLikeList(userId : Int): List<ForumCommentLikeData>? {
             return forumCommentLikeDao.getCommentLikeList(userId)
     }
 

@@ -41,14 +41,14 @@ class ForumAddComment : Fragment() {
         var initialCommentId = arguments?.getInt("initialCommentId")
         var parentCommentId = arguments?.getInt("parentCommentId")
         var commentId = arguments?.getInt("commentId")
-        var replyUserId = arguments?.getString("replyUserId")
-        var userId = arguments?.getString("userId")
+        var replyUserName = arguments?.getString("replyUserName")
+        var userName = arguments?.getString("userName")
         var isReply = arguments?.getBoolean("isReply")
         var content = arguments?.getString("content")
 
         if (commentId == -1) {
             if (isReply == true) {
-                binding.addCommentText.text = "Reply to " + replyUserId
+                binding.addCommentText.text = "Reply to " + replyUserName
                 binding.commentContentEditField.hint = "Reply"
                 binding.postButton.setOnClickListener() {
                     if (binding.commentContentEditField.text.isNotEmpty()) {
@@ -80,7 +80,7 @@ class ForumAddComment : Fragment() {
                 }
 
             } else {
-                binding.addCommentText.text = "Comment as " + userId
+                binding.addCommentText.text = "Comment as " + userName
                 binding.commentContentEditField.hint = "Comment"
                 binding.postButton.setOnClickListener() {
                     if (binding.commentContentEditField.text.isNotEmpty()) {
@@ -88,8 +88,6 @@ class ForumAddComment : Fragment() {
                             if (parentCommentId != null) {
                                 if (postId != null) {
                                     shareViewModel.addforumComment(
-                                        initialCommentId,
-                                        parentCommentId,
                                         postId,
                                         binding.commentContentEditField.text.toString()
                                     )
@@ -113,7 +111,7 @@ class ForumAddComment : Fragment() {
             }
         } else {
             if (isReply == true) {
-                binding.addCommentText.text = "Edit Reply to " + replyUserId
+                binding.addCommentText.text = "Edit Reply to " + replyUserName
                 binding.commentContentEditField.hint = "Reply"
                 binding.commentContentEditField.text =
                     Editable.Factory.getInstance().newEditable(content)
@@ -124,8 +122,6 @@ class ForumAddComment : Fragment() {
                         if (parentCommentId != null) {
                             if (postId != null) {
                                 shareViewModel.addforumComment(
-                                    initialCommentId,
-                                    parentCommentId,
                                     postId,
                                     binding.commentContentEditField.text.toString()
                                 )
@@ -141,7 +137,7 @@ class ForumAddComment : Fragment() {
                 }
 
             } else {
-                binding.addCommentText.text = "Edit Comment as " + userId
+                binding.addCommentText.text = "Edit Comment as " + userName
                 binding.commentContentEditField.hint = "Comment"
                 binding.commentContentEditField.text =
                     Editable.Factory.getInstance().newEditable(content)
@@ -152,8 +148,6 @@ class ForumAddComment : Fragment() {
                         if (parentCommentId != null) {
                             if (postId != null) {
                                 shareViewModel.addforumComment(
-                                    initialCommentId,
-                                    parentCommentId,
                                     postId,
                                     binding.commentContentEditField.text.toString()
                                 )

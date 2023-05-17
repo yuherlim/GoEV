@@ -14,7 +14,7 @@ interface ForumPostDislikeDao {
     @Update
     suspend fun updatePostDislike(forumPostDislike : ForumPostDislikeData)
 
-    @Delete()
+    @Delete
     suspend fun deletePostDislike(forumPostDislike : ForumPostDislikeData)
 
     @Query("SELECT * FROM forumPostDislike_table")
@@ -24,7 +24,7 @@ interface ForumPostDislikeDao {
     suspend fun getPostDislikeCount(postId : Int): Int
 
     @Query("SELECT * FROM forumPostDislike_table WHERE user_id = :userId")
-    suspend fun getPostDislikeList(userId : String): List<ForumPostDislikeData>?
+    suspend fun getPostDislikeList(userId : Int): List<ForumPostDislikeData>?
 
 
 

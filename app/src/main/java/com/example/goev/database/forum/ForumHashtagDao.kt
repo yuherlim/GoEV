@@ -14,7 +14,7 @@ interface ForumHashtagDao {
     @Update
     suspend fun updateHashTag(forumHashtagData: ForumHashtagData)
 
-    @Delete()
+    @Delete
     suspend fun deleteHashTag(forumHashtagData: ForumHashtagData)
 
     @Query("SELECT * FROM forumHashtag_table")

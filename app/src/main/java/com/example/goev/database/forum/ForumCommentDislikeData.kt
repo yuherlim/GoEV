@@ -4,13 +4,14 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.goev.database.UserData
+
+import com.example.goev.database.user.UserData
 
 @Entity(
     tableName = "forumCommentDislike_table",
     foreignKeys = [ForeignKey(
         entity = UserData::class,
-        parentColumns = ["userId"],
+        parentColumns = ["id"],
         childColumns = ["user_id"]
     ), ForeignKey(
         entity = ForumCommentData::class,
@@ -23,7 +24,7 @@ data class ForumCommentDislikeData(
     var commentDislikeId: Int = 0,
 
     @ColumnInfo(name = "user_id")
-    var userId: String,
+    var userId: Int,
 
     @ColumnInfo(name = "comment_id")
     var commentId: Int,

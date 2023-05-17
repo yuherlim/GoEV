@@ -40,7 +40,7 @@ class ForumSearchAdapter() :
             var postContentExpandable: Boolean
             var postContentExpandState = false
             var status = forumPost.status
-            binding.username.text = forumPost.forumPostData.userId
+            binding.username.text = forumPost.userData.userName
             binding.postContent.text = forumPost.forumPostData.content
             binding.postTitle.text = forumPost.forumPostData.title
             binding.timestamp.text = TimeAgo.using(forumPost.forumPostData.updatedAt)

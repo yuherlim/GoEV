@@ -58,4 +58,7 @@ interface UserDao {
 
     @Query("SELECT COUNT(*) FROM users")
     fun getRowCount(): Int
+
+    @Query("SELECT * FROM users")
+    fun getAllUsers(): List<UserData>
 }

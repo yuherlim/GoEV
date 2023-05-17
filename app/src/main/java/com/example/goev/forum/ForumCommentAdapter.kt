@@ -17,7 +17,7 @@ class ForumCommentAdapter() :
     RecyclerView.Adapter<ForumCommentAdapter.PostCommentViewHolder>() {
     private var forumCommentList: List<ForumPostComment>? = emptyList()
     private var isButtonClicked = false
-    private var forumCommentAdapterButtonClickListener:OnForumCommentAdapterButtonClickListener? =
+    private var forumCommentAdapterButtonClickListener: OnForumCommentAdapterButtonClickListener? =
         null
 
     fun setForumCommentAdapterButtonClickListener(listener: OnForumCommentAdapterButtonClickListener) {
@@ -36,7 +36,7 @@ class ForumCommentAdapter() :
     inner class PostCommentViewHolder(private val binding: CommentViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(forumComment: ForumPostComment) {
-            binding.username.text = forumComment.forumCommentData.userId
+            binding.username.text = forumComment.userData.userName
             binding.commentContent.text = forumComment.forumCommentData.content
             binding.noOfLike.text = forumComment.noOfLike.toString()
             binding.noOfDislike.text = forumComment.noOfDislike.toString()
@@ -80,19 +80,22 @@ class ForumCommentAdapter() :
                     "like" -> {
                         forumCommentAdapterButtonClickListener?.onDeleteLikeClicked(
                             adapterPosition,
-                            forumComment.forumCommentData.commentId, forumComment.forumCommentData.postId
+                            forumComment.forumCommentData.commentId,
+                            forumComment.forumCommentData.postId
                         )
                     }
                     "none" -> {
                         forumCommentAdapterButtonClickListener?.onAddLikeClicked(
                             adapterPosition,
-                            forumComment.forumCommentData.commentId,forumComment.forumCommentData.postId
+                            forumComment.forumCommentData.commentId,
+                            forumComment.forumCommentData.postId
                         )
                     }
                     "dislike" -> {
                         forumCommentAdapterButtonClickListener?.onDisliketoLikeClicked(
                             adapterPosition,
-                            forumComment.forumCommentData.commentId,forumComment.forumCommentData.postId
+                            forumComment.forumCommentData.commentId,
+                            forumComment.forumCommentData.postId
                         )
 
                     }
@@ -107,19 +110,22 @@ class ForumCommentAdapter() :
                     "dislike" -> {
                         forumCommentAdapterButtonClickListener?.onDeleteDislikeClicked(
                             adapterPosition,
-                            forumComment.forumCommentData.commentId,forumComment.forumCommentData.postId
+                            forumComment.forumCommentData.commentId,
+                            forumComment.forumCommentData.postId
                         )
                     }
                     "none" -> {
                         forumCommentAdapterButtonClickListener?.onAddDislikeClicked(
                             adapterPosition,
-                            forumComment.forumCommentData.commentId,forumComment.forumCommentData.postId
+                            forumComment.forumCommentData.commentId,
+                            forumComment.forumCommentData.postId
                         )
                     }
                     "like" -> {
                         forumCommentAdapterButtonClickListener?.onLiketoDislikeClicked(
                             adapterPosition,
-                            forumComment.forumCommentData.commentId,forumComment.forumCommentData.postId
+                            forumComment.forumCommentData.commentId,
+                            forumComment.forumCommentData.postId
                         )
                     }
                     else -> {
@@ -141,30 +147,42 @@ class ForumCommentAdapter() :
                     layoutParams.bottomMargin
                 )
                 binding.commentLayout.layoutParams = layoutParams
-                binding.tag.text = "@" + forumComment.RespondedCommentData.userId
+                binding.tag.text = "@" + forumComment.respondentUserData.userName
                 binding.tag.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.tag.visibility = View.GONE
             }
 
 
             if (forumComment.noOfReplies > 0) {
-                    binding.noOfReplies.visibility = View.VISIBLE
-            }else{
+                binding.noOfReplies.visibility = View.VISIBLE
+                binding.showMore.visibility = View.GONE
+            } else {
                 binding.noOfReplies.visibility = View.GONE
                 binding.showMore.visibility = View.GONE
             }
 
 
             binding.reply.setOnClickListener {
-                forumCommentAdapterButtonClickListener?.onAddCommentClicked(adapterPosition,forumComment.parentCommentId,forumComment.forumCommentData.commentId,-1, forumComment.forumCommentData.postId,true, forumComment.forumCommentData.userId,forumComment.userId,"")
+                forumCommentAdapterButtonClickListener?.onAddCommentClicked(
+                    adapterPosition,
+                    if(forumComment.parentCommentId == -1){forumComment.forumCommentData.commentId}else{forumComment.parentCommentId},
+                    forumComment.forumCommentData.commentId,
+                    -1,
+                    forumComment.forumCommentData.postId,
+                    true,
+                    forumComment.userData.userName,
+                    forumComment.userName,
+                    ""
+                )
 
             }
             binding.more.visibility = View.INVISIBLE
 
 
-            }
         }
+    }
+
     override fun getItemCount(): Int {
         return forumCommentList?.size ?: 0
     }
@@ -194,21 +212,22 @@ class ForumCommentAdapter() :
     }
 
     interface OnForumCommentAdapterButtonClickListener {
-        fun onAddLikeClicked(position: Int, commentId: Int,postId : Int)
-        fun onDeleteLikeClicked(position: Int, commentId: Int,postId : Int)
-        fun onAddDislikeClicked(position: Int, commentId: Int,postId : Int)
-        fun onDeleteDislikeClicked(position: Int, commentId: Int,postId : Int)
-        fun onLiketoDislikeClicked(position: Int, commentId: Int,postId : Int)
-        fun onDisliketoLikeClicked(position: Int, commentId: Int,postId : Int)
+        fun onAddLikeClicked(position: Int, commentId: Int, postId: Int)
+        fun onDeleteLikeClicked(position: Int, commentId: Int, postId: Int)
+        fun onAddDislikeClicked(position: Int, commentId: Int, postId: Int)
+        fun onDeleteDislikeClicked(position: Int, commentId: Int, postId: Int)
+        fun onLiketoDislikeClicked(position: Int, commentId: Int, postId: Int)
+        fun onDisliketoLikeClicked(position: Int, commentId: Int, postId: Int)
         fun onAddCommentClicked(
-            position: Int,parentCommentId :Int,
+            position: Int, parentCommentId: Int,
             initialCommentId: Int,
             commentId: Int,
-            postId:Int,
-            isReply:Boolean,
-            replyUserId: String,
-            userId:String,
-        content :String)
+            postId: Int,
+            isReply: Boolean,
+            replyUserName: String,
+            userName: String,
+            content: String
+        )
 
     }
 

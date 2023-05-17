@@ -71,7 +71,7 @@ class ForumPostDetailsFragment : Fragment(),ForumCommentAdapter.OnForumCommentAd
 
 
         shareViewModel.forumData.observe(viewLifecycleOwner) { forumData ->
-            binding!!.username.text = forumData.forumPostData.userId
+            binding!!.username.text = forumData.userData.userName
             binding!!.timestamp.text = TimeAgo.using(forumData.forumPostData.updatedAt)
             binding!!.postContent.text = forumData.forumPostData.content
             binding!!.postTitle.text = forumData.forumPostData.title
@@ -138,7 +138,7 @@ class ForumPostDetailsFragment : Fragment(),ForumCommentAdapter.OnForumCommentAd
         }
 
         binding?.commentButton?.setOnClickListener(){
-            postId?.let { it1 -> onAddCommentClicked(-1,-1,-1,-1, it1,false,"", shareViewModel.userid,"") }
+            postId?.let { it1 -> onAddCommentClicked(-1,-1,-1,-1, it1,false,"", shareViewModel.currentLoginUser.userName,"") }
 
         }
         binding?.more?.visibility = View.INVISIBLE
@@ -176,16 +176,16 @@ class ForumPostDetailsFragment : Fragment(),ForumCommentAdapter.OnForumCommentAd
         commentId: Int,
         postId:Int,
         isReply:Boolean,
-        replyUserId: String,
-        userId:String,
+        replyUserName: String,
+        userName:String,
     content: String){
         bundle.apply {
             putInt("postId", postId)
             putInt("initialCommentId",initialCommentId)
             putInt("parentCommentId",parentCommentId)
             putInt("commentId",commentId)
-            putString("replyUserId",replyUserId)
-            putString("userId",userId)
+            putString("replyUserName",replyUserName)
+            putString("userName",userName)
             putBoolean("isReply",isReply)
             putString("content",content)
         }

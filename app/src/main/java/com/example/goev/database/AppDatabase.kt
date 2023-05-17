@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.goev.database.forum.*
+import com.example.goev.database.user.UserDao
+import com.example.goev.database.user.UserData
 
 @Database(entities =
-[UserData::class,
-     ForumPostData::class,
+[ForumPostData::class,
      ForumPostLikeData::class,
      ForumPostDislikeData::class,
      ForumCommentData::class,
@@ -16,6 +17,7 @@ import com.example.goev.database.forum.*
      ForumCommentDislikeData::class,
      ForumRepliesData::class,
      ForumHashtagData::class,
+     UserData::class,
      ForumPostHashtagData::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
      abstract val forumPostDao: ForumPostDao
@@ -27,7 +29,8 @@ abstract class AppDatabase : RoomDatabase() {
      abstract val forumHashtagDao: ForumHashtagDao
      abstract val forumRepliesDao: ForumRepliesDao
      abstract val forumPostHashtagDao: ForumPostHashtagDao
-     abstract val userDao: UserDao
+     abstract val userDao:UserDao
+
 
 
 

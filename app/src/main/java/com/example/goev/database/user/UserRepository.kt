@@ -59,4 +59,9 @@ class UserRepository(private val userDao: UserDao) {
     fun getRowCount(): Int {
         return userDao.getRowCount()
     }
+
+    fun getAllUsers(): List<UserData>{
+        return userDao.getAllUsers()
+
+    }
 }

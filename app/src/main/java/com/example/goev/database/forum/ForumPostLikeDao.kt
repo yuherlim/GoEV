@@ -10,7 +10,7 @@ interface ForumPostLikeDao {
     @Update
     suspend fun updatePostLike(forumPostLike : ForumPostLikeData)
 
-    @Delete()
+    @Delete
     suspend fun deletePostLike(forumPostLike : ForumPostLikeData)
 
     @Query("SELECT * FROM forumPostLike_table")
@@ -20,7 +20,7 @@ interface ForumPostLikeDao {
     suspend fun getPostLikeCount(postId : Int): Int
 
     @Query("SELECT * FROM forumPostLike_table WHERE user_id = :userId")
-    suspend fun getPostLikeList(userId : String): List<ForumPostLikeData>?
+    suspend fun getPostLikeList(userId : Int): List<ForumPostLikeData>?
 
 
 

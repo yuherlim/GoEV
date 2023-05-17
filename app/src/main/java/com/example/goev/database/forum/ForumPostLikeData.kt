@@ -4,13 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.goev.database.UserData
+import com.example.goev.database.user.UserData
 
 @Entity(
     tableName = "forumPostLike_table",
     foreignKeys = [ForeignKey(
         entity = UserData::class,
-        parentColumns = ["userId"],
+        parentColumns = ["id"],
         childColumns = ["user_id"]
     ), ForeignKey(
         entity = ForumPostData::class,
@@ -25,7 +25,7 @@ data class ForumPostLikeData(
     val postId: Int,
 
     @ColumnInfo(name = "user_id")
-    val userId: String,
+    val userId: Int,
 
     @ColumnInfo(name = "created_at")
     val createdAt: Long,

@@ -24,7 +24,7 @@ interface ForumCommentDislikeDao {
     suspend fun getCommentDislikeCount(commentId : Int): Int
 
     @Query("SELECT * FROM forumCommentDislike_table WHERE user_id = :userId")
-    suspend fun getCommentDislikeList(userId : String): List<ForumCommentDislikeData>?
+    suspend fun getCommentDislikeList(userId : Int): List<ForumCommentDislikeData>?
 
 
 

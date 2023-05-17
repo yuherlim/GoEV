@@ -14,7 +14,7 @@ interface ForumCommentDao {
     @Update
     suspend fun updateComment(forumCommentData: ForumCommentData)
 
-    @Delete()
+    @Delete
     suspend fun deleteComment(forumCommentData: ForumCommentData)
 
     @Query("SELECT * FROM forumComment_table")
