@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.example.goev.database.AppDatabase
 import com.example.goev.database.forum.*
 import com.example.goev.database.user.UserData
 import com.example.goev.databases.TipsAndKnowledgeDatabase
@@ -624,6 +623,104 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
 
             }
 
+        }
+    }
+
+    fun loadMyPostList(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postsDataList = forumPostRepository.getAllPost()
+            val postLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
+            val hashtagDataList = forumHashtagRepository.getHashTagList()
+            val postCommentList = forumCommentRepository.getAllComment()
+            val usersList = userRepository.getAllUsers()
+            val forumDataList = postsDataList?.map { post ->
+                val userData = usersList.filter{it.id == post.userId} [0]
+                val postLikeCount = postLikeList?.count { it.postId == post.postId } ?: 0
+                val postDislikeCount = postDislikeList?.count { it.postId == post.postId } ?: 0
+                val postCommentCount = postCommentList?.count { it.postId == post.postId } ?: 0
+                val postHashtagIdList =
+                    postsHashtagDataList!!.filter { it.postId == post.postId }.map { it.hashtagId }
+                val postHashtagList =
+                    hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
+                var status: String = ""
+                if (postLikeList?.count { it.postId == post.postId && it.userId == userId } == 1) {
+                    status = "like"
+                } else if (postDislikeList != null) {
+                    if (postDislikeList.count { it.postId == post.postId && it.userId == userId } == 1) {
+                        status = "dislike"
+                    } else {
+                        status = "none"
+                    }
+                }
+                ForumPost(
+                    post,
+                    userData,
+                    postLikeCount,
+                    postDislikeCount,
+                    postCommentCount,
+                    postHashtagList,
+                    status,
+                    userId
+                )
+            }?.sortedByDescending { it.forumPostData.updatedAt }
+
+            val myPostList = forumDataList?.filter{it.userId == userId}
+
+            withContext(Dispatchers.Main) {
+                _forumDataList.postValue(myPostList)
+            }
+        }
+    }
+
+    fun loadMyLikePostList(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            val postsDataList = forumPostRepository.getAllPost()
+            val postLikeList = forumPostLikeRepository.getAllPostLikeList()
+            val postDislikeList = forumPostDislikeRepository.getAllPostDislikeList()
+            val postsHashtagDataList = forumPostHashtagRepository.getAllPostHashtagList()
+            val hashtagDataList = forumHashtagRepository.getHashTagList()
+            val postCommentList = forumCommentRepository.getAllComment()
+            val usersList = userRepository.getAllUsers()
+            val forumDataList = postsDataList?.map { post ->
+                val userData = usersList.filter{it.id == post.userId} [0]
+                val postLikeCount = postLikeList?.count { it.postId == post.postId } ?: 0
+                val postDislikeCount = postDislikeList?.count { it.postId == post.postId } ?: 0
+                val postCommentCount = postCommentList?.count { it.postId == post.postId } ?: 0
+                val postHashtagIdList =
+                    postsHashtagDataList!!.filter { it.postId == post.postId }.map { it.hashtagId }
+                val postHashtagList =
+                    hashtagDataList?.filter { hashtag -> postHashtagIdList!!.any { hashtagId -> hashtagId == hashtag.hashtagId } }
+                var status: String = ""
+                if (postLikeList?.count { it.postId == post.postId && it.userId == userId } == 1) {
+                    status = "like"
+                } else if (postDislikeList != null) {
+                    if (postDislikeList.count { it.postId == post.postId && it.userId == userId } == 1) {
+                        status = "dislike"
+                    } else {
+                        status = "none"
+                    }
+                }
+                ForumPost(
+                    post,
+                    userData,
+                    postLikeCount,
+                    postDislikeCount,
+                    postCommentCount,
+                    postHashtagList,
+                    status,
+                    userId
+                )
+            }?.sortedByDescending { it.forumPostData.updatedAt }
+
+            val myLikePostList = forumDataList?.filter{it.status == "like"}
+
+            withContext(Dispatchers.Main) {
+                _forumDataList.postValue(myLikePostList)
+            }
         }
     }
 
