@@ -616,8 +616,8 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 )
             }?.sortedByDescending { it.forumPostData.updatedAt }
 
-            val myPostList = forumDataList?.filter{it.userId == userId}
-
+            val myPostList = forumDataList?.filter{it.forumPostData.userId == userId}
+            Log.d("1","1")
             withContext(Dispatchers.Main) {
                 _forumDataList.postValue(myPostList)
             }
@@ -1173,6 +1173,7 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 forumPostLikeRepository.addPostLike(
                     ForumPostLikeData(
                         postId = postId, userId = userId, createdAt = System.currentTimeMillis()
+
                     )
                 )
             }.await()
