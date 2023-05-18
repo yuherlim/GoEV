@@ -76,8 +76,8 @@ class ChargingStationViewModel(application: Application) : AndroidViewModel(appl
         _currentChargingStationList.value = emptyList()
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<ChargingStation>> {
-        return chargingStationRepository.searchDatabase(searchQuery).asLiveData()
+    fun searchDatabase(userId: Int, searchQuery: String): LiveData<List<ChargingStation>> {
+        return chargingStationRepository.searchDatabase(userId, searchQuery).asLiveData()
     }
 
     fun getChargingStationById(id: Int, callback: (ChargingStation?) -> Unit) {

@@ -26,8 +26,8 @@ class ChargingStationRepository(private val chargingStationDao: ChargingStationD
         chargingStationDao.deleteAllChargingStations(userId)
     }
 
-    fun searchDatabase(searchQuery: String): Flow<List<ChargingStation>> {
-        return chargingStationDao.searchDatabase(searchQuery)
+    fun searchDatabase(userId: Int, searchQuery: String): Flow<List<ChargingStation>> {
+        return chargingStationDao.searchDatabase(userId, searchQuery)
     }
 
     suspend fun updateChargingStationImage(uploadedImage: ByteArray, id: Int) {

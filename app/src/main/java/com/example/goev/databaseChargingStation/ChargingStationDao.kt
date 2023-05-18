@@ -24,8 +24,8 @@ interface ChargingStationDao {
     @Query("SELECT * FROM charging_station_table ORDER BY id ASC")
     suspend fun getAllChargingStations(): List<ChargingStation>?
 
-    @Query("SELECT * FROM charging_station_table WHERE name LIKE :searchQuery OR address LIKE :searchQuery")
-    fun searchDatabase(searchQuery: String): Flow<List<ChargingStation>>
+    @Query("SELECT * FROM charging_station_table WHERE userId = :userId AND (name LIKE :searchQuery OR address LIKE :searchQuery)")
+    fun searchDatabase(userId: Int, searchQuery: String): Flow<List<ChargingStation>>
 
     @Query("UPDATE charging_station_table SET image = :uploadedImage WHERE id = :id")
     suspend fun updateChargingStationImage(uploadedImage: ByteArray, id: Int)

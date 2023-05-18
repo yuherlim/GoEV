@@ -169,7 +169,7 @@ class TrackerFragment : Fragment(), SearchView.OnQueryTextListener {
     private fun searchDatabase(query: String) {
         val searchQuery = "%$query%"
 
-        mChargingStationViewModel.searchDatabase(searchQuery).observe(this) { list ->
+        mChargingStationViewModel.searchDatabase(mChargingStationViewModel.currentLoginUserId.value!!, searchQuery).observe(this) { list ->
             list.let {
                 adapter.setData(it)
             }
