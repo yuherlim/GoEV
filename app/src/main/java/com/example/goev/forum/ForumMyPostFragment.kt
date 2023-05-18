@@ -89,9 +89,7 @@ class ForumMyPostFragment : Fragment(), ForumPostAdapter.OnForumPostAdapterButto
         view?.findNavController()?.navigate(R.id.action_forumMyPostFragment_to_forumPostDetailsFragment,bundle)
     }
 
-    override fun onDialogClicked(postId: Int) {
-
-    }
+    override fun onDialogClicked(postId: Int,createdTime : Long,content:String,title:String) {}
 
     override fun onResume() {
         // Hides bottom navigation

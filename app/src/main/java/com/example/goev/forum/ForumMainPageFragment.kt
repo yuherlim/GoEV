@@ -45,7 +45,12 @@ class ForumMainPageFragment : Fragment(), ForumPostAdapter.OnForumPostAdapterBut
         var fragmentBinding = FragmentForumMainPageBinding.inflate(inflater,container,false)
         binding = fragmentBinding
         binding?.addIcon?.setOnClickListener(){
-            view?.findNavController()?.navigate(R.id.action_forumMainPageFragment_to_forumAddPostFragment)
+            bundle.apply {putString("postId", "-1")
+                putString("postMode","")
+                putString("content", "")
+                putLong("time", 0)
+                putString("title", "")}
+            view?.findNavController()?.navigate(R.id.action_forumMainPageFragment_to_forumAddPostFragment,bundle)
 
         }
         binding?.searchIcon?.setOnClickListener(){
@@ -102,7 +107,31 @@ class ForumMainPageFragment : Fragment(), ForumPostAdapter.OnForumPostAdapterBut
         view?.findNavController()?.navigate(R.id.action_forumMainPageFragment_to_forumPostDetailsFragment,bundle)
     }
 
-    override fun onDialogClicked(postId: Int) {
+    override fun onDialogClicked(postId: Int,createdTime : Long,content:String,title:String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Edit / Delete Post")
+            .setMessage("")
+            .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+
+            }
+            .setNegativeButton("Delete") { dialog, which ->
+
+                shareViewModel.deletePost(postId)
+                val toast = Toast.makeText(requireContext(),"Post Deleted",Toast.LENGTH_SHORT)
+                toast.show()
+
+
+            }
+            .setPositiveButton("Edit") { dialog, which ->
+                bundle.apply {putString("postId", postId.toString())
+                    putString("postMode","EditPost")
+                    putString("content", content)
+                    putLong("time", createdTime)
+                    putString("title", title)}
+                view?.findNavController()?.navigate(R.id.action_forumMainPageFragment_to_forumAddPostFragment,bundle)
+            }
+            .show()
+
     }
 
 

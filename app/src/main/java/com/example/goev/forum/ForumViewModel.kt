@@ -1437,7 +1437,7 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                 )
             }.await()
         }
-        loadPostList()
+
     }
 
     fun deletePost(postId: Int) {
@@ -1521,7 +1521,29 @@ class ForumViewModel(application: Application) : AndroidViewModel(application) {
                     forumPostRepository.deletePost(postDelete)
                 }
             }.await()
+            loadPostList()
         }
+
+    }
+
+    fun editPost (postId: Int , content:String, title:String, createdTime : Long){
+        viewModelScope.launch(Dispatchers.IO) {
+            val userId = currentLoginUser.id
+            async {
+                forumPostRepository.updatePost(
+                    ForumPostData(
+                        postId =postId,
+                        title = title,
+                        content = content,
+                        userId = userId,
+                        createdAt = createdTime,
+                        updatedAt = System.currentTimeMillis()
+                    )
+                )
+            }.await()
+            loadPostList()
+        }
+
     }
 
 

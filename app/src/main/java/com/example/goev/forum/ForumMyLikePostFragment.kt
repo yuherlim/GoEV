@@ -88,8 +88,7 @@ class ForumMyLikePost : Fragment(), ForumPostAdapter.OnForumPostAdapterButtonCli
         view?.findNavController()?.navigate(R.id.action_forumMyLikePost_to_forumPostDetailsFragment,bundle)
     }
 
-    override fun onDialogClicked(postId: Int) {
-    }
+    override fun onDialogClicked(postId: Int,createdTime : Long,content:String,title:String) {}
 
     override fun onResume() {
         // Hides bottom navigation

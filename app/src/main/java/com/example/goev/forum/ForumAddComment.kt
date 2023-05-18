@@ -34,8 +34,10 @@ class ForumAddComment : Fragment() {
         var fragmentBinding = FragmentForumAddCommentBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         binding.cancelButton?.setOnClickListener() {
+            bundle.apply {
+                putString("fromWhere","MainPage")}
             view?.findNavController()
-                ?.navigate(R.id.action_forumAddComment_to_forumPostDetailsFragment)
+                ?.navigate(R.id.action_forumAddComment_to_forumPostDetailsFragment,bundle)
         }
         var postId = arguments?.getInt("postId")
         var initialCommentId = arguments?.getInt("initialCommentId")
@@ -45,6 +47,8 @@ class ForumAddComment : Fragment() {
         var userName = arguments?.getString("userName")
         var isReply = arguments?.getBoolean("isReply")
         var content = arguments?.getString("content")
+
+
 
         if (commentId == -1) {
             if (isReply == true) {
@@ -66,7 +70,8 @@ class ForumAddComment : Fragment() {
                         }
                         val toast = Toast.makeText(context, "Reply Posted", Toast.LENGTH_SHORT)
                         toast.show()
-                        bundle.apply { putString("postId", postId.toString()) }
+                        bundle.apply { putString("postId", postId.toString())
+                            putString("fromWhere","MainPage")}
                         view?.findNavController()
                             ?.navigate(
                                 R.id.action_forumAddComment_to_forumPostDetailsFragment,
@@ -96,7 +101,8 @@ class ForumAddComment : Fragment() {
                         }
                         val toast = Toast.makeText(context, "Comment Posted", Toast.LENGTH_SHORT)
                         toast.show()
-                        bundle.apply { putString("postId", postId.toString()) }
+                        bundle.apply { putString("postId", postId.toString())
+                            putString("fromWhere","MyPost")}
                         view?.findNavController()
                             ?.navigate(
                                 R.id.action_forumAddComment_to_forumPostDetailsFragment,

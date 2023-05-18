@@ -50,20 +50,66 @@ class ForumAddPostFragment : Fragment() {
                 ?.navigate(R.id.action_forumAddPostFragment_to_forumMainPageFragment)
     }
 
+        var postId = arguments?.getString("postId")?.toInt()
+        var content = arguments?.getString("content")
+        var time = arguments?.getLong("time")
+        var title = arguments?.getString("title")
+        var mode = arguments?.getString("postMode")
+
+
+        if (mode == "EditPost"){
+            binding?.fragmentName?.text = "Edit Post"
+            binding?.postButton?.text = "Post"
+            binding?.postTitleEditField?.setText(title)
+            binding?.postContentEditField?.setText(content)
+        }
+
+
         binding?.postButton?.setOnClickListener{
-            if(binding?.postTitleEditField?.text?.isNotEmpty() == true){
-            if (binding?.postContentEditField?.text?.isNotEmpty() == true){
-                shareViewModel.addPost(binding?.postTitleEditField?.text.toString(),binding?.postContentEditField?.text.toString())
-                val toast = Toast.makeText(context, "Post Created", Toast.LENGTH_SHORT)
-                toast.show()
-                view?.findNavController()
-                    ?.navigate(R.id.action_forumAddPostFragment_to_forumMainPageFragment)
+            if (mode == "EditPost") {
+                if (binding?.postTitleEditField?.text?.isNotEmpty() == true) {
+                    if (binding?.postContentEditField?.text?.isNotEmpty() == true) {
+                        if (postId != null) {
+                            if (time != null) {
+                                shareViewModel.editPost(
+                                    postId,
+                                    binding?.postContentEditField?.text.toString() ,
+                                    binding?.postTitleEditField?.text.toString(),
+                                    time
+                                )
+                            }
+                        }
+                        val toast = Toast.makeText(context, "Post Updated", Toast.LENGTH_LONG)
+                        toast.show()
+                        view?.findNavController()
+                            ?.navigate(R.id.action_forumAddPostFragment_to_forumMainPageFragment)
+                    } else {
+                        val toast = Toast.makeText(context, "Content is Empty", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                } else {
+                    val toast = Toast.makeText(context, "Title is Empty", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
             }else{
-                val toast = Toast.makeText(context, "Content is Empty", Toast.LENGTH_SHORT)
-                toast.show()
-            }}else{
-                val toast = Toast.makeText(context, "Title is Empty", Toast.LENGTH_SHORT)
-                toast.show()
+                if (binding?.postTitleEditField?.text?.isNotEmpty() == true) {
+                    if (binding?.postContentEditField?.text?.isNotEmpty() == true) {
+                        shareViewModel.addPost(
+                            binding?.postTitleEditField?.text.toString(),
+                            binding?.postContentEditField?.text.toString()
+                        )
+                        val toast = Toast.makeText(context, "Post Created", Toast.LENGTH_SHORT)
+                        toast.show()
+                        view?.findNavController()
+                            ?.navigate(R.id.action_forumAddPostFragment_to_forumMainPageFragment)
+                    } else {
+                        val toast = Toast.makeText(context, "Content is Empty", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+                } else {
+                    val toast = Toast.makeText(context, "Title is Empty", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
             }
         }
 

@@ -158,9 +158,13 @@ class ForumPostAdapter() :
             if(forumPost.forumPostData.userId  == forumPost.userId) {
                 binding.more.visibility = View.VISIBLE
                 binding.more.setOnClickListener(){
-                    forumPostAdapterButtonClickListener?.onDialogClicked(forumPost.forumPostData!!.postId)
+                    forumPostAdapterButtonClickListener?.onDialogClicked(forumPost.forumPostData!!.postId,forumPost.forumPostData!!.createdAt,forumPost.forumPostData!!.content,forumPost.forumPostData!!.title)
+                    Log.d("2","2")
                 }
+            }else{
+                binding.more.visibility = View.INVISIBLE
             }
+
 
         }
     }
@@ -197,7 +201,7 @@ class ForumPostAdapter() :
         fun onLiketoDislikeClicked(position: Int, postId: Int)
         fun onDisliketoLikeClicked(position: Int, postId: Int)
         fun onPostDetailsClicked(postId: Int)
-        fun onDialogClicked(postId: Int)
+        fun onDialogClicked(postId: Int,createdTime : Long,content:String,title:String)
 
 
     }
