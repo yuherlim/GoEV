@@ -1,5 +1,6 @@
 package com.example.goev
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,7 +81,11 @@ class PostCommentAdapter(val userDAO: UserDao,
                 .setView(dialogView)
                 .setPositiveButton(R.string.save) { _, _ ->
                     val newComment = comment.copy(comment = editText.text.toString())
-                    editComment(comment,newComment)
+                    if(newComment.comment.isEmpty()){
+                        Toast.makeText(holder.itemView.context, "Cannot be empty", Toast.LENGTH_SHORT).show()
+                    }else {
+                        editComment(comment, newComment)
+                    }
                 }
                 .setNegativeButton(R.string.cancel, null)
                 .show()
